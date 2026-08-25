@@ -17,7 +17,7 @@
 
 ## Demo
 
-Открой `src/index.html` напрямую в браузере или подними локальный сервер (см. [Запуск](#запуск)).
+Открой `index.html` напрямую в браузере или подними локальный сервер (см. [Запуск](#запуск)).
 
 ## Стек
 
@@ -26,20 +26,21 @@
 - **Vanilla JS** — без зависимостей, ES2017+, `IntersectionObserver`
 - **Google Fonts** — Inter Tight, Inter, JetBrains Mono (с fallback на системные шрифты)
 
-Никаких фреймворков, сборщиков и npm-зависимостей. Весь сайт — три файла в `src/`.
+Никаких фреймворков, сборщиков и npm-зависимостей. Весь сайт — три файла в корне репозитория.
 
 ## Структура проекта
 
 ```
 motodrive/
-├── index.js            # entry pointer
-├── package.json        # npm scripts
-├── README.md
-└── src/
-    ├── index.html      # разметка
-    ├── styles.css      # дизайн-токены + стили
-    └── app.js          # интерактив
+├── index.html      # разметка
+├── styles.css      # дизайн-токены + стили
+├── app.js          # интерактив
+├── index.js        # entry pointer (npm scripts)
+├── package.json    # npm scripts
+└── README.md
 ```
+
+Все публичные файлы лежат **в корне репозитория** — это требование GitHub Pages по умолчанию (он отдаёт `index.html` из корня ветки).
 
 ## Запуск
 
@@ -55,24 +56,32 @@ npm run dev
 
 ```bash
 # Python 3
-python -m http.server 5173 -d src
+python -m http.server 5173
 
 # Node
-npx serve src -p 5173
+npx serve . -p 5173
 
 # PHP
-php -S localhost:5173 -t src
+php -S localhost:5173
 ```
 
 ## Сборка / деплой
 
-Сайт полностью статический — просто загрузи содержимое `src/` на любой хостинг:
+Сайт полностью статический — никаких шагов сборки не требуется.
+
+### GitHub Pages (рекомендуемый)
+
+1. Закоммить всё в `master` ветку
+2. **Settings → Pages → Build and deployment → Source:** `Deploy from a branch`
+3. **Branch:** `master`, **Folder:** `/ (root)`
+4. URL: `https://<user>.github.io/motodrive/`
+
+### Другие хостинги
 
 | Хостинг | Что сделать |
 |---|---|
-| GitHub Pages | `Settings → Pages → Source: /src` (или перенеси файлы в корень) |
-| Netlify / Vercel | Drop `src/` в UI или укажи `Publish directory: src` |
-| Cloudflare Pages | `Build command:` _(пусто)_, `Build output: src` |
+| Netlify / Vercel | Drop корень репозитория в UI или укажи `Publish directory: .` |
+| Cloudflare Pages | `Build command:` _(пусто)_, `Build output: .` |
 | S3 / Nginx | Загрузи файлы, отдавай `index.html` как `index` |
 
 ## Адаптив
@@ -108,7 +117,7 @@ Multi-tier брейкпоинты (от меньшего к большему):
 
 ## Дизайн-система
 
-Токены в `:root` (`src/styles.css:4`):
+Токены в `:root` (`styles.css:4`):
 
 | Переменная | Значение | Назначение |
 |---|---|---|
@@ -136,9 +145,9 @@ Multi-tier брейкпоинты (от меньшего к большему):
 
 ## Кастомизация
 
-**Изменить цвета:** отредактируй токены в `:root` (`src/styles.css:4`).
+**Изменить цвета:** отредактируй токены в `:root` (`styles.css:4`).
 
-**Изменить контент:** все тексты — в `src/index.html`. Структура пронумерована `№01`…`№07` для удобства.
+**Изменить контент:** все тексты — в `index.html`. Структура пронумерована `№01`…`№07` для удобства.
 
 **Добавить секцию:** скопируй любой `<section class="section ...">` блок, поменяй `id`, добавь ссылку в `.nav__links` и `.mobile-nav__list`.
 
