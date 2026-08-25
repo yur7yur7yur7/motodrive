@@ -126,6 +126,17 @@
       const btn = form.querySelector('button[type="submit"]');
       const phone = form.querySelector('input[name="phone"]');
       const name = form.querySelector('input[name="name"]');
+      const consent = form.querySelector('input[name="consent"]');
+      const consentLabel = form.querySelector('.consent');
+
+      // consent must be ticked (152-ФЗ)
+      if (consent && !consent.checked) {
+        if (consentLabel) {
+          consentLabel.classList.add('consent--error');
+          consentLabel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
 
       if (!name.value.trim() || !phone.value.trim()) {
         [name, phone].forEach((el) => {
@@ -155,6 +166,15 @@
         }, 2400);
       }, 900);
     });
+
+    // clear consent error on toggle
+    const consent = form.querySelector('input[name="consent"]');
+    const consentLabel = form.querySelector('.consent');
+    if (consent && consentLabel) {
+      consent.addEventListener('change', () => {
+        if (consent.checked) consentLabel.classList.remove('consent--error');
+      });
+    }
   }
 
   /* ---------- FAQ: ensure only one open at a time (optional polish) ---------- */
