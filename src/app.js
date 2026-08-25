@@ -2,10 +2,11 @@
 (function () {
   'use strict';
 
-  const nav       = document.getElementById('nav');
-  const dialSvg   = document.querySelector('.dial__progress');
-  const dialNum   = document.querySelector('.dial__number');
-  const sections  = document.querySelectorAll('.section, .hero');
+  const nav        = document.getElementById('nav');
+  const burger     = document.getElementById('navBurger');
+  const mobileNav  = document.getElementById('mobileNav');
+  const dialSvg    = document.querySelector('.dial__progress');
+  const dialNum    = document.querySelector('.dial__number');
 
   /* ---------- nav: appear on scroll ---------- */
   const onScroll = () => {
@@ -14,6 +15,41 @@
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  /* ---------- mobile nav toggle ---------- */
+  const closeMobileNav = () => {
+    if (!mobileNav || !burger) return;
+    mobileNav.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Открыть меню');
+    document.body.style.overflow = '';
+  };
+  const openMobileNav = () => {
+    if (!mobileNav || !burger) return;
+    mobileNav.hidden = false;
+    // reflow to allow transition
+    void mobileNav.offsetHeight;
+    mobileNav.classList.add('is-open');
+    burger.classList.add('is-open');
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Закрыть меню');
+    document.body.style.overflow = 'hidden';
+  };
+  if (burger && mobileNav) {
+    burger.addEventListener('click', () => {
+      if (mobileNav.classList.contains('is-open')) closeMobileNav();
+      else openMobileNav();
+    });
+    mobileNav.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMobileNav));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) closeMobileNav();
+    });
+    // close on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 880) closeMobileNav();
+    });
+  }
 
   /* ---------- smooth anchor offset ---------- */
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -130,7 +166,7 @@
     });
   });
 
-  /* ---------- parallax for hero chips on mouse move (subtle) ---------- */
+  /* ---------- parallax for hero chips on mouse move (subtle) — desktop only ---------- */
   const chips = document.querySelectorAll('.hero__chip');
   const visual = document.querySelector('.hero__visual');
   if (visual && chips.length && window.matchMedia('(pointer: fine)').matches) {

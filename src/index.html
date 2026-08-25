@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0E1116" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="format-detection" content="telephone=no" />
   <title>MotoDrive — Мотоприводы для инвалидных колясок</title>
   <meta name="description" content="Мотоприводы для инвалидных колясок нового поколения. Скорость до 25 км/ч, запас хода 45 км, установка за 15 минут." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,8 +33,22 @@
         <a href="#faq">FAQ</a>
       </nav>
       <a href="#order" class="btn btn--accent nav__cta">Заказать</a>
+      <button class="nav__burger" id="navBurger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <nav class="mobile-nav__list" aria-label="Мобильное меню">
+      <a href="#models">Модели</a>
+      <a href="#specs">Характеристики</a>
+      <a href="#how">Как установить</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#faq">FAQ</a>
+      <a href="#order" class="btn btn--accent btn--block">Заказать</a>
+    </nav>
+  </div>
 
   <main id="top">
     <!-- HERO -->
@@ -300,11 +317,11 @@
         <form class="order__form" novalidate>
           <label class="field">
             <span class="field__label">Имя</span>
-            <input type="text" name="name" placeholder="Алексей" required />
+            <input type="text" name="name" placeholder="Алексей" autocomplete="given-name" required />
           </label>
           <label class="field">
             <span class="field__label">Телефон</span>
-            <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required />
+            <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" enterkeyhint="send" required />
           </label>
           <label class="field field--full">
             <span class="field__label">Модель</span>
