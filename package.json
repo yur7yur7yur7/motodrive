@@ -1,0 +1,11 @@
+{
+  "name": "motodrive-landing",
+  "version": "1.0.0",
+  "description": "Сайт-визитка: мотоприводы для инвалидных колясок MotoDrive",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "npx --yes serve src -p 5173",
+    "dev": "npx --yes serve src -p 5173"
+  },
+  "private": true
+}
