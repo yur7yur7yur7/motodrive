@@ -1,4 +1,4 @@
-/* MotoDrive — interactions */
+/* Wheel Pilots — interactions */
 (function () {
   'use strict';
 
@@ -85,7 +85,7 @@
 
   /* ---------- dial: animate when hero in view ---------- */
   if (dialSvg && dialNum) {
-    const targetVal = parseInt(dialNum.textContent, 10) || 25;
+    const targetVal = parseInt(dialNum.textContent, 10) || 45;
     const totalLen = 691; // 2 * pi * 110
     dialSvg.style.strokeDashoffset = totalLen;
 
@@ -93,7 +93,7 @@
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const pct = targetVal / 30; // 25 / 30 ≈ 83%
+          const pct = targetVal / 60; // 45 / 60 = 75%
           const offset = totalLen * (1 - pct);
           dialSvg.style.strokeDashoffset = offset;
 
@@ -146,7 +146,7 @@
       if (!name.value.trim() || !phone.value.trim()) {
         [name, phone].forEach((el) => {
           if (!el.value.trim()) {
-            el.style.borderColor = '#FF6B1A';
+            el.style.borderColor = '#FFD400';
             el.focus();
           }
         });

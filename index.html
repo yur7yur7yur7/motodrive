@@ -6,9 +6,10 @@
   <meta name="theme-color" content="#0E1116" />
   <meta name="color-scheme" content="dark light" />
   <meta name="format-detection" content="telephone=no" />
-  <title>MotoDrive — Мотоприводы для инвалидных колясок</title>
-  <meta name="description" content="Мотоприводы для инвалидных колясок нового поколения. Скорость до 25 км/ч, запас хода 45 км, установка за 15 минут." />
+  <title>Wheel Pilots — Электроприставка для инвалидной коляски</title>
+  <meta name="description" content="Электроприставка Wheel Pilots: мотор 500 Вт, скорость до 45 км/ч, запас хода до 65 км. Крепление к подножкам, установка за минуты." />
   <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="stylesheet" href="./fonts.css" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -16,13 +17,8 @@
   <!-- NAV -->
   <header class="nav" id="nav">
     <div class="nav__inner container">
-      <a href="#top" class="nav__brand" aria-label="MotoDrive">
-        <svg class="nav__logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="2"/>
-          <path d="M8 20 L16 6 L24 20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="square"/>
-          <circle cx="16" cy="20" r="2" fill="currentColor"/>
-        </svg>
-        <span>MotoDrive</span>
+      <a href="#top" class="nav__brand" aria-label="Wheel Pilots">
+        <img class="nav__logo" src="./img/logo-horizontal-white.png" alt="Wheel Pilots" width="180" height="68" />
       </a>
       <nav class="nav__links" aria-label="Главное меню">
         <a href="#models">Модели</a>
@@ -54,23 +50,23 @@
     <section class="hero">
       <div class="hero__grid container">
         <div class="hero__copy">
-          <span class="eyebrow">№01 / MOTODRIVE S-SERIES</span>
+          <span class="eyebrow">№01 / WHEEL PILOTS POWER</span>
           <h1 class="hero__title">
             <span class="hero__title-line">Свобода</span>
             <span class="hero__title-line hero__title-line--italic">не ждёт</span>
             <span class="hero__title-line">на обочине.</span>
           </h1>
           <p class="hero__lede">
-            Мотопривод, который превращает вашу коляску в электрическую за 15 минут. Без инструментов, без сервиса, без компромиссов.
+            Моторизированное колесо превращает вашу инвалидную коляску в электрическую за считанные минуты. Без посторонней помощи, без сложного монтажа.
           </p>
           <div class="hero__ctas">
             <a href="#order" class="btn btn--accent btn--lg">Заказать сейчас</a>
             <a href="#how" class="btn btn--ghost btn--lg">Как это работает →</a>
           </div>
           <ul class="hero__stats">
-            <li><b>25 км/ч</b><span>макс. скорость</span></li>
-            <li><b>45 км</b><span>запас хода</span></li>
-            <li><b>15 мин</b><span>установка</span></li>
+            <li><b>45 км/ч</b><span>макс. скорость</span></li>
+            <li><b>65 км</b><span>запас хода</span></li>
+            <li><b>500 Вт</b><span>мощность мотора</span></li>
           </ul>
         </div>
         <div class="hero__visual" aria-hidden="true">
@@ -80,19 +76,19 @@
               <circle cx="120" cy="120" r="110" fill="none" stroke="var(--bolt)" stroke-width="2"
                       stroke-dasharray="691" stroke-dashoffset="691"
                       class="dial__progress" transform="rotate(-90 120 120)"/>
-              <text x="120" y="100" text-anchor="middle" class="dial__number">25</text>
+              <text x="120" y="100" text-anchor="middle" class="dial__number">45</text>
               <text x="120" y="130" text-anchor="middle" class="dial__unit">км/ч</text>
               <text x="120" y="160" text-anchor="middle" class="dial__label">TOP SPEED</text>
             </svg>
           </div>
           <div class="hero__chip hero__chip--1">
-            <span class="dot"></span> Активна
+            <span class="mono">⚡ 500 Вт</span>
           </div>
           <div class="hero__chip hero__chip--2">
-            <span class="mono">98%</span> заряда
+            <span class="mono">⚡ 17 Ah</span>
           </div>
           <div class="hero__chip hero__chip--3">
-            <span class="mono">15 min</span> setup
+            <span class="mono">⚡ до 65 км</span>
           </div>
         </div>
       </div>
@@ -112,7 +108,7 @@
       </div>
       <div class="ad-mark container" aria-label="Маркировка рекламы">
         <span class="ad-mark__tag">Реклама</span>
-        <span class="ad-mark__text">Рекламодатель: ИП Сашка<span aria-hidden="true">*</span>. ИНН: <span aria-hidden="true">*</span><span class="sr-only">по запросу</span> · ОГРНИП: <span aria-hidden="true">*</span><span class="sr-only">по запросу</span></span>
+        <span class="ad-mark__text">Рекламодатель: ИП Половников Александр Владимирович · ИНН: 352304349171 · ОГРНИП: 322352500031695</span>
         <span class="ad-mark__erid">erid: <span aria-hidden="true">*</span><span class="sr-only">будет присвоен ОРД после запуска рекламной кампании</span></span>
       </div>
     </section>
@@ -121,59 +117,33 @@
     <section class="section section--dark" id="models">
       <div class="container">
         <header class="section__head">
-          <span class="eyebrow">№02 / Модели</span>
-          <h2 class="section__title">Три привода. <em>Одна свобода.</em></h2>
-          <p class="section__sub">От городских прогулок до путешествий по бездорожью — выберите свою скорость.</p>
+          <span class="eyebrow">№02 / Модель</span>
+          <h2 class="section__title">Электроприставка <em>для вашей коляски.</em></h2>
+          <p class="section__sub">Моторизированное колесо с креплением к подножкам — для большинства инвалидных колясок с ручным управлением.</p>
         </header>
         <div class="models">
-          <article class="model__item">
-            <div class="model__num">01</div>
-            <h3 class="model__name">City <em>S1</em></h3>
-            <p class="model__tag">Для города и ровных дорог</p>
-            <ul class="model__list">
-              <li><span>Скорость</span><b>15 км/ч</b></li>
-              <li><span>Запас хода</span><b>30 км</b></li>
-              <li><span>Вес привода</span><b>4.8 кг</b></li>
-              <li><span>Аккумулятор</span><b>240 Вт·ч</b></li>
-            </ul>
-            <div class="model__foot">
-              <div class="model__price">от <b>89 000 ₽</b></div>
-              <a href="#order" class="btn btn--outline">Выбрать</a>
-            </div>
-          </article>
           <article class="model__item model__item--featured">
-            <div class="model__badge">Хит продаж<span aria-hidden="true">*</span></div>
-            <div class="model__num">02</div>
-            <h3 class="model__name">Trail <em>S2</em></h3>
-            <p class="model__tag">Универсальный. Город + парки</p>
+            <div class="model__num">01</div>
+            <h3 class="model__name">Wheel Pilots <em>Power</em></h3>
+            <p class="model__tag">Электроприставка к инвалидной коляске</p>
             <ul class="model__list">
-              <li><span>Скорость</span><b>25 км/ч</b></li>
-              <li><span>Запас хода</span><b>45 км</b></li>
-              <li><span>Вес привода</span><b>5.4 кг</b></li>
-              <li><span>Аккумулятор</span><b>360 Вт·ч</b></li>
+              <li><span>Колесо</span><b>12 дюймов</b></li>
+              <li><span>Мощность</span><b>500 Вт</b></li>
+              <li><span>Аккумулятор</span><b>Li-ion 17 Ah (съёмный, 4.5 кг)</b></li>
+              <li><span>Скорость</span><b>до 45 км/ч</b></li>
+              <li><span>Запас хода</span><b>до 65 км</b></li>
+              <li><span>Вес приставки</span><b>19.5 кг</b></li>
+              <li><span>Передачи</span><b>3 скорости + задняя</b></li>
+              <li><span>Тормоз</span><b>Гидравлический V-Brake</b></li>
+              <li><span>Руль</span><b>Складывается</b></li>
             </ul>
             <div class="model__foot">
-              <div class="model__price">от <b>139 000 ₽</b></div>
-              <a href="#order" class="btn btn--accent">Выбрать</a>
-            </div>
-          </article>
-          <article class="model__item">
-            <div class="model__num">03</div>
-            <h3 class="model__name">Offroad <em>X3</em></h3>
-            <p class="model__tag">Бездорожье, грунт, снег</p>
-            <ul class="model__list">
-              <li><span>Скорость</span><b>20 км/ч</b></li>
-              <li><span>Запас хода</span><b>60 км</b></li>
-              <li><span>Вес привода</span><b>6.2 кг</b></li>
-              <li><span>Аккумулятор</span><b>480 Вт·ч</b></li>
-            </ul>
-            <div class="model__foot">
-              <div class="model__price">от <b>189 000 ₽</b></div>
-              <a href="#order" class="btn btn--outline">Выбрать</a>
+              <div class="model__price">Цена <b>по запросу<span aria-hidden="true">*</span></b></div>
+              <a href="#order" class="btn btn--accent">Заказать</a>
             </div>
           </article>
         </div>
-        <p class="models__disclaimer"><span aria-hidden="true">*</span> Цены, технические характеристики, а также обозначение «Хит продаж» являются ориентировочными и требуют подтверждения производителя.</p>
+        <p class="models__disclaimer"><span aria-hidden="true">*</span> Технические характеристики приведены по данным производителя. Запас хода зависит от нагрузки, рельефа, температуры и стиля езды. Уточняйте актуальную цену у менеджера.</p>
       </div>
     </section>
 
@@ -186,36 +156,71 @@
         </header>
         <div class="specs__grid">
           <div class="specs__row">
-            <div class="specs__label">01. Мотор</div>
-            <div class="specs__value">Бесщёточный 350 Вт с рекуперацией</div>
-            <div class="specs__bar"><span style="--w: 92%"></span></div>
+            <div class="specs__label">01. Колесо</div>
+            <div class="specs__value">12 дюймов, моторизированное</div>
+            <div class="specs__bar"><span style="--w: 90%"></span></div>
           </div>
           <div class="specs__row">
-            <div class="specs__label">02. Аккумулятор</div>
-            <div class="specs__value">Li-ion 360 Вт·ч, съёмный, IP65</div>
+            <div class="specs__label">02. Мотор</div>
+            <div class="specs__value">500 Вт — уверенный подъём и бездорожье</div>
+            <div class="specs__bar"><span style="--w: 95%"></span></div>
+          </div>
+          <div class="specs__row">
+            <div class="specs__label">03. Аккумулятор</div>
+            <div class="specs__value">Li-ion 17 Ah, съёмный (4.5 кг)</div>
             <div class="specs__bar"><span style="--w: 88%"></span></div>
           </div>
           <div class="specs__row">
-            <div class="specs__label">03. Крепление</div>
-            <div class="specs__value">Зажим 25-40 мм, без инструментов</div>
+            <div class="specs__label">04. Запас хода</div>
+            <div class="specs__value">до 65 км на одном заряде</div>
+            <div class="specs__bar"><span style="--w: 92%"></span></div>
+          </div>
+          <div class="specs__row">
+            <div class="specs__label">05. Скорость</div>
+            <div class="specs__value">до 45 км/ч, 3 передачи + задняя</div>
+            <div class="specs__bar"><span style="--w: 80%"></span></div>
+          </div>
+          <div class="specs__row">
+            <div class="specs__label">06. Тормоз</div>
+            <div class="specs__value">Гидравлический V-Brake</div>
             <div class="specs__bar"><span style="--w: 96%"></span></div>
           </div>
           <div class="specs__row">
-            <div class="specs__label">04. Управление</div>
-            <div class="specs__value">Bluetooth-джойстик, отклик 8 мс</div>
+            <div class="specs__label">07. Консоль</div>
+            <div class="specs__value">ЖК-дисплей: скорость, заряд, пробег, настройки</div>
             <div class="specs__bar"><span style="--w: 85%"></span></div>
           </div>
           <div class="specs__row">
-            <div class="specs__label">05. Шум</div>
-            <div class="specs__value">42 дБ — тише электросамоката</div>
+            <div class="specs__label">08. Фара</div>
+            <div class="specs__value">Передняя LED с звуковым сигналом</div>
             <div class="specs__bar"><span style="--w: 78%"></span></div>
           </div>
           <div class="specs__row">
-            <div class="specs__label">06. Гарантия</div>
-            <div class="specs__value">3 года на привод, 2 года на батарею</div>
+            <div class="specs__label">09. Гарантия</div>
+            <div class="specs__value">1 год на электропривод, 3 месяца на аккумулятор</div>
             <div class="specs__bar"><span style="--w: 100%"></span></div>
           </div>
+          <div class="specs__row">
+            <div class="specs__label">10. Сервис</div>
+            <div class="specs__value">Все расходные материалы и запчасти в наличии</div>
+            <div class="specs__bar"><span style="--w: 92%"></span></div>
+          </div>
         </div>
+
+        <div class="specs__safety">
+          <h3 class="specs__safety-title">Меры предосторожности с аккумулятором</h3>
+          <ul>
+            <li>Храните аккумулятор в сухом прохладном месте, вдали от прямых солнечных лучей и источников тепла.</li>
+            <li>Для длительного хранения поддерживайте заряд около 50–60%.</li>
+            <li>Используйте только зарядное устройство, рекомендованное производителем.</li>
+            <li>При зарядке: <b>сначала подключите зарядное устройство к аккумулятору, затем включите его в сеть</b>. При отключении — <b>сначала отключите зарядное устройство от сети, затем отсоедините от аккумулятора</b>.</li>
+            <li>Не оставляйте аккумулятор на зарядке ночью или без наблюдения.</li>
+            <li>При появлении признаков повреждения (вздутие, утечка, необычный нагрев) немедленно прекратите использование.</li>
+            <li>Не пытайтесь самостоятельно ремонтировать или модифицировать аккумулятор.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
       </div>
     </section>
 
@@ -224,25 +229,25 @@
       <div class="container">
         <header class="section__head">
           <span class="eyebrow">№04 / Установка</span>
-          <h2 class="section__title">Зажим — кнопка — поехали.</h2>
+          <h2 class="section__title">Крепление — поехали.</h2>
         </header>
         <ol class="steps">
           <li class="step">
             <div class="step__num">01</div>
-            <h3>Зажмите</h3>
-            <p>Зафиксируйте привод на раме коляски одним движением. Подходит для 95% моделей.</p>
+            <h3>Закрепите</h3>
+            <p>Специальная система крепления к подножкам подходит для большинства инвалидных колясок с ручным управлением.</p>
             <div class="step__time">≈ 3 мин</div>
           </li>
           <li class="step">
             <div class="step__num">02</div>
             <h3>Подключите</h3>
-            <p>Вставьте аккумулятор и синхронизируйте джойстик по Bluetooth одним нажатием.</p>
+            <p>Установите съёмный аккумулятор и включите консоль. Руль раскладывается, приставка готова к работе.</p>
             <div class="step__time">≈ 2 мин</div>
           </li>
           <li class="step">
             <div class="step__num">03</div>
             <h3>Поехали</h3>
-            <p>Плавное ускорение, рекуперация при торможении, 45 км свободы на одном заряде.</p>
+            <p>Выберите одну из 3 передач или задний ход. До 65 км свободы на одном заряде.</p>
             <div class="step__time">≈ 10 мин</div>
           </li>
         </ol>
@@ -258,21 +263,21 @@
         </header>
         <div class="reviews">
           <figure class="review">
-            <blockquote>«Утром встал — за 15 минут пристёгнут привод. За день объехал весь район. Никаких больше такси и просьб подвезти.»</blockquote>
+            <blockquote>«Утром встал — за пару минут пристёгнут привод. За день объехал весь район. Никаких больше такси и просьб подвезти.»</blockquote>
             <figcaption>
-              <b>Алексей К.<span aria-hidden="true">*</span></b><span>Москва · Trail S2</span>
+              <b>Алексей К.<span aria-hidden="true">*</span></b><span>Москва</span>
             </figcaption>
           </figure>
           <figure class="review">
             <blockquote>«Живу в пятиэтажке без лифта. Раньше не выходила без посторонней помощи. Теперь спускаюсь сама — привод как третья рука.»</blockquote>
             <figcaption>
-              <b>Марина Д.<span aria-hidden="true">*</span></b><span>Самара · City S1</span>
+              <b>Марина Д.<span aria-hidden="true">*</span></b><span>Самара</span>
             </figcaption>
           </figure>
           <figure class="review">
-            <blockquote>«Ездил на фестиваль в соседний город. 38 км в одну сторону — приехал с 12% заряда. Никогда так не кайфовал от дороги.»</blockquote>
+            <blockquote>«Ездил на фестиваль в соседний город. 38 км в одну сторону — приехал с запасом заряда. Никогда так не кайфовал от дороги.»</blockquote>
             <figcaption>
-              <b>Денис П.<span aria-hidden="true">*</span></b><span>Казань · Offroad X3</span>
+              <b>Денис П.<span aria-hidden="true">*</span></b><span>Казань</span>
             </figcaption>
           </figure>
         </div>
@@ -290,19 +295,23 @@
         <div class="faq__list">
           <details class="faq__item">
             <summary>Подойдёт ли привод к моей коляске?</summary>
-            <p>Крепление совместимо с рамами диаметром 25–40 мм — это покрывает около 95% активных колясок. Если сомневаетесь, пришлите фото рамы в чат — ответим за час.</p>
+            <p>Специальная система крепления к подножкам подходит для большинства инвалидных колясок с ручным управлением. Если сомневаетесь, пришлите фото коляски — менеджер ответит в течение часа.</p>
           </details>
           <details class="faq__item">
-            <summary>Нужна ли регистрация или права?</summary>
-            <p>Нет. Мотопривод для коляски — это вспомогательное средство передвижения, а не транспортное средство. Никаких прав, регистрации и шлемов не требуется.</p>
+            <summary>Нужны ли права, регистрация или шлем?</summary>
+            <p>Электроприставка мощностью 500 Вт и скоростью до 45 км/ч по характеристикам относится к категории электромобилей (электросамокатов / электровелосипедов). Уточняйте актуальные требования ПДД и Росздравнадзора для вашего региона в момент покупки — законодательство может меняться.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Какой вариант крепления выбрать?</summary>
+            <p>Доступны два варианта крепления — для разных типов колясок. Менеджер подберёт подходящий по фото вашей коляски.</p>
           </details>
           <details class="faq__item">
             <summary>Что входит в комплект?</summary>
-            <p>Привод, съёмный аккумулятор с зарядным устройством, Bluetooth-джойстик с держателем, инструкция и сумка для переноски.</p>
+            <p>Электроприставка, съёмный аккумулятор 17 Ah с зарядным устройством, консоль управления с ЖК-дисплеем, передняя LED-фара с звуковым сигналом, инструкция.</p>
           </details>
           <details class="faq__item">
             <summary>Как обслуживать?</summary>
-            <p>Раз в полгода — замена тормозных колодок (~1500 ₽) и проверка крепления. Мы пришлём напоминание и забронируем мастера.</p>
+            <p>Все расходные материалы и запчасти для привода есть в нашем магазине. По гарантии — 1 год на электропривод и 3 месяца на аккумулятор.</p>
           </details>
           <details class="faq__item">
             <summary>Доставка и оплата?</summary>
@@ -330,12 +339,11 @@
             <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" enterkeyhint="send" required />
           </label>
           <label class="field field--full">
-            <span class="field__label">Модель</span>
-            <select name="model">
-              <option>City S1</option>
-              <option selected>Trail S2 — хит продаж*</option>
-              <option>Offroad X3</option>
-              <option>Помогите выбрать</option>
+            <span class="field__label">Тип крепления</span>
+            <select name="mount">
+              <option value="type-a" selected>Тип крепления А — стандарт</option>
+              <option value="type-b">Тип крепления Б — усиленное</option>
+              <option value="help">Помогите подобрать</option>
             </select>
           </label>
           <label class="field field--full consent">
@@ -365,14 +373,14 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <span class="footer__logo">MotoDrive</span>
-        <p>Мотоприводы для инвалидных колясок<span class="sr-only">.</span><span aria-hidden="true">*</span> <span class="footer__brand-note">Страна производства уточняется.</span></p>
+        <span class="footer__logo">Wheel&nbsp;Pilots</span>
+        <p>Электроприставки к инвалидным коляскам <span class="footer__brand-note">Страна производства: Китай.</span></p>
       </div>
       <div class="footer__col">
         <h4>Контакты</h4>
-        <a href="tel:+78001112233">+7 800 111-22-33</a>
-        <a href="mailto:hi@motodrive.ru">hi@motodrive.ru</a>
-        <p>Москва, ул. Промышленная, 14</p>
+        <a href="tel:+79815070100">+7 (981) 707-01-00</a>
+        <a href="mailto:wheelpilots@yandex.ru">wheelpilots@yandex.ru</a>
+        <p>г. Череповец, Вологодской обл.</p>
       </div>
       <div class="footer__col">
         <h4>Навигация</h4>
@@ -393,21 +401,21 @@
     <div class="footer__legal container">
       <h4 class="footer__legal-title">Реквизиты продавца</h4>
       <dl class="footer__legal-list">
-        <dt>Продавец</dt><dd>ИП Сашка<span aria-hidden="true">*</span></dd>
-        <dt>ИНН</dt><dd><span aria-hidden="true">0000000000</span><span class="sr-only">заполнить перед запуском</span><span aria-hidden="true">*</span></dd>
-        <dt>ОГРНИП</dt><dd><span aria-hidden="true">000000000000000</span><span class="sr-only">заполнить перед запуском</span><span aria-hidden="true">*</span></dd>
-        <dt>Юридический адрес</dt><dd><span aria-hidden="true">г. Москва, ул. Промышленная, 14</span><span class="sr-only">заполнить перед запуском</span><span aria-hidden="true">*</span></dd>
-        <dt>Контактный телефон</dt><dd><a href="tel:+78001112233">+7 800 111-22-33</a><span aria-hidden="true">*</span></dd>
-        <dt>Электронная почта</dt><dd><a href="mailto:hi@motodrive.ru">hi@motodrive.ru</a><span aria-hidden="true">*</span></dd>
+        <dt>Продавец</dt><dd>ИП Половников Александр Владимирович</dd>
+        <dt>ИНН</dt><dd>352304349171</dd>
+        <dt>ОГРНИП</dt><dd>322352500031695</dd>
+        <dt>Юридический адрес</dt><dd>г. Череповец, Вологодской обл.</dd>
+        <dt>Контактный телефон</dt><dd><a href="tel:+79815070100">+7 (981) 707-01-00</a></dd>
+        <dt>Электронная почта</dt><dd><a href="mailto:wheelpilots@yandex.ru">wheelpilots@yandex.ru</a></dd>
       </dl>
     </div>
 
     <div class="footer__bottom container">
-      <span>© 2026 ИП Сашка<span aria-hidden="true">*</span>. Все права защищены.</span>
+      <span>© 2026 ИП Половников А. В. Все права защищены.</span>
       <span class="mono">v 1.0.0 · build 2026.08</span>
     </div>
 
-    <p class="footer__notes container"><span aria-hidden="true">*</span> Данные, отмеченные звёздочкой, являются заполнителями (placeholder) и подлежат замене на актуальные до публичного запуска сайта.</p>
+    <p class="footer__notes container"><span aria-hidden="true">*</span> erid-токен присваивается ОРД после запуска рекламной кампании.</p>
   </footer>
 
   <script src="./app.js"></script>

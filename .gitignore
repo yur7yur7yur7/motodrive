@@ -1,0 +1,10 @@
+# IDE
+.idea/
+
+# Local serve logs (started via npm run dev / python -m http.server)
+serve.log
+serve.err.log
+
+# OS
+.DS_Store
+Thumbs.db

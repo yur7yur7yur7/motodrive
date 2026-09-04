@@ -1,7 +1,7 @@
 {
-  "name": "motodrive-landing",
+  "name": "wheelpilots-landing",
   "version": "1.0.0",
-  "description": "Сайт-визитка: мотоприводы для инвалидных колясок MotoDrive",
+  "description": "Сайт-визитка: электроприставки к инвалидным коляскам Wheel Pilots",
   "main": "index.html",
   "scripts": {
     "start": "npx --yes serve . -p 5173",
