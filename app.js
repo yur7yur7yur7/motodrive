@@ -127,14 +127,19 @@
       const phone = form.querySelector('input[name="phone"]');
       const name = form.querySelector('input[name="name"]');
       const consent = form.querySelector('input[name="consent"]');
-      const consentLabel = form.querySelector('.consent');
+      const offer = form.querySelector('input[name="offer"]');
+      const consentLabels = form.querySelectorAll('.consent');
 
-      // consent must be ticked (152-ФЗ)
-      if (consent && !consent.checked) {
-        if (consentLabel) {
-          consentLabel.classList.add('consent--error');
-          consentLabel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+      // оба согласия обязательны (152-ФЗ: ПДн отдельным согласием; оферта — отдельный акцепт)
+      const allConsents = [consent, offer].filter(Boolean);
+      const missing = allConsents.filter((c) => !c.checked);
+      if (missing.length) {
+        consentLabels.forEach((label) => {
+          const cb = label.querySelector('input[type="checkbox"]');
+          if (cb && !cb.checked) label.classList.add('consent--error');
+        });
+        const firstError = form.querySelector('.consent--error');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
@@ -168,13 +173,15 @@
     });
 
     // clear consent error on toggle
-    const consent = form.querySelector('input[name="consent"]');
-    const consentLabel = form.querySelector('.consent');
-    if (consent && consentLabel) {
-      consent.addEventListener('change', () => {
-        if (consent.checked) consentLabel.classList.remove('consent--error');
+    const consentBoxes = form.querySelectorAll('.consent input[type="checkbox"]');
+    consentBoxes.forEach((cb) => {
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          const label = cb.closest('.consent');
+          if (label) label.classList.remove('consent--error');
+        }
       });
-    }
+    });
   }
 
   /* ---------- FAQ: ensure only one open at a time (optional polish) ---------- */

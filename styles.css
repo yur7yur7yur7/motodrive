@@ -1038,6 +1038,7 @@ em { font-style: italic; font-family: var(--font-d); font-weight: 500; }
   transition: border-color .2s ease, background .2s ease;
 }
 .consent:hover { background: rgba(245,242,235,0.8); }
+.consent + .consent { margin-top: 8px; }
 .consent input[type="checkbox"] {
   width: 20px;
   height: 20px;
