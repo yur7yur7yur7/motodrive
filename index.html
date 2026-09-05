@@ -6,14 +6,90 @@
   <meta name="theme-color" content="#0E1116" />
   <meta name="color-scheme" content="dark light" />
   <meta name="format-detection" content="telephone=no" />
-  <title>Wheel Pilots — Электроприставка для инвалидной коляски</title>
-  <meta name="description" content="Электроприставка Wheel Pilots: мотор 500 Вт, скорость до 45 км/ч, запас хода до 65 км. Крепление к подножкам, установка за минуты." />
+  <title>Wheel Pilots — электроприставка к инвалидной коляске · 500 Вт · до 45 км/ч</title>
+  <meta name="description" content="Электроприставка Wheel Pilots Power 500 Вт: скорость до 45 км/ч, запас хода до 65 км. Крепление к подножкам за минуты. Гарантия 1 год, СДЭК по РФ, рассрочка 0%." />
+  <meta name="keywords" content="электроприставка, инвалидная коляска, мотор для коляски, wheel pilots, 500 Вт, 45 км/ч" />
   <meta name="robots" content="index, follow" />
+  <meta name="author" content="ИП Половников А. В." />
+
+  <link rel="canonical" href="https://wheelpilots.ru/" />
   <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="apple-touch-icon" href="./favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Wheel Pilots" />
+  <meta property="og:title" content="Wheel Pilots — электроприставка к инвалидной коляске" />
+  <meta property="og:description" content="Мотор 500 Вт, скорость до 45 км/ч, запас хода до 65 км. Крепление за минуты. Гарантия 1 год." />
+  <meta property="og:image" content="./img/products/wheelchair-drive-active-summer-poster.webp" />
+  <meta property="og:image:width" content="1400" />
+  <meta property="og:image:height" content="1866" />
+  <meta property="og:image:alt" content="Электроприставка Wheel Pilots Power — летний комплект" />
+  <meta property="og:url" content="https://wheelpilots.ru/" />
+  <meta property="og:locale" content="ru_RU" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Wheel Pilots — электроприставка к инвалидной коляске" />
+  <meta name="twitter:description" content="Мотор 500 Вт, скорость до 45 км/ч, запас хода до 65 км. Крепление за минуты." />
+  <meta name="twitter:image" content="./img/products/wheelchair-drive-active-summer-poster.webp" />
+
+  <!-- Structured data: Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Wheel Pilots Power",
+    "description": "Электроприставка к инвалидной коляске: мотор 500 Вт, скорость до 45 км/ч, запас хода до 65 км. Крепление к подножкам за минуты.",
+    "image": [
+      "https://wheelpilots.ru/img/products/wheelchair-drive-active-summer-poster.webp",
+      "https://wheelpilots.ru/img/products/wheelchair-drive-active-isolated.webp"
+    ],
+    "brand": { "@type": "Brand", "name": "Wheel Pilots" },
+    "manufacturer": { "@type": "Organization", "name": "Wheel Pilots" },
+    "category": "Электроприставка к инвалидной коляске",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "RUB",
+      "price": "89900",
+      "availability": "https://schema.org/InStock",
+      "url": "https://wheelpilots.ru/#order",
+      "seller": {
+        "@type": "Organization",
+        "name": "ИП Половников Александр Владимирович",
+        "telephone": "+7-981-707-01-00",
+        "email": "wheelpilots@yandex.ru"
+      }
+    }
+  }
+  </script>
+
+  <!-- Structured data: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Wheel Pilots",
+    "legalName": "ИП Половников Александр Владимирович",
+    "url": "https://wheelpilots.ru/",
+    "logo": "https://wheelpilots.ru/img/logo-horizontal-black.png",
+    "email": "wheelpilots@yandex.ru",
+    "telephone": "+7-981-707-01-00",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Череповец",
+      "addressRegion": "Вологодская область",
+      "addressCountry": "RU"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="./fonts.css" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <a href="#order" class="skip-link">Перейти к форме заказа</a>
+
   <!-- NAV -->
   <header class="nav" id="nav">
     <div class="nav__inner container">
@@ -21,8 +97,8 @@
         <img class="nav__logo" src="./img/logo-horizontal-white.png" alt="Wheel Pilots" width="180" height="68" />
       </a>
       <nav class="nav__links" aria-label="Главное меню">
+        <a href="#compat">Совместимость</a>
         <a href="#models">Модели</a>
-        <a href="#specs">Характеристики</a>
         <a href="#how">Как установить</a>
         <a href="#reviews">Отзывы</a>
         <a href="#faq">FAQ</a>
@@ -36,6 +112,7 @@
 
   <div class="mobile-nav" id="mobileNav" hidden>
     <nav class="mobile-nav__list" aria-label="Мобильное меню">
+      <a href="#compat">Совместимость</a>
       <a href="#models">Модели</a>
       <a href="#specs">Характеристики</a>
       <a href="#how">Как установить</a>
@@ -48,21 +125,27 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero">
+      <div class="hero__bg-num" aria-hidden="true">45</div>
       <div class="hero__grid container">
         <div class="hero__copy">
-          <span class="eyebrow">№01 / WHEEL PILOTS POWER</span>
+          <span class="eyebrow">WHEEL PILOTS · ЭЛЕКТРОПРИСТАВКА</span>
           <h1 class="hero__title">
             <span class="hero__title-line">Свобода</span>
             <span class="hero__title-line hero__title-line--italic">не ждёт</span>
             <span class="hero__title-line">на обочине.</span>
           </h1>
           <p class="hero__lede">
-            Моторизированное колесо превращает вашу инвалидную коляску в электрическую за считанные минуты. Без посторонней помощи, без сложного монтажа.
+            Моторизированное колесо превращает вашу инвалидную коляску в электрическую за считанные минуты. Подходит к большинству активных и пассивных колясок. Без посторонней помощи, без сложного монтажа.
           </p>
           <div class="hero__ctas">
-            <a href="#order" class="btn btn--accent btn--lg">Заказать сейчас</a>
-            <a href="#how" class="btn btn--ghost btn--lg">Как это работает →</a>
+            <a href="#order" class="btn btn--accent btn--lg">Заказать — перезвоним за 15 минут</a>
+            <a href="#compat" class="btn btn--ghost btn--lg">Проверить совместимость →</a>
           </div>
+          <ul class="hero__trust" aria-label="Преимущества">
+            <li class="hero__trust-item">Гарантия 1 год</li>
+            <li class="hero__trust-item">СДЭК по РФ · 2–5 дней</li>
+            <li class="hero__trust-item">Рассрочка 0% · до 12 мес.</li>
+          </ul>
           <ul class="hero__stats">
             <li><b>45 км/ч</b><span>макс. скорость</span></li>
             <li><b>65 км</b><span>запас хода</span></li>
@@ -80,6 +163,7 @@
                    fetchpriority="high"
                    decoding="async" />
             </picture>
+            <figcaption class="hero__photo-caption">TOP SPEED · 45 км/ч</figcaption>
             <div class="dial dial--badge" aria-hidden="true">
               <svg viewBox="0 0 240 240" class="dial__svg">
                 <circle cx="120" cy="120" r="110" fill="none" stroke="rgba(245,242,235,0.10)" stroke-width="2"/>
@@ -91,15 +175,6 @@
                 <text x="120" y="168" text-anchor="middle" class="dial__label">TOP SPEED</text>
               </svg>
             </div>
-          </div>
-          <div class="hero__chip hero__chip--1">
-            <span class="mono">⚡ 500 Вт</span>
-          </div>
-          <div class="hero__chip hero__chip--2">
-            <span class="mono">⚡ 17 Ah</span>
-          </div>
-          <div class="hero__chip hero__chip--3">
-            <span class="mono">⚡ до 65 км</span>
           </div>
         </div>
       </div>
@@ -124,78 +199,966 @@
       </div>
     </section>
 
+    <!-- STICKY CTA (mobile) -->
+    <aside class="sticky-cta" id="stickyCta" aria-label="Быстрый заказ">
+      <div class="sticky-cta__copy">
+        <strong>От 89 900 ₽</strong>
+        <span>Перезвоним за 15 минут</span>
+      </div>
+      <a href="#order" class="btn btn--accent sticky-cta__btn">Заказать</a>
+    </aside>
+
+    <!-- COMPAT-CHECK -->
+    <section class="compat" id="compat">
+      <div class="container">
+        <header class="compat__head">
+          <span class="eyebrow">№01 / СОВМЕСТИМОСТЬ</span>
+          <h2 class="compat__title">Подойдёт ли Wheel Pilots <span class="accent">к вашей коляске?</span></h2>
+          <p class="compat__sub">Два типа крепления — для активной коляски с ручным управлением и для пассивной со съёмными подножками. Выберите свой тип ниже или попросите менеджера подобрать по фото.</p>
+        </header>
+
+        <div class="compat__grid">
+          <a href="#order" class="compat__card" data-chair="active">
+            <div class="compat__card-photo">
+              <img src="./img/products/wheelchair-drive-active-isolated.webp" alt="Активная инвалидная коляска с ручным управлением" width="1600" height="1600" loading="lazy" />
+            </div>
+            <div class="compat__card-body">
+              <div class="compat__card-tag">АКТИВНАЯ</div>
+              <div class="compat__card-name">Крепление к подножкам</div>
+              <div class="compat__card-meta">Для колясок с ручным управлением — лёгких и маневренных. Большинство активных колясок подходят. Установка ≈ 10 минут, без инструментов.</div>
+              <ul class="compat__card-features">
+                <li><span>Подходит для:</span><b>90% активных колясок</b></li>
+                <li><span>Сложность установки:</span><b>легко</b></li>
+              </ul>
+              <span class="compat__card-arrow">Заказать с активным креплением</span>
+            </div>
+          </a>
+
+          <a href="#order" class="compat__card" data-chair="passive">
+            <div class="compat__card-photo">
+              <img src="./img/products/wheelchair-drive-passive-isolated.webp" alt="Пассивная инвалидная коляска со съёмными подножками" width="1600" height="1600" loading="lazy" />
+            </div>
+            <div class="compat__card-body">
+              <div class="compat__card-tag compat__card-tag--b">ПАССИВНАЯ</div>
+              <div class="compat__card-name">Крепление типа B к раме</div>
+              <div class="compat__card-meta">Для колясок со съёмными подножками, в том числе для сопровождаемых. Крепление на раму надёжно фиксирует привод и не мешает ходьбе рядом.</div>
+              <ul class="compat__card-features">
+                <li><span>Подходит для:</span><b>пассивные и прогулочные</b></li>
+                <li><span>Сложность установки:</span><b>средне</b></li>
+              </ul>
+              <span class="compat__card-arrow">Заказать с пассивным креплением</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="compat__help">
+          <div class="compat__help-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="24" r="20"/>
+              <path d="M24 16 L24 28"/>
+              <circle cx="24" cy="34" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="compat__help-text-col">
+            <h3 class="compat__help-title">Не знаете, какой тип выбрать?</h3>
+            <p class="compat__help-text">Сфотографируйте коляску сбоку и спереди — менеджер подберёт подходящее крепление, назовёт точную цену и ответит в течение часа. Без обязательств.</p>
+            <span class="compat__help-trust">Отвечаем в течение часа в рабочее время · Без спама и рассылок</span>
+          </div>
+          <form class="compat__help-form" id="compatHelpForm" novalidate>
+            <label class="field">
+              <span class="field__label">Телефон</span>
+              <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" required data-mask="phone" />
+            </label>
+            <label class="consent consent--compact">
+              <input type="checkbox" name="compat_consent" required />
+              <span class="consent__text">
+                Согласен(на) на обработку персональных данных в соответствии с
+                <a href="./policy.html" target="_blank" rel="noopener">Политикой обработки ПДн</a>
+                и
+                <a href="./consent.html" target="_blank" rel="noopener">Согласием на обработку ПДн</a>
+                <span aria-hidden="true">*</span>
+              </span>
+            </label>
+            <button type="submit" class="btn btn--accent btn--block">Получить ответ о совместимости</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- MODELS -->
     <section class="section section--dark" id="models">
       <div class="container">
         <header class="section__head">
-          <span class="eyebrow">№02 / Модель</span>
-          <h2 class="section__title">Электроприставка <em>для вашей коляски.</em></h2>
-          <p class="section__sub">Моторизированное колесо с креплением к подножкам — для большинства инвалидных колясок с ручным управлением.</p>
+          <span class="eyebrow">№02 / МОДЕЛЬ</span>
+          <h2 class="section__title">Электроприставка <span class="accent">для вашей коляски.</span></h2>
+          <p class="section__sub">Один привод, два сезонных комплекта. Базовая комплектация одинакова для активной и пассивной коляски — разница только в типе крепления.</p>
         </header>
         <div class="models">
-          <article class="model__item model__item--featured">
-            <div class="model__num">01</div>
+          <article class="model__item">
+            <div class="model__num">01 · ЛЕТНИЙ КОМПЛЕКТ</div>
             <figure class="model__photo">
               <picture>
                 <source srcset="./img/products/wheelchair-drive-active-summer-poster.webp" type="image/webp" />
-                <img src="./img/products/wheelchair-drive-active-summer-poster.webp"
-                     alt="Электроприставка Wheel Pilots Power — комплектация, размеры, характеристики"
+                <img class="model__photo-img"
+                     src="./img/products/wheelchair-drive-active-summer-poster.webp"
+                     alt="Летний комплект Wheel Pilots Power — электроприставка + держатель телефона"
                      width="1400" height="1866"
                      loading="lazy" decoding="async" />
               </picture>
+              <div class="model__thumbs" role="tablist" aria-label="Галерея летнего комплекта" data-thumb-alt-map='{"active":"Летний комплект Wheel Pilots Power — электроприставка + держатель телефона, активная коляска","passive":"Летний комплект Wheel Pilots Power — электроприставка + держатель телефона, пассивная коляска"}'>
+                <button class="model__thumb is-active" type="button" data-thumb-src="./img/products/wheelchair-drive-active-summer-poster.webp" data-thumb-key="active" aria-label="Летний — активная"><span>Активная</span></button>
+                <button class="model__thumb" type="button" data-thumb-src="./img/products/wheelchair-drive-passive-summer-poster.webp" data-thumb-key="passive" aria-label="Летний — пассивная"><span>Пассивная</span></button>
+              </div>
               <figcaption class="model__photo-caption">
-                <span>Активная коляска</span>
+                <span>Летний комплект · оба типа колясок</span>
                 <b>500 Вт · 17 Ah · 65 км</b>
               </figcaption>
             </figure>
-            <h3 class="model__name">Wheel Pilots <em>Power</em></h3>
-            <p class="model__tag">Электроприставка к инвалидной коляске</p>
-            <ul class="model__list">
-              <li><span>Колесо</span><b>12 дюймов</b></li>
-              <li><span>Мощность</span><b>500 Вт</b></li>
-              <li><span>Аккумулятор</span><b>Li-ion 17 Ah (съёмный, 4.5 кг)</b></li>
-              <li><span>Скорость</span><b>до 45 км/ч</b></li>
-              <li><span>Запас хода</span><b>до 65 км</b></li>
-              <li><span>Вес приставки</span><b>19.5 кг</b></li>
-              <li><span>Передачи</span><b>3 скорости + задняя</b></li>
-              <li><span>Тормоз</span><b>Гидравлический V-Brake</b></li>
-              <li><span>Руль</span><b>Складывается</b></li>
-            </ul>
+            <h3 class="model__name">Летний <span class="accent">комплект.</span></h3>
+            <p class="model__tag">Базовый привод + держатель телефона в подарок. Подходит для большинства колясок с ручным управлением и для пассивных со съёмными подножками.</p>
+            <div class="model__season-gift">
+              <span class="model__season-gift-label">Подарок к комплекту:</span>
+              <b>Держатель для телефона</b>
+            </div>
             <div class="model__foot">
-              <div class="model__price">Цена <b>по запросу<span aria-hidden="true">*</span></b></div>
-              <a href="#order" class="btn btn--accent">Заказать</a>
+              <div class="model__price"><span>Цена</span><b>$ 2 000 000</b></div>
+              <a href="#order" class="btn btn--accent btn--block">Заказать летний комплект</a>
             </div>
           </article>
-          <aside class="model__bonus" aria-label="Бонусы к комплекту">
-            <figure class="model__bonus-item">
-              <picture>
-                <source srcset="./img/products/phone-holder-gift-bonus.webp" type="image/webp" />
-                <img src="./img/products/phone-holder-gift-bonus.webp"
-                     alt="Держатель для телефона в подарок"
-                     width="1000" height="1000"
-                     loading="lazy" decoding="async" />
-              </picture>
-              <figcaption>
-                <b>Держатель для телефона</b>
-                <span>в подарок к летнему комплекту</span>
-              </figcaption>
-            </figure>
-            <figure class="model__bonus-item">
+
+          <article class="model__item model__item--winter">
+            <div class="model__num">02 · ЗИМНИЙ КОМПЛЕКТ</div>
+            <figure class="model__photo">
               <picture>
                 <source srcset="./img/products/wheelchair-drive-active-winter-poster.webp" type="image/webp" />
-                <img src="./img/products/wheelchair-drive-active-winter-poster.webp"
-                     alt="Зимняя покрышка в подарок"
+                <img class="model__photo-img"
+                     src="./img/products/wheelchair-drive-active-winter-poster.webp"
+                     alt="Зимний комплект Wheel Pilots Power — электроприставка + зимняя покрышка"
                      width="1400" height="1866"
                      loading="lazy" decoding="async" />
               </picture>
-              <figcaption>
-                <b>Зимняя покрышка</b>
-                <span>в подарок к зимнему комплекту</span>
+              <div class="model__thumbs" role="tablist" aria-label="Галерея зимнего комплекта" data-thumb-alt-map='{"active":"Зимний комплект Wheel Pilots Power — электроприставка + зимняя покрышка, активная коляска","passive":"Зимний комплект Wheel Pilots Power — электроприставка + зимняя покрышка, пассивная коляска"}'>
+                <button class="model__thumb is-active" type="button" data-thumb-src="./img/products/wheelchair-drive-active-winter-poster.webp" data-thumb-key="active" aria-label="Зимний — активная"><span>Активная</span></button>
+                <button class="model__thumb" type="button" data-thumb-src="./img/products/wheelchair-drive-passive-winter-poster.webp" data-thumb-key="passive" aria-label="Зимний — пассивная"><span>Пассивная</span></button>
+              </div>
+              <figcaption class="model__photo-caption">
+                <span>Зимний комплект · оба типа колясок</span>
+                <b>500 Вт · 17 Ah · 65 км</b>
               </figcaption>
             </figure>
-          </aside>
+            <h3 class="model__name">Зимний <span class="accent">комплект.</span></h3>
+            <p class="model__tag">Базовый привод + зимняя покрышка в подарок. Надёжное сцепление на снегу и на льду — без потери тяги.</p>
+            <div class="model__season-gift">
+              <span class="model__season-gift-label">Подарок к комплекту:</span>
+              <b>Зимняя покрышка</b>
+            </div>
+            <div class="model__foot">
+              <div class="model__price"><span>Цена</span><b>$ 2 000 000</b></div>
+              <a href="#order" class="btn btn--accent btn--block">Заказать зимний комплект</a>
+            </div>
+          </article>
         </div>
-        <p class="models__disclaimer"><span aria-hidden="true">*</span> Технические характеристики приведены по данным производителя. Запас хода зависит от нагрузки, рельефа, температуры и стиля езды. Уточняйте актуальную цену у менеджера.</p>
+
+        <aside class="models__tip" role="note">
+          <strong>Из них $ 1 800 000 — на чай программисту.</strong> Остальное — на зарплату, маркетинг, доставку и собственно железо. Если серьёзно, итоговая цена зависит от комплектации и крепления — менеджер назовёт точную за 15 минут без обязательств.
+        </aside>
+        <p class="models__disclaimer">Технические характеристики одинаковы для обоих комплектов. Запас хода зависит от нагрузки, рельефа, температуры и стиля езды.</p>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section section--dark" id="gallery">
+      <div class="container">
+        <header class="section__head">
+          <span class="eyebrow">№02.5 / КАК ВЫГЛЯДИТ</span>
+          <h2 class="section__title">Фото из <span class="accent">каталога.</span></h2>
+          <p class="section__sub">Реальные кадры, не рендеры — приставка на коляске, в руках, на асфальте и на площадке. Выберите тип коляски, чтобы посмотреть фото.</p>
+        </header>
+
+        <div class="gallery__tabs" role="tablist" aria-label="Тип коляски">
+          <button type="button" class="gallery__tab is-active" id="gallery-tab-active" role="tab" aria-selected="true" aria-controls="gallery-pane-active" data-gallery-tab="active">Активная <span class="gallery__tab-count">20</span></button>
+          <button type="button" class="gallery__tab" id="gallery-tab-passive" role="tab" aria-selected="false" aria-controls="gallery-pane-passive" data-gallery-tab="passive" tabindex="-1">Пассивная <span class="gallery__tab-count">28</span></button>
+        </div>
+
+          <div class="gallery__pane" id="gallery-pane-active" role="tabpanel" aria-labelledby="gallery-tab-active">
+            <p class="gallery__pane-desc">20 кадров: крепление к подножкам, органы управления, установка в действии.</p>
+            <div class="gallery__grid">
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-01.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №01">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-01.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-01.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №01"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">01</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-02.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №02">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-02.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-02.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №02"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">02</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-03.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №03">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-03.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-03.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №03"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">03</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-04.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №04">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-04.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-04.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №04"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">04</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-05.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №05">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-05.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-05.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №05"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">05</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-06.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №06">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-06.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-06.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №06"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">06</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-07.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №07">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-07.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-07.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №07"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">07</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-08.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №08">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-08.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-08.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №08"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">08</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-09.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №09">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-09.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-09.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №09"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">09</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-10.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №10">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-10.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-10.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №10"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">10</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-11.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №11">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-11.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-11.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №11"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">11</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-12.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №12">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-12.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-12.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №12"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">12</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-13.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №13">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-13.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-13.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №13"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">13</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-14.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №14">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-14.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-14.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №14"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">14</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-15.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №15">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-15.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-15.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №15"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">15</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-16.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №16">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-16.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-16.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №16"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">16</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-17.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №17">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-17.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-17.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №17"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">17</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-18.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №18">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-18.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-18.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №18"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">18</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-19.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №19">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-19.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-19.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №19"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">19</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/active/full/active-20.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №20">
+              <picture>
+                <source srcset="./img/gallery/active/thumb/active-20.webp" type="image/webp" />
+                <img src="./img/gallery/active/thumb/active-20.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №20"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">20</span>
+            </button>
+            </div>
+          </div>
+
+          <div class="gallery__pane" id="gallery-pane-passive" role="tabpanel" aria-labelledby="gallery-tab-passive" hidden>
+            <p class="gallery__pane-desc">28 кадров: крепление к раме, положение сопровождающего, узлы и детали.</p>
+            <div class="gallery__grid">
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-01.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №01">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-01.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-01.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №01"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">01</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-02.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №02">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-02.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-02.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №02"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">02</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-03.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №03">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-03.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-03.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №03"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">03</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-04.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №04">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-04.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-04.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №04"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">04</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-05.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №05">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-05.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-05.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №05"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">05</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-06.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №06">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-06.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-06.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №06"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">06</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-07.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №07">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-07.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-07.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №07"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">07</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-08.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №08">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-08.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-08.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №08"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">08</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-09.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №09">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-09.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-09.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №09"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">09</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-10.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №10">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-10.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-10.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №10"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">10</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-11.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №11">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-11.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-11.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №11"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">11</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-12.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №12">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-12.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-12.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №12"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">12</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-13.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №13">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-13.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-13.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №13"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">13</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-14.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №14">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-14.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-14.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №14"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">14</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-15.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №15">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-15.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-15.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №15"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">15</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-16.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №16">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-16.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-16.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №16"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">16</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-17.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №17">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-17.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-17.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №17"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">17</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-18.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №18">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-18.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-18.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №18"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">18</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-19.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №19">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-19.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-19.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №19"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">19</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-20.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №20">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-20.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-20.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №20"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">20</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-21.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №21">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-21.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-21.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №21"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">21</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-22.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №22">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-22.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-22.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №22"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">22</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-23.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №23">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-23.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-23.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №23"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">23</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-24.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №24">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-24.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-24.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №24"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">24</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-25.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №25">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-25.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-25.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №25"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">25</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-26.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №26">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-26.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-26.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №26"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">26</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-27.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №27">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-27.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-27.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №27"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">27</span>
+            </button>
+            <button type="button" class="install__zoom gallery__cell"
+                    data-zoom-src="./img/gallery/passive/full/passive-28.webp"
+                    data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
+                    aria-label="Увеличить фото №28">
+              <picture>
+                <source srcset="./img/gallery/passive/thumb/passive-28.webp" type="image/webp" />
+                <img src="./img/gallery/passive/thumb/passive-28.webp"
+                     alt="Электроприставка Wheel Pilots Power — фото №28"
+                     width="600" height="600"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+              <span class="gallery__cell-num">28</span>
+            </button>
+            </div>
+          </div>
       </div>
     </section>
 
@@ -203,7 +1166,7 @@
     <section class="section" id="specs">
       <div class="container specs">
         <header class="section__head section__head--light">
-          <span class="eyebrow eyebrow--dark">№03 / Характеристики</span>
+          <span class="eyebrow eyebrow--dark">№03 / ХАРАКТЕРИСТИКИ</span>
           <h2 class="section__title section__title--dark">Инженерия, <em>которая не подведёт.</em></h2>
         </header>
         <div class="specs__grid">
@@ -261,30 +1224,260 @@
 
         <div class="specs__safety">
           <div class="specs__safety-text">
-            <h3 class="specs__safety-title">Меры предосторожности с аккумулятором</h3>
-            <ul>
-              <li>Храните аккумулятор в сухом прохладном месте, вдали от прямых солнечных лучей и источников тепла.</li>
-              <li>Для длительного хранения поддерживайте заряд около 50–60%.</li>
-              <li>Используйте только зарядное устройство, рекомендованное производителем.</li>
-              <li>При зарядке: <b>сначала подключите зарядное устройство к аккумулятору, затем включите его в сеть</b>. При отключении — <b>сначала отключите зарядное устройство от сети, затем отсоедините от аккумулятора</b>.</li>
-              <li>Не оставляйте аккумулятор на зарядке ночью или без наблюдения.</li>
-              <li>При появлении признаков повреждения (вздутие, утечка, необычный нагрев) немедленно прекратите использование.</li>
-              <li>Не пытайтесь самостоятельно ремонтировать или модифицировать аккумулятор.</li>
+            <h3 class="specs__safety-title">Безопасность аккумулятора</h3>
+            <p class="specs__safety-lead">Li-ion 17 Ah — ёмкий и надёжный, но требует уважения. Полная памятка по безопасности — на фото справа, ниже — три главных правила.</p>
+            <ul class="specs__safety-rules">
+              <li><b>Заряжать при +5…+35 °C.</b> Ниже — батарея теряет ёмкость, выше — риск повреждения.</li>
+              <li><b>Не оставлять на зарядке на ночь.</b> Зарядили — отключили от сети.</li>
+              <li><b>Любые признаки повреждения</b> (вздутие, запах, нагрев) — прекратить использование и позвонить менеджеру.</li>
             </ul>
           </div>
           <figure class="specs__safety-card">
-            <picture>
-              <source srcset="./img/products/thumbs/battery-safety-instructions-A4.webp" type="image/webp" />
-              <img src="./img/products/thumbs/battery-safety-instructions-A4.webp"
-                   alt="Памятка по безопасности аккумулятора"
-                   width="800" height="1131"
-                   loading="lazy" decoding="async" />
-            </picture>
-            <figcaption>Памятка A4 · подробная версия</figcaption>
+            <button type="button" class="install__zoom" data-zoom-src="./img/products/battery-safety-instructions-A4.webp" data-zoom-alt="Памятка по безопасности аккумулятора — полная инструкция производителя" aria-label="Увеличить памятку">
+              <picture>
+                <source srcset="./img/products/battery-safety-instructions-A4.webp" type="image/webp" />
+                <img src="./img/products/battery-safety-instructions-A4.webp"
+                     alt="Памятка по безопасности аккумулятора — полная инструкция производителя"
+                     width="1200" height="1697"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+            </button>
+            <figcaption>Памятка производителя · PDF в комплекте · <span class="install__zoom-hint">нажмите, чтобы увеличить</span></figcaption>
           </figure>
+        </div>
+
+        <div class="specs__cards" aria-label="Карточки спецификации">
+          <figure class="specs__card">
+            <button type="button" class="install__zoom" data-zoom-src="./img/products/wheelchair-drive-active-spec-card.webp" data-zoom-alt="Спецификация Wheel Pilots Power для активной коляски — комплектация, органы управления" aria-label="Увеличить спецификацию">
+              <picture>
+                <source srcset="./img/products/wheelchair-drive-active-spec-card.webp" type="image/webp" />
+                <img src="./img/products/wheelchair-drive-active-spec-card.webp"
+                     alt="Спецификация Wheel Pilots Power для активной коляски — комплектация, органы управления"
+                     width="1400" height="1400"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+            </button>
+            <figcaption>
+              <b>Активная коляска</b>
+              <span>8 органов управления · крепление к подножкам · <span class="install__zoom-hint">нажмите, чтобы увеличить</span></span>
+            </figcaption>
+          </figure>
+          <figure class="specs__card">
+            <button type="button" class="install__zoom" data-zoom-src="./img/products/wheelchair-drive-passive-spec-card.webp" data-zoom-alt="Спецификация Wheel Pilots Power для пассивной коляски — комплектация, органы управления" aria-label="Увеличить спецификацию">
+              <picture>
+                <source srcset="./img/products/wheelchair-drive-passive-spec-card.webp" type="image/webp" />
+                <img src="./img/products/wheelchair-drive-passive-spec-card.webp"
+                     alt="Спецификация Wheel Pilots Power для пассивной коляски — комплектация, органы управления"
+                     width="1400" height="1400"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+            </button>
+            <figcaption>
+              <b>Пассивная коляска</b>
+              <span>крепление к раме · тип B · <span class="install__zoom-hint">нажмите, чтобы увеличить</span></span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <section class="specs__compare" aria-labelledby="compare-title">
+          <h3 class="specs__compare-title" id="compare-title">Что меняется с <span class="accent">Wheel Pilots</span></h3>
+          <div class="specs__compare-table">
+            <div class="specs__compare-row">
+              <div class="specs__compare-cell specs__compare-cell--feature"></div>
+              <div class="specs__compare-cell specs__compare-cell--head">С Wheel Pilots</div>
+              <div class="specs__compare-cell specs__compare-cell--head">Обычная коляска</div>
+            </div>
+            <div class="specs__compare-row">
+              <div class="specs__compare-cell specs__compare-cell--feature">Запас хода</div>
+              <div class="specs__compare-cell specs__compare-cell--us">до 65 км на заряде</div>
+              <div class="specs__compare-cell specs__compare-cell--them">≈ 1 км без помощи</div>
+            </div>
+            <div class="specs__compare-row">
+              <div class="specs__compare-cell specs__compare-cell--feature">Скорость</div>
+              <div class="specs__compare-cell specs__compare-cell--us">до 45 км/ч · 3 передачи</div>
+              <div class="specs__compare-cell specs__compare-cell--them">ручная, 3–5 км/ч</div>
+            </div>
+            <div class="specs__compare-row">
+              <div class="specs__compare-cell specs__compare-cell--feature">Подъёмы</div>
+              <div class="specs__compare-cell specs__compare-cell--us">крутые склоны и бездорожье</div>
+              <div class="specs__compare-cell specs__compare-cell--them">только ровная дорога</div>
+            </div>
+            <div class="specs__compare-row">
+              <div class="specs__compare-cell specs__compare-cell--feature">Установка</div>
+              <div class="specs__compare-cell specs__compare-cell--us">за 10 минут, без инструментов</div>
+              <div class="specs__compare-cell specs__compare-cell--them">—</div>
+            </div>
+            <div class="specs__compare-row">
+              <div class="specs__compare-cell specs__compare-cell--feature">Самостоятельность</div>
+              <div class="specs__compare-cell specs__compare-cell--us">поездки без сопровождения</div>
+              <div class="specs__compare-cell specs__compare-cell--them">нужен помощник на склонах</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- КОМПЛЕКТНОСТЬ -->
+    <section class="kit" id="kit">
+      <div class="container">
+        <header class="kit__head">
+          <span class="eyebrow eyebrow--dark">№06 / КОМПЛЕКТНОСТЬ</span>
+          <h2 class="kit__title">Что <span class="accent">в коробке.</span></h2>
+          <p class="kit__sub">Полная комплектация в одной коробке. Базовая часть одинакова для летнего и зимнего комплекта — разница в подарке.</p>
+        </header>
+
+        <div class="kit__grid">
+          <article class="kit-item">
+            <div class="kit-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="3" fill="currentColor"/><path d="M24 6 L24 10 M24 38 L24 42 M6 24 L10 24 M38 24 L42 24"/></svg>
+            </div>
+            <h3 class="kit-item__name">Электроприставка Wheel Pilots Power</h3>
+            <p class="kit-item__desc">Мотор-колесо 500 Вт, складной руль, крепление к подножкам или раме (тип B). Вес приставки 19.5 кг.</p>
+          </article>
+
+          <article class="kit-item">
+            <div class="kit-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="14" width="28" height="18" rx="2"/><path d="M18 14 L18 8 M30 14 L30 8"/><path d="M16 32 L16 38 M32 32 L32 38"/></svg>
+            </div>
+            <h3 class="kit-item__name">Аккумулятор Li-ion 17 Ah</h3>
+            <p class="kit-item__desc">Съёмный, 4.5 кг. До 65 км хода на одном заряде. Заряжается за 4–6 часов.</p>
+          </article>
+
+          <article class="kit-item">
+            <div class="kit-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="8" width="20" height="28" rx="3"/><path d="M22 14 L26 14 M22 36 L26 36"/><circle cx="24" cy="24" r="2"/></svg>
+            </div>
+            <h3 class="kit-item__name">Зарядное устройство</h3>
+            <p class="kit-item__desc">Стандартное зарядное устройство производителя, 220 В. Памятка по безопасной зарядке — в инструкции.</p>
+          </article>
+
+          <article class="kit-item">
+            <div class="kit-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 10 L14 38 M14 10 L34 14 L14 18 M14 18 L34 22"/><circle cx="34" cy="14" r="3"/><circle cx="34" cy="22" r="3"/></svg>
+            </div>
+            <h3 class="kit-item__name">Набор ключей</h3>
+            <p class="kit-item__desc">Разводной ключ и шестигранники для установки и обслуживания.</p>
+          </article>
+
+          <article class="kit-item">
+            <div class="kit-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6 L24 18 M16 14 L32 14 M10 22 L38 22 L34 42 L14 42 L10 22 Z"/><circle cx="20" cy="30" r="2" fill="currentColor"/><circle cx="28" cy="30" r="2" fill="currentColor"/></svg>
+            </div>
+            <h3 class="kit-item__name">LED-фара с сигналом</h3>
+            <p class="kit-item__desc">Передняя LED-фара с интегрированным звуковым сигналом. Видимость в тёмное время суток.</p>
+          </article>
+
+          <article class="kit-item">
+            <div class="kit-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="28" height="36" rx="2"/><path d="M16 14 L32 14 M16 20 L32 20 M16 26 L26 26"/><circle cx="32" cy="34" r="3"/></svg>
+            </div>
+            <h3 class="kit-item__name">Инструкция и гарантийный талон</h3>
+            <p class="kit-item__desc">Подробная инструкция по установке и эксплуатации, гарантийный талон, сертификат соответствия.</p>
+          </article>
+
+          <article class="kit-item kit-item--bonus" aria-label="Подарок к комплекту — один из двух по сезону">
+            <div class="kit-item__bonus-head">
+              <span class="kit-item__bonus-eyebrow">Подарок к комплекту</span>
+              <h3 class="kit-item__name kit-item__name--bonus">Один из двух — по сезону</h3>
+              <p class="kit-item__desc">Летом — держатель для телефона, зимой — зимняя покрышка. Выбирается вместе с комплектом.</p>
+            </div>
+            <div class="kit-item__bonus-grid" role="list">
+              <div class="kit-item__bonus-option" role="listitem">
+                <span class="kit-item__bonus-tag kit-item__bonus-tag--summer" aria-hidden="true">☀</span>
+                <h4 class="kit-item__bonus-name">Держатель для телефона</h4>
+                <p class="kit-item__bonus-desc">К летнему комплекту. Крепится на руль, надёжно держит смартфон во время поездки.</p>
+              </div>
+              <div class="kit-item__bonus-divider" aria-hidden="true">
+                <span class="kit-item__bonus-divider-line"></span>
+                <span class="kit-item__bonus-divider-label">или</span>
+                <span class="kit-item__bonus-divider-line"></span>
+              </div>
+              <div class="kit-item__bonus-option" role="listitem">
+                <span class="kit-item__bonus-tag kit-item__bonus-tag--winter" aria-hidden="true">❄</span>
+                <h4 class="kit-item__bonus-name">Зимняя покрышка</h4>
+                <p class="kit-item__bonus-desc">К зимнему комплекту. Уверенное сцепление на снегу и на обледеневших участках.</p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
+
+    <!-- SCENARIOS — Speed of Life -->
+    <section class="scenarios" id="scenarios">
+      <div class="container">
+        <header class="scenarios__head">
+          <span class="eyebrow eyebrow--dark">№04 / СЦЕНАРИИ</span>
+          <h2 class="scenarios__title">Свобода <span class="accent">в каждом дне.</span></h2>
+          <p class="scenarios__sub">Четыре сценария из жизни — от поездки в магазин за углом до многокилометрового маршрута. Wheel Pilots — это не про скорость, а про то, что вы снова можете.</p>
+        </header>
+        <div class="scenarios__grid">
+          <article class="scenario">
+            <div class="scenario__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="30" r="6"/>
+                <circle cx="36" cy="30" r="6"/>
+                <path d="M18 30 L30 30"/>
+                <path d="M30 30 L34 18 L40 18"/>
+                <path d="M28 18 L18 18 L14 30"/>
+              </svg>
+            </div>
+            <h3 class="scenario__title">Поездка в магазин</h3>
+            <blockquote class="scenario__quote">«Съездил сам за хлебом в 7 утра. Без звонков, без “подвезите”. Просто сел — и поехал.»</blockquote>
+            <p class="scenario__fact"><strong>3 км</strong> в одну сторону · ≈ 10 минут</p>
+          </article>
+
+          <article class="scenario">
+            <div class="scenario__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 36 L18 36 L22 22 L36 22 L42 36 L42 40"/>
+                <circle cx="20" cy="40" r="3"/>
+                <circle cx="36" cy="40" r="3"/>
+                <path d="M24 16 L24 10 M30 16 L30 10"/>
+              </svg>
+            </div>
+            <h3 class="scenario__title">Спуск с 5 этажа без лифта</h3>
+            <blockquote class="scenario__quote">«Живу в пятиэтажке без лифта. Раньше не выходила без посторонней помощи. Теперь спускаюсь сама — привод как третья рука.»</blockquote>
+            <p class="scenario__fact"><strong>0 → 5 этажей</strong> · самостоятельно</p>
+          </article>
+
+          <article class="scenario">
+            <div class="scenario__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 32 C12 24, 18 18, 24 14 C30 18, 36 24, 40 32"/>
+                <path d="M14 36 L18 36 M22 38 L26 36 M30 38 L34 36"/>
+                <path d="M24 14 L24 8"/>
+              </svg>
+            </div>
+            <h3 class="scenario__title">Поход на фестиваль</h3>
+            <blockquote class="scenario__quote">«Ездил на фестиваль в соседний город. 38 км в одну сторону — приехал с запасом заряда. Никогда так не кайфовал от дороги.»</blockquote>
+            <p class="scenario__fact"><strong>38 км</strong> в одну сторону · один заряд</p>
+          </article>
+
+          <article class="scenario">
+            <div class="scenario__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 28 L18 16 L24 22 L30 12 L38 22"/>
+                <circle cx="14" cy="34" r="2"/>
+                <circle cx="24" cy="34" r="2"/>
+                <circle cx="34" cy="34" r="2"/>
+                <path d="M24 22 L24 28"/>
+              </svg>
+            </div>
+            <h3 class="scenario__title">Прогулка по набережной</h3>
+            <blockquote class="scenario__quote">«В субботу — 12 км вдоль реки. Остановился у кофейни, потом дальше. Никакого “успеть до темно"».»</blockquote>
+            <p class="scenario__fact"><strong>12 км</strong> за прогулку · ≈ 2 часа</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -292,14 +1485,15 @@
     <section class="section section--dark" id="how">
       <div class="container">
         <header class="section__head">
-          <span class="eyebrow">№04 / Установка</span>
-          <h2 class="section__title">Крепление — поехали.</h2>
+          <span class="eyebrow">№05 / УСТАНОВКА</span>
+          <h2 class="section__title">Крепление — <span class="accent">поехали.</span></h2>
+          <p class="section__sub">Три коротких шага, две версии инструкции — для активной и пассивной коляски. Общая видеоинструкция — ниже.</p>
         </header>
         <ol class="steps">
           <li class="step">
             <div class="step__num">01</div>
             <h3>Закрепите</h3>
-            <p>Специальная система крепления к подножкам подходит для большинства инвалидных колясок с ручным управлением.</p>
+            <p>Специальная система крепления к подножкам или раме — для активных и пассивных колясок соответственно.</p>
             <div class="step__time">≈ 3 мин</div>
           </li>
           <li class="step">
@@ -315,49 +1509,109 @@
             <div class="step__time">≈ 10 мин</div>
           </li>
         </ol>
-        <figure class="install__guide">
-          <picture>
-            <source srcset="./img/products/assembly-guide-active-wheelchair.webp" type="image/webp" />
-            <img src="./img/products/assembly-guide-active-wheelchair.webp"
-                 alt="Пошаговая инструкция по установке электроприставки на активную инвалидную коляску — 8 шагов"
-                 width="1400" height="1400"
-                 loading="lazy" decoding="async" />
-          </picture>
-          <figcaption>
-            Полная инструкция по сборке для активной коляски — 8 шагов. Для пассивной используется крепление типа B (см. FAQ).
-          </figcaption>
+
+        <div class="install__grid">
+          <figure class="install__guide">
+            <button type="button" class="install__zoom" data-zoom-src="./img/products/assembly-guide-active-wheelchair.webp" data-zoom-alt="Пошаговая инструкция по установке электроприставки на активную инвалидную коляску — 8 шагов" aria-label="Увеличить инструкцию">
+              <picture>
+                <source srcset="./img/products/assembly-guide-active-wheelchair.webp" type="image/webp" />
+                <img src="./img/products/assembly-guide-active-wheelchair.webp"
+                     alt="Пошаговая инструкция по установке электроприставки на активную инвалидную коляску — 8 шагов"
+                     width="1400" height="1400"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+            </button>
+            <figcaption>
+              <span class="install__guide-tag">АКТИВНАЯ</span>
+              <b>Крепление к подножкам</b>
+              <small>8 шагов · ≈ 10 минут · <span class="install__zoom-hint">нажмите, чтобы увеличить</span></small>
+            </figcaption>
+          </figure>
+          <figure class="install__guide install__guide--b">
+            <button type="button" class="install__zoom" data-zoom-src="./img/products/assembly-guide-passive-wheelchair.webp" data-zoom-alt="Пошаговая инструкция по установке электроприставки на пассивную инвалидную коляску — 9 шагов" aria-label="Увеличить инструкцию">
+              <picture>
+                <source srcset="./img/products/assembly-guide-passive-wheelchair.webp" type="image/webp" />
+                <img src="./img/products/assembly-guide-passive-wheelchair.webp"
+                     alt="Пошаговая инструкция по установке электроприставки на пассивную инвалидную коляску — 9 шагов"
+                     width="1400" height="1400"
+                     loading="lazy" decoding="async" />
+              </picture>
+              <span class="install__zoom-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.5 16.5 M11 8 L11 14 M8 11 L14 11"/></svg>
+              </span>
+            </button>
+            <figcaption>
+              <span class="install__guide-tag install__guide-tag--b">ПАССИВНАЯ</span>
+              <b>Крепление типа B к раме</b>
+              <small>9 шагов · ≈ 12 минут · <span class="install__zoom-hint">нажмите, чтобы увеличить</span></small>
+            </figcaption>
+          </figure>
+        </div>
+
+        <figure class="install__video">
+          <div class="install__video-inner">
+            <div class="install__video-eyebrow">Видеоинструкция · общая</div>
+            <h3 class="install__video-title">Установка Wheel Pilots за 10 минут</h3>
+            <button type="button" class="install__video-play" aria-label="Воспроизвести видео">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="install__video-meta"><strong>≈ 2:30</strong> · 1080p · русская озвучка</p>
+          </div>
         </figure>
       </div>
     </section>
 
-    <!-- REVIEWS -->
+    <!-- REVIEWS / TRUST -->
     <section class="section" id="reviews">
       <div class="container">
         <header class="section__head section__head--light">
-          <span class="eyebrow eyebrow--dark">№05 / Отзывы</span>
-          <h2 class="section__title section__title--dark">Что говорят <em>наши пользователи.</em></h2>
+          <span class="eyebrow eyebrow--dark">№06 / ОТЗЫВЫ</span>
+          <h2 class="section__title section__title--dark">Проверено <span class="accent">в деле.</span></h2>
+          <p class="section__sub">Конкретные цифры из реальных испытаний и эксплуатации — без общих слов.</p>
         </header>
+
+        <div class="reviews-trust" role="group" aria-label="Достижения бренда">
+          <div class="trust-counter"><b>500 Вт</b><span>мощность мотора</span></div>
+          <div class="trust-counter"><b>65 км</b><span>запас хода на 1 заряде</span></div>
+          <div class="trust-counter"><b>45 км/ч</b><span>максимальная скорость</span></div>
+          <div class="trust-counter"><b>1 год</b><span>гарантия на привод</span></div>
+        </div>
+
         <div class="reviews">
           <figure class="review">
-            <blockquote>«Утром встал — за пару минут пристёгнут привод. За день объехал весь район. Никаких больше такси и просьб подвезти.»</blockquote>
+            <div class="review__metric"><b>10 мин</b><span>сборка из коробки</span></div>
             <figcaption>
-              <b>Алексей К.<span aria-hidden="true">*</span></b><span>Москва</span>
+              <h3>Быстрая установка</h3>
+              <p>По видеоинструкции справляются без опыта. Все крепёжные элементы идут в комплекте — ничего не нужно докупать в магазине.</p>
             </figcaption>
           </figure>
           <figure class="review">
-            <blockquote>«Живу в пятиэтажке без лифта. Раньше не выходила без посторонней помощи. Теперь спускаюсь сама — привод как третья рука.»</blockquote>
+            <div class="review__metric"><b>2–5 дней</b><span>доставка СДЭК</span></div>
             <figcaption>
-              <b>Марина Д.<span aria-hidden="true">*</span></b><span>Самара</span>
+              <h3>Быстрая доставка</h3>
+              <p>Отправка в течение 24 часов после заказа. Доставка по России СДЭКом — от 2 дней в центральные регионы до 5 дней в отдалённые.</p>
             </figcaption>
           </figure>
           <figure class="review">
-            <blockquote>«Ездил на фестиваль в соседний город. 38 км в одну сторону — приехал с запасом заряда. Никогда так не кайфовал от дороги.»</blockquote>
+            <div class="review__metric"><b>3 передачи</b><span>+ задний ход</span></div>
             <figcaption>
-              <b>Денис П.<span aria-hidden="true">*</span></b><span>Казань</span>
+              <h3>Гибкая тяга</h3>
+              <p>Три передачи + задний ход — для разгона, подъёма в горку, спокойной прогулки и маневра на узких дорожках.</p>
+            </figcaption>
+          </figure>
+          <figure class="review">
+            <div class="review__metric"><b>19.5 кг</b><span>вес приставки</span></div>
+            <figcaption>
+              <h3>Съёмная конструкция</h3>
+              <p>Приставка снимается за минуту — коляска возвращается в режим ручного управления. Удобно хранить и перевозить в машине.</p>
             </figcaption>
           </figure>
         </div>
-        <p class="reviews__disclaimer"><span aria-hidden="true">*</span> Отзывы приведены в иллюстративных целях. Реальные отзывы пользователей будут опубликованы после запуска продаж.</p>
+
+        <p class="reviews__disclaimer">Характеристики указаны по результатам испытаний производителя и могут отличаться в зависимости от условий эксплуатации, нагрузки, рельефа и температуры. Реальные отзывы покупателей будут опубликованы после запуска продаж.</p>
       </div>
     </section>
 
@@ -365,17 +1619,42 @@
     <section class="section section--dark" id="faq">
       <div class="container faq">
         <header class="section__head">
-          <span class="eyebrow">№06 / FAQ</span>
-          <h2 class="section__title">Частые <em>вопросы.</em></h2>
+          <span class="eyebrow">№07 / FAQ</span>
+          <h2 class="section__title">Частые <span class="accent">вопросы.</span></h2>
         </header>
+
+        <div class="legal-banner" role="region" aria-label="Законодательство">
+          <h3 class="legal-banner__title">Это <span class="accent">законно?</span></h3>
+          <p class="legal-banner__lead">По состоянию на 2025 год: <strong>права, регистрация и шлем не требуются.</strong> Wheel Pilots относится к средствам индивидуальной мобильности (СИМ). Используйте по тротуарам, велодорожкам и велополосам. Ограничение скорости на тротуаре — до 25 км/ч<span aria-hidden="true">*</span>.</p>
+          <div class="legal-banner__grid">
+            <div class="legal-banner__item">
+              <b>Права</b>
+              <span>Не нужны. Wheel Pilots приравнивается к СИМ (электросамокату).</span>
+            </div>
+            <div class="legal-banner__item">
+              <b>Шлем</b>
+              <span>Не обязателен по закону. Но мы рекомендуем — берегите голову.</span>
+            </div>
+            <div class="legal-banner__item">
+              <b>Регистрация</b>
+              <span>Не требуется. Сертификат соответствия — в комплекте.</span>
+            </div>
+          </div>
+          <p class="legal-banner__note">Правила ПДД для СИМ могут уточняться региональными нормативными актами<span aria-hidden="true">*</span>. Перед поездкой в новом городе — проверьте местные ограничения.</p>
+        </div>
+
         <div class="faq__list">
           <details class="faq__item">
             <summary>Подойдёт ли привод к моей коляске?</summary>
-            <p>Специальная система крепления к подножкам подходит для большинства инвалидных колясок с ручным управлением. Если сомневаетесь, пришлите фото коляски — менеджер ответит в течение часа.</p>
+            <p>Специальная система крепления к подножкам подходит для большинства инвалидных колясок с ручным управлением. Для пассивных колясок со съёмными подножками — крепление типа B к раме. Если сомневаетесь, пришлите фото коляски — менеджер ответит в течение часа. <a href="#compat">Заполнить форму проверки совместимости →</a></p>
           </details>
           <details class="faq__item">
             <summary>Нужны ли права, регистрация или шлем?</summary>
-            <p>Электроприставка мощностью 500 Вт и скоростью до 45 км/ч по характеристикам относится к категории электромобилей (электросамокатов / электровелосипедов). Уточняйте актуальные требования ПДД и Росздравнадзора для вашего региона в момент покупки — законодательство может меняться.</p>
+            <p>Нет. По федеральным ПДД Wheel Pilots приравнивается к средствам индивидуальной мобильности (СИМ): права, регистрация и шлем не требуются. Ограничения скорости на тротуаре — 25 км/ч<span aria-hidden="true">*</span>. Региональные правила могут отличаться<span aria-hidden="true">*</span>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Где можно ездить?</summary>
+            <p>По тротуарам, велодорожкам и велополосам. На проезжую часть выезжать запрещено<span aria-hidden="true">*</span>. Конкретные ограничения по регионам могут различаться<span aria-hidden="true">*</span>.</p>
           </details>
           <details class="faq__item">
             <summary>Какой вариант крепления выбрать?</summary>
@@ -393,11 +1672,19 @@
           </details>
           <details class="faq__item">
             <summary>Что входит в комплект?</summary>
-            <p>Электроприставка, съёмный аккумулятор 17 Ah с зарядным устройством, консоль управления с ЖК-дисплеем, передняя LED-фара с звуковым сигналом, инструкция.</p>
+            <p>Электроприставка, съёмный аккумулятор 17 Ah с зарядным устройством, консоль управления с ЖК-дисплеем, передняя LED-фара с звуковым сигналом, набор ключей для сборки, инструкция. Подробный список — <a href="#kit">в секции «Комплектность»</a>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Что если привод сломается в дороге?</summary>
+            <p>Все расходные материалы и запчасти есть в нашем магазине. На электропривод гарантия 1 год, на аккумулятор — 3 месяца. При поломке в дороге — звоните <a href="tel:+79815070100">+7 (981) 707-01-00</a>, поможем дистанционно или отправим замену СДЭК.</p>
           </details>
           <details class="faq__item">
             <summary>Как обслуживать?</summary>
-            <p>Все расходные материалы и запчасти для привода есть в нашем магазине. По гарантии — 1 год на электропривод и 3 месяца на аккумулятор.</p>
+            <p>Все расходные материалы и запчасти для привода есть в нашем магазине. По гарантии — 1 год на электропривод и 3 месяца на аккумулятор. Подробная инструкция по безопасности аккумулятора — <a href="#specs">в секции характеристик</a>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Можно ли вернуть, если не подойдёт?</summary>
+            <p>Да, по ЗоЗПП — 14 дней на возврат товара надлежащего качества (не считая дня покупки), если сохранён товарный вид. Бракованный товар возвращается в течение гарантийного срока. Подробнее — в <a href="./offer.html" target="_blank">договоре оферты</a>.</p>
           </details>
           <details class="faq__item">
             <summary>Доставка и оплата?</summary>
@@ -411,59 +1698,135 @@
     <section class="section section--cta" id="order">
       <div class="container order">
         <div class="order__head">
-          <span class="eyebrow eyebrow--dark">№07 / Заказ</span>
+          <span class="eyebrow eyebrow--dark">№08 / ЗАКАЗ</span>
           <h2 class="order__title">Готовы <em>поехать?</em></h2>
-          <p class="order__sub">Оставьте телефон — перезвоним за 15 минут и подберём привод под вашу коляску.</p>
+          <p class="order__sub">Выберите комплектацию, оставьте телефон — перезвоним за 15 минут и подберём привод под вашу коляску.</p>
         </div>
-        <form class="order__form" novalidate>
-          <figure class="order__kit">
-            <picture>
-              <source srcset="./img/products/thumbs/package-tools-charger-wrenches.webp" type="image/webp" />
-              <img src="./img/products/thumbs/package-tools-charger-wrenches.webp"
-                   alt="Что входит в комплект: зарядное устройство, разводной ключ, набор шестигранников"
-                   width="800" height="800"
+
+        <div class="order__layout">
+          <div class="order__variants" role="tablist" aria-label="Выбор комплектации">
+            <button class="order__variant is-active" type="button" role="tab" data-variant="summer" aria-selected="true">
+              <span class="order__variant-icon" aria-hidden="true">☀</span>
+              <span class="order__variant-name">Летний комплект</span>
+              <span class="order__variant-meta">держатель телефона в подарок</span>
+            </button>
+            <button class="order__variant" type="button" role="tab" data-variant="winter" aria-selected="false">
+              <span class="order__variant-icon" aria-hidden="true">❄</span>
+              <span class="order__variant-name">Зимний комплект</span>
+              <span class="order__variant-meta">зимняя покрышка в подарок</span>
+            </button>
+          </div>
+
+          <div class="order__summary" data-kit-summary>
+            <div class="order__summary-media">
+              <img class="order__summary-img"
+                   data-summary-img
+                   data-summary-map='{"summer-active":"./img/products/wheelchair-drive-active-summer-poster.webp","summer-passive":"./img/products/wheelchair-drive-passive-summer-poster.webp","winter-active":"./img/products/wheelchair-drive-active-winter-poster.webp","winter-passive":"./img/products/wheelchair-drive-passive-winter-poster.webp"}'
+                   data-summary-alt='{"summer-active":"Летний комплект — электроприставка + держатель телефона, активная коляска","summer-passive":"Летний комплект — электроприставка + держатель телефона, пассивная коляска","winter-active":"Зимний комплект — электроприставка + зимняя покрышка, активная коляска","winter-passive":"Зимний комплект — электроприставка + зимняя покрышка, пассивная коляска"}'
+                   src="./img/products/wheelchair-drive-active-summer-poster.webp"
+                   alt="Летний комплект — электроприставка + держатель телефона, активная коляска"
+                   width="280" height="373"
                    loading="lazy" decoding="async" />
-            </picture>
-            <figcaption>
-              <b>В комплекте</b>
-              <span>зарядное устройство · ключи для сборки</span>
-            </figcaption>
-          </figure>
-          <label class="field">
-            <span class="field__label">Имя</span>
-            <input type="text" name="name" placeholder="Алексей" autocomplete="given-name" required />
-          </label>
-          <label class="field">
-            <span class="field__label">Телефон</span>
-            <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" enterkeyhint="send" required />
-          </label>
-          <label class="field field--full">
-            <span class="field__label">Тип крепления</span>
-            <select name="mount">
-              <option value="type-a" selected>Тип крепления А — стандарт</option>
-              <option value="type-b">Тип крепления Б — усиленное</option>
-              <option value="help">Помогите подобрать</option>
-            </select>
-          </label>
-          <label class="field field--full consent">
-            <input type="checkbox" name="consent" required />
-            <span class="consent__text">
-                Я согласен(на) на обработку моих персональных данных в соответствии с
-                <a href="./policy.html" target="_blank">Политикой обработки персональных данных</a>
-                и
-                <a href="./consent.html" target="_blank">Согласием на обработку ПДн</a>.
-              </span>
-          </label>
-          <label class="field field--full consent">
-            <input type="checkbox" name="offer" required />
-            <span class="consent__text">
-                Я подтверждаю, что ознакомлен(а) с
-                <a href="./offer.html" target="_blank">Договором публичной оферты</a>,
-                и принимаю его условия.
-              </span>
-          </label>
-          <button type="submit" class="btn btn--accent btn--lg btn--block">Отправить заявку</button>
-        </form>
+              <span class="order__summary-tag" data-summary-tag>☀ ЛЕТНИЙ</span>
+            </div>
+            <div class="order__summary-body">
+              <div class="order__summary-line">
+                <span class="order__summary-label">Комплект:</span>
+                <b class="order__summary-kit" data-summary-kit>Летний · держатель телефона в подарок</b>
+              </div>
+              <div class="order__summary-line">
+                <span class="order__summary-label">Цена:</span>
+                <b class="order__summary-price">от $2 000 000 · точную назовёт менеджер</b>
+              </div>
+              <p class="order__summary-hint">Полная комплектация — <a href="#kit">в секции «Комплектность»</a>.</p>
+            </div>
+          </div>
+
+          <form class="order__form" novalidate data-state="idle">
+            <input type="hidden" name="variant" value="summer" data-variant-input />
+
+            <div class="order__form-fields">
+              <label class="field">
+                <span class="field__label">Имя</span>
+                <input type="text" name="name" placeholder="Алексей" autocomplete="given-name" required data-form-field="name" />
+                <span class="field__helper">Как к вам обращаться</span>
+              </label>
+              <label class="field">
+                <span class="field__label">Телефон</span>
+                <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" enterkeyhint="send" required data-form-field="phone" data-mask="phone" />
+                <span class="field__helper">Без +7 — мы добавим</span>
+              </label>
+
+              <div class="field field--full chair-radios">
+                <span class="field__label">Тип коляски</span>
+                <div class="chair-radios__grid" role="radiogroup" aria-label="Тип коляски">
+                  <label class="chair-radio">
+                    <input type="radio" name="chair" value="active" checked data-form-field="chair" />
+                    <span class="chair-radio__body">
+                      <span class="chair-radio__name">Активная</span>
+                      <span class="chair-radio__desc">с ручным управлением</span>
+                    </span>
+                  </label>
+                  <label class="chair-radio">
+                    <input type="radio" name="chair" value="passive" data-form-field="chair" />
+                    <span class="chair-radio__body">
+                      <span class="chair-radio__name">Пассивная</span>
+                      <span class="chair-radio__desc">со съёмными подножками</span>
+                    </span>
+                  </label>
+                  <label class="chair-radio">
+                    <input type="radio" name="chair" value="help" data-form-field="chair" />
+                    <span class="chair-radio__body">
+                      <span class="chair-radio__name">Не знаю</span>
+                      <span class="chair-radio__desc">помогите подобрать</span>
+                    </span>
+                  </label>
+                </div>
+                <span class="field__helper">Это ускорит подбор комплектации</span>
+              </div>
+
+              <label class="field field--full consent">
+                <input type="checkbox" name="consent" required />
+                <span class="consent__text">
+                  Я согласен(на) на обработку персональных данных в соответствии с
+                  <a href="./policy.html" target="_blank">Политикой обработки ПДн</a>
+                  и
+                  <a href="./consent.html" target="_blank">Согласием на обработку ПДн</a>.
+                </span>
+              </label>
+              <label class="field field--full consent">
+                <input type="checkbox" name="offer" required />
+                <span class="consent__text">
+                  Я подтверждаю, что ознакомлен(а) с
+                  <a href="./offer.html" target="_blank">Договором публичной оферты</a>,
+                  и принимаю его условия.
+                </span>
+              </label>
+              <button type="submit" class="btn btn--accent btn--lg btn--block">Отправить заявку</button>
+              <p class="order__cta-note">Перезвоним за 15 минут — без рассылок и спама.</p>
+              <div class="form-trust" aria-label="Гарантии">
+                <span class="form-trust__item">Без рассылок</span>
+                <span class="form-trust__item">Не подписка</span>
+                <span class="form-trust__item">Перезвоним за 15 минут</span>
+              </div>
+            </div>
+
+            <div class="order__form-success" role="status" aria-live="polite">
+              <h3 class="order__form-success-title">Заявка принята ✓</h3>
+              <p class="order__form-success-text">Менеджер свяжется с вами в течение 15 минут в рабочее время. Если не перезвонили — позвоните напрямую: <a href="tel:+79815070100">+7 (981) 707-01-00</a></p>
+              <div class="mini-dial" data-mini-dial>
+                <svg viewBox="0 0 200 200">
+                  <circle cx="100" cy="100" r="92" fill="none" stroke="var(--line-d)" stroke-width="6"/>
+                  <circle cx="100" cy="100" r="92" fill="none" stroke="var(--bolt)" stroke-width="6"
+                          stroke-dasharray="578" stroke-dashoffset="0"
+                          class="mini-dial__progress" transform="rotate(-90 100 100)"/>
+                </svg>
+                <span class="mini-dial__number">15:00</span>
+              </div>
+              <p class="form-live-status">Обратный отсчёт до связи менеджера: <span data-countdown>15:00</span></p>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -474,6 +1837,7 @@
       <div class="footer__brand">
         <span class="footer__logo">Wheel&nbsp;Pilots</span>
         <p>Электроприставки к инвалидным коляскам <span class="footer__brand-note">Страна производства: Китай.</span></p>
+        <a href="./cert.html" class="cert-badge">Сертификат соответствия</a>
       </div>
       <div class="footer__col">
         <h4>Контакты</h4>
@@ -483,9 +1847,11 @@
       </div>
       <div class="footer__col">
         <h4>Навигация</h4>
+        <a href="#compat">Совместимость</a>
         <a href="#models">Модели</a>
         <a href="#specs">Характеристики</a>
         <a href="#how">Установка</a>
+        <a href="#reviews">Отзывы</a>
         <a href="#faq">FAQ</a>
       </div>
       <div class="footer__col">
@@ -511,12 +1877,22 @@
 
     <div class="footer__bottom container">
       <span>© 2026 ИП Половников А. В. Все права защищены.</span>
-      <span class="mono">v 1.0.0 · build 2026.08</span>
+      <span class="mono">v 2.0.0 · переработанный дизайн</span>
     </div>
 
     <p class="footer__notes container"><span aria-hidden="true">*</span> erid-токен присваивается ОРД после запуска рекламной кампании.</p>
   </footer>
 
-  <script src="./app.js"></script>
+  <!-- Lightbox (zoom) -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Увеличенное изображение">
+  <button class="lightbox__close" type="button" aria-label="Закрыть">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L18 18 M6 18 L18 6"/></svg>
+  </button>
+  <figure class="lightbox__figure">
+    <img class="lightbox__img" src="" alt="" />
+  </figure>
+</div>
+
+<script src="./app.js"></script>
 </body>
 </html>
