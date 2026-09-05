@@ -1,9 +1,15 @@
 # IDE
 .idea/
 
+# Playwright scratch
+.playwright-cli/
+
 # Local serve logs (started via npm run dev / python -m http.server)
 serve.log
 serve.err.log
+
+# Source photos (~80MB originals) — only compressed WebP in img/products/ is shipped
+photo/
 
 # OS
 .DS_Store
