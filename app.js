@@ -454,6 +454,550 @@
   }
   bindTabs('.order__variant', 'kit');
 
+  /* ---------- Custom video player (gated loading + full controls) ---------- */
+  const videoPlayers = new Map();
+
+  const formatTime = (sec) => {
+    if (!Number.isFinite(sec) || sec < 0) return '0:00';
+    const s = Math.floor(sec % 60);
+    const m = Math.floor(sec / 60) % 60;
+    const h = Math.floor(sec / 3600);
+    const pad = (n) => String(n).padStart(2, '0');
+    return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+  };
+
+  const parseSources = (root) => {
+    /* data-player-sources='[{"label":"1080p","src":"…"},{"label":"720p","src":"…"}]' */
+    const raw = root.getAttribute('data-player-sources');
+    if (!raw) return null;
+    try {
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr) || arr.length === 0) return null;
+      return arr.filter((s) => s && s.src && s.label);
+    } catch (e) {
+      console.warn('video: invalid data-player-sources', e);
+      return null;
+    }
+  };
+
+  const setSeekFill = (player, pct) => {
+    const fill = player.seek.querySelector('.vp__seek-fill');
+    const thumb = player.seek.querySelector('.vp__seek-thumb');
+    const p = Math.max(0, Math.min(100, pct));
+    fill.style.width = p + '%';
+    thumb.style.left = p + '%';
+    player.seek.setAttribute('aria-valuenow', String(Math.round(p)));
+  };
+
+  const setVolumeFill = (player, vol) => {
+    const v = Math.max(0, Math.min(1, vol));
+    player.volume.querySelector('.vp__volume-fill').style.width = (v * 100) + '%';
+    player.volume.querySelector('.vp__volume-thumb').style.left = (v * 100) + '%';
+    player.volume.setAttribute('aria-valuenow', String(Math.round(v * 100)));
+  };
+
+  const updateMuteUI = (player) => {
+    const muted = player.video.muted || player.video.volume === 0;
+    player.root.classList.toggle('is-muted', muted);
+    player.mute.setAttribute(
+      'aria-label',
+      muted ? 'Включить звук' : 'Выключить звук'
+    );
+  };
+
+  const updatePlayUI = (player) => {
+    const playing = !player.video.paused && !player.video.ended && player.video.readyState > 2;
+    player.root.classList.toggle('is-playing', playing);
+    player.root.classList.toggle('is-paused', !playing);
+    player.play.setAttribute('aria-label', playing ? 'Пауза' : 'Воспроизвести');
+  };
+
+  const setStatus = (player, state, msg) => {
+    player.root.classList.remove('is-loading', 'is-error');
+    const status = player.root.querySelector('.vp__status');
+    if (state === 'loading') {
+      player.root.classList.add('is-loading');
+      status.textContent = 'Загрузка…';
+    } else if (state === 'error') {
+      player.root.classList.add('is-error');
+      status.innerHTML = '<span>Видео недоступно</span><span class="vp__status-msg"></span>';
+      const m = status.querySelector('.vp__status-msg');
+      if (m) m.textContent = msg || 'Нажмите, чтобы попробовать снова';
+    } else {
+      status.textContent = '';
+    }
+  };
+
+  const loadInitialSource = (player) => { ensureSource(player); };
+
+  const tryPlay = (player) => {
+    ensureSource(player);
+    if (player.unmuteOnPlay) player.video.muted = false;
+    const fire = () => {
+      const p = player.video.play();
+      if (p && typeof p.then === 'function') {
+        p.then(() => { setStatus(player, null); }).catch((err) => {
+          if (err && err.name === 'AbortError') return;
+          /* Если unmuted-блок — пробуем muted как фолбэк */
+          if (player.unmuteOnPlay && player.video.muted === false) {
+            player.video.muted = true;
+            updateMuteUI(player);
+            const p2 = player.video.play();
+            if (p2 && typeof p2.then === 'function') {
+              p2.then(() => setStatus(player, null)).catch(() => setStatus(player, 'error'));
+            }
+            return;
+          }
+          setStatus(player, 'error');
+        });
+      }
+    };
+    if (player.video.readyState >= 2) {
+      fire();
+    } else {
+      setStatus(player, 'loading');
+      const onReady = () => { fire(); };
+      player.video.addEventListener('loadeddata', onReady, { once: true });
+      player.video.addEventListener('error', () => setStatus(player, 'error'), { once: true });
+    }
+  };
+
+  const ensureSource = (player) => {
+    if (player.video.src) return;
+    if (player.sources && player.sources.length > 0) {
+      const initial = player.sources.find((s) => s.default) || player.sources[0];
+      player.currentQuality = initial.label;
+      player.video.src = initial.src;
+    } else {
+      player.video.src = player.src;
+    }
+    /* До явного Play качаем только метаданные (для превью-постера).
+       При play() браузер догружает поток и стартует почти мгновенно. */
+    try { player.video.preload = 'metadata'; } catch (e) {}
+    try { player.video.load(); } catch (e) { /* noop */ }
+  };
+
+  const captureFirstFrame = (player) => {
+    /* Используем первый кадр видео как постер.
+       Снимок делаем после loadeddata; рисуем в canvas → toDataURL → <img>. */
+    const v = player.video;
+    if (!player.poster) return;
+    let done = false;
+    const snap = () => {
+      if (done) return;
+      done = true;
+      const rect = player.root.getBoundingClientRect();
+      const w = Math.max(64, Math.min(960, Math.round(rect.width || 480)));
+      const h = Math.max(64, Math.round((rect.height || w * 9 / 16)));
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      try {
+        ctx.drawImage(v, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        if (dataUrl && dataUrl.length > 200) player.poster.src = dataUrl;
+      } catch (err) {
+        /* CORS-tainted video может бросить SecurityException — игнор, оставляем статичный постер */
+      }
+    };
+    v.addEventListener('loadeddata', snap, { once: true });
+  };
+
+  const bindSlider = (el, onChange, onCommit) => {
+    let dragging = false;
+    const setFromEvent = (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      const ratio = Math.max(0, Math.min(1, x / rect.width));
+      onChange(ratio);
+      return ratio;
+    };
+    el.addEventListener('mousedown', (e) => {
+      dragging = true;
+      el.classList.add('is-dragging');
+      setFromEvent(e);
+      const move = (ev) => { if (dragging) setFromEvent(ev); };
+      const up = (ev) => {
+        if (dragging) {
+          dragging = false;
+          el.classList.remove('is-dragging');
+          if (onCommit) onCommit(setFromEvent(ev));
+        }
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', up);
+      };
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', up);
+      e.preventDefault();
+    });
+    el.addEventListener('touchstart', (e) => {
+      el.classList.add('is-dragging');
+      setFromEvent(e);
+      const move = (ev) => { setFromEvent(ev); };
+      const end = (ev) => {
+        el.classList.remove('is-dragging');
+        const t = (ev.changedTouches && ev.changedTouches[0]) || ev;
+        if (onCommit) onCommit(setFromEvent(t));
+        el.removeEventListener('touchmove', move);
+        el.removeEventListener('touchend', end);
+      };
+      el.addEventListener('touchmove', move, { passive: true });
+      el.addEventListener('touchend', end);
+    }, { passive: true });
+    el.addEventListener('keydown', (e) => {
+      const step = e.shiftKey ? 0.1 : 0.02;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { onChange(Math.max(0, parseFloat(el.getAttribute('aria-valuenow') || '0') / 100 - step)); e.preventDefault(); if (onCommit) onCommit((parseFloat(el.getAttribute('aria-valuenow') || '0')) / 100); }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { onChange(Math.min(1, (parseFloat(el.getAttribute('aria-valuenow') || '0') + step * 100) / 100)); e.preventDefault(); if (onCommit) onCommit((parseFloat(el.getAttribute('aria-valuenow') || '0')) / 100); }
+      if (e.key === 'Home') { onChange(0); e.preventDefault(); if (onCommit) onCommit(0); }
+      if (e.key === 'End') { onChange(1); e.preventDefault(); if (onCommit) onCommit(1); }
+    });
+  };
+
+  const buildQualityMenu = (player) => {
+    if (!player.sources || player.sources.length < 2) {
+      player.quality.hidden = true;
+      return;
+    }
+    player.quality.hidden = false;
+    const wrap = document.createElement('div');
+    wrap.className = 'vp__quality-menu';
+    player.root.appendChild(wrap);
+    const render = () => {
+      wrap.innerHTML = '';
+      player.sources.forEach((s) => {
+        const opt = document.createElement('button');
+        opt.type = 'button';
+        opt.className = 'vp__quality-opt' + (s.label === player.currentQuality ? ' is-current' : '');
+        opt.textContent = s.label;
+        opt.addEventListener('click', () => {
+          if (s.label === player.currentQuality) {
+            wrap.classList.remove('is-open');
+            return;
+          }
+          const wasPlaying = !player.video.paused;
+          const t = player.video.currentTime || 0;
+          player.currentQuality = s.label;
+          player.video.src = s.src;
+          player.video.currentTime = t;
+          player.video.addEventListener('loadedmetadata', () => {
+            if (wasPlaying) player.video.play().catch(() => {});
+          }, { once: true });
+          wrap.classList.remove('is-open');
+          player.qualityLabel && (player.qualityLabel.textContent = s.label);
+        });
+        wrap.appendChild(opt);
+      });
+    };
+    player.quality.addEventListener('click', (e) => {
+      e.stopPropagation();
+      wrap.classList.toggle('is-open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target) && e.target !== player.quality) wrap.classList.remove('is-open');
+    });
+    render();
+  };
+
+  const initPlayer = (root) => {
+    const player = {
+      root,
+      video: root.querySelector('.vp__el'),
+      poster: root.querySelector('.vp__poster'),
+      bigPlay: root.querySelector('.vp__big-play'),
+      play: root.querySelector('.vp__play'),
+      mute: root.querySelector('.vp__mute'),
+      volume: root.querySelector('.vp__volume'),
+      seek: root.querySelector('.vp__seek'),
+      fs: root.querySelector('.vp__fs'),
+      quality: root.querySelector('.vp__quality'),
+      qualityLabel: root.querySelector('.vp__quality-label'),
+      src: root.getAttribute('data-player-src') || '',
+      sources: parseSources(root),
+      currentQuality: null,
+      noFs: root.getAttribute('data-player-no-fs') === 'true',
+    };
+    if (!player.video) return null;
+
+    const posterUrl = root.getAttribute('data-player-poster');
+    if (posterUrl && player.poster) player.poster.src = posterUrl;
+
+    if (root.getAttribute('data-player-loop') === 'true') player.video.loop = true;
+    if (root.getAttribute('data-player-init-muted') === 'true') {
+      player.video.muted = true;
+    }
+    if (root.getAttribute('data-player-unmute-on-play') === 'true') {
+      player.unmuteOnPlay = true;
+    }
+
+    /* Начальная громкость — из localStorage или 1 */
+    let storedVol = 1;
+    try {
+      const v = localStorage.getItem('vp:volume');
+      if (v !== null && !Number.isNaN(parseFloat(v))) storedVol = Math.max(0, Math.min(1, parseFloat(v)));
+    } catch (e) { /* localStorage недоступен — игнор */ }
+    player.video.volume = storedVol;
+    setVolumeFill(player, storedVol);
+    updateMuteUI(player);
+
+    /* Превью-загрузка при hover/focus — файл начнёт качаться до клика Play. */
+    const primeLoad = () => {
+      if (player.video.src) return;
+      ensureSource(player);
+    };
+    root.addEventListener('mouseenter', primeLoad);
+    root.addEventListener('focusin', primeLoad);
+    root.addEventListener('touchstart', primeLoad, { passive: true });
+    /* И на visibility — когда плеер появляется в viewport */
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) primeLoad(); });
+      }, { rootMargin: '200px' });
+      io.observe(root);
+    }
+
+    /* Big play = основная кнопка запуска */
+    player.bigPlay.addEventListener('click', () => {
+      /* Если данные из init-muted — снимаем mute, чтобы был звук при ручном старте.
+         Но! Не делаем unmute автоматически — пользователь сам решит, нажав Mute. */
+      tryPlay(player);
+    });
+
+    /* Внутренний play/pause */
+    player.play.addEventListener('click', () => {
+      if (player.video.paused || player.video.ended) {
+        tryPlay(player);
+      } else {
+        player.video.pause();
+      }
+    });
+
+    /* Mute */
+    player.mute.addEventListener('click', () => {
+      if (player.video.muted || player.video.volume === 0) {
+        player.video.muted = false;
+        if (player.video.volume === 0) { player.video.volume = storedVol || 0.5; setVolumeFill(player, player.video.volume); }
+      } else {
+        player.video.muted = true;
+      }
+      updateMuteUI(player);
+    });
+
+    /* Volume slider */
+    bindSlider(player.volume, (ratio) => {
+      player.video.muted = false;
+      player.video.volume = ratio;
+      setVolumeFill(player, ratio);
+      updateMuteUI(player);
+    }, (ratio) => {
+      try { localStorage.setItem('vp:volume', String(ratio)); } catch (e) {}
+    });
+
+    /* Seek slider */
+    bindSlider(player.seek, (ratio) => {
+      if (player.video.duration) {
+        setSeekFill(player, ratio * 100);
+      }
+    }, (ratio) => {
+      if (player.video.duration) {
+        player.video.currentTime = ratio * player.video.duration;
+      }
+    });
+
+    /* Fullscreen (только если не data-player-no-fs) */
+    if (!player.noFs) {
+      player.fs.addEventListener('click', () => {
+        const inFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        if (inFs) {
+          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        } else {
+          const req = player.root.requestFullscreen || player.root.webkitRequestFullscreen;
+          if (req) req.call(player.root);
+        }
+      });
+      const onFsChange = () => {
+        const inFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        player.root.classList.toggle('is-fullscreen', inFs);
+        player.fs.setAttribute('aria-label', inFs ? 'Свернуть' : 'На весь экран');
+      };
+      document.addEventListener('fullscreenchange', onFsChange);
+      document.addEventListener('webkitfullscreenchange', onFsChange);
+
+      player.video.addEventListener('dblclick', () => player.fs.click());
+    }
+
+    /* Click on video area toggles play */
+    player.video.addEventListener('click', () => {
+      if (player.video.paused || player.video.ended) tryPlay(player);
+      else player.video.pause();
+    });
+
+    /* Состояния видео */
+    player.video.addEventListener('play', () => {
+      /* Single-active rule: при старте любого плеера пауза всем остальным. */
+      for (const other of videoPlayers.values()) {
+        if (other === player) continue;
+        if (!other.video.paused) {
+          other.video.pause();
+          /* Если другой плеер был инициализирован как init-muted=true (например, hero
+             с data-player-unmute-on-play), его pause вернёт корректный state.
+             Звук мы не трогаем. */
+        }
+      }
+      updatePlayUI(player);
+    });
+    player.video.addEventListener('pause', () => updatePlayUI(player));
+    player.video.addEventListener('ended', () => {
+      if (player.video.loop) return;
+      updatePlayUI(player);
+      player.bigPlay.hidden = false;
+    });
+    player.video.addEventListener('timeupdate', () => {
+      const t = player.video.currentTime || 0;
+      const d = player.video.duration || 0;
+      const cur = root.querySelector('.vp__time-cur');
+      const dur = root.querySelector('.vp__time-dur');
+      if (cur) cur.textContent = formatTime(t);
+      if (dur) dur.textContent = formatTime(d);
+      if (d > 0) setSeekFill(player, (t / d) * 100);
+    });
+    player.video.addEventListener('durationchange', () => {
+      const dur = root.querySelector('.vp__time-dur');
+      if (dur) dur.textContent = formatTime(player.video.duration || 0);
+    });
+    player.video.addEventListener('progress', () => {
+      if (!player.video.duration || !player.video.buffered.length) return;
+      const end = player.video.buffered.end(player.video.buffered.length - 1);
+      const pct = (end / player.video.duration) * 100;
+      const buf = player.seek.querySelector('.vp__seek-buffer');
+      if (buf) buf.style.width = Math.min(100, pct) + '%';
+    });
+    player.video.addEventListener('waiting', () => {
+      if (player.video.paused) return;
+      setStatus(player, 'loading');
+    });
+    player.video.addEventListener('canplay', () => setStatus(player, null));
+    player.video.addEventListener('loadeddata', () => {
+      player.root.classList.add('is-ready');
+    });
+    player.video.addEventListener('error', () => {
+      setStatus(player, 'error', 'Не удалось загрузить видео');
+    });
+    /* Снимок первого кадра — после загрузки метаданных. Используется как постер. */
+    captureFirstFrame(player);
+
+    /* Клик по статусу ошибки — повтор */
+    const statusEl = root.querySelector('.vp__status');
+    if (statusEl) {
+      statusEl.addEventListener('click', () => {
+        if (player.root.classList.contains('is-error')) {
+          setStatus(player, 'loading');
+          ensureSource(player);
+          try { player.video.load(); } catch (e) {}
+          tryPlay(player);
+        }
+      });
+    }
+
+    /* Качество */
+    buildQualityMenu(player);
+
+    return player;
+  };
+
+  document.querySelectorAll('[data-player]').forEach((root) => {
+    const player = initPlayer(root);
+    if (player) videoPlayers.set(root, player);
+  });
+
+  /* Global hotkeys — срабатывают для плеера, на котором hover или focus. */
+  const getActivePlayer = () => {
+    /* Приоритет: focused элемент внутри плеера → hovered плеер. */
+    const active = document.activeElement;
+    if (active && active.closest) {
+      const r = active.closest('[data-player]');
+      if (r && videoPlayers.has(r)) return videoPlayers.get(r);
+    }
+    /* hover fallback */
+    for (const p of videoPlayers.values()) {
+      if (p.root.matches(':hover')) return p;
+    }
+    return null;
+  };
+  document.addEventListener('keydown', (e) => {
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    /* не перехватываем клавиши при активном вводе в обычном поле (хотя у нас их нет) */
+    const player = getActivePlayer();
+    if (!player) return;
+    const key = e.key;
+    if (key === ' ' || key === 'k' || key === 'K') {
+      if (player.video.paused || player.video.ended) tryPlay(player);
+      else player.video.pause();
+      e.preventDefault();
+    } else if (key === 'ArrowLeft') {
+      player.video.currentTime = Math.max(0, player.video.currentTime - 5);
+      e.preventDefault();
+    } else if (key === 'ArrowRight') {
+      player.video.currentTime = Math.min(player.video.duration || 0, player.video.currentTime + 5);
+      e.preventDefault();
+    } else if (key === 'm' || key === 'M' || key === 'ь' || key === 'Ь') {
+      player.video.muted = !player.video.muted;
+      updateMuteUI(player);
+      e.preventDefault();
+    } else if ((key === 'f' || key === 'F' || key === 'а' || key === 'А') && !player.noFs) {
+      player.fs.click();
+      e.preventDefault();
+    } else if (key === 'j' || key === 'J') {
+      player.video.currentTime = Math.max(0, player.video.currentTime - 10);
+      e.preventDefault();
+    } else if (key === 'l' || key === 'L') {
+      player.video.currentTime = Math.min(player.video.duration || 0, player.video.currentTime + 10);
+      e.preventDefault();
+    }
+  });
+
+  /* Install tabs: при переключении вкладки пауза других плееров */
+  const videoRoot = document.querySelector('[data-video-tabs]');
+  if (videoRoot) {
+    const tabs = videoRoot.querySelectorAll('.install__video-tab');
+    const panes = videoRoot.querySelectorAll('.install__video-pane');
+    const metas = videoRoot.querySelectorAll('[data-install-meta-for]');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.getAttribute('aria-controls');
+        const targetPane = targetId ? videoRoot.querySelector('#' + targetId) : null;
+
+        tabs.forEach((other) => {
+          const active = other === tab;
+          other.classList.toggle('is-active', active);
+          other.setAttribute('aria-selected', active ? 'true' : 'false');
+          other.tabIndex = active ? 0 : -1;
+        });
+
+        panes.forEach((pane) => {
+          const panePlayer = pane.querySelector('[data-player]');
+          if (pane === targetPane) {
+            pane.removeAttribute('hidden');
+          } else {
+            pane.setAttribute('hidden', '');
+            if (panePlayer && panePlayer.video) panePlayer.video.pause();
+          }
+        });
+
+        metas.forEach((m) => {
+          if (m.getAttribute('data-install-meta-for') === targetId) {
+            m.removeAttribute('hidden');
+          } else {
+            m.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+  }
+
   /* ---------- Parallax (hero chips) — disabled on touch & reduced-motion ---------- */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const chips = document.querySelectorAll('.hero__chip');
@@ -473,30 +1017,119 @@
     });
   }
 
-  /* ---------- Lightbox: клик по [data-zoom-src] открывает на полный экран ---------- */
+  /* ---------- Lightbox: клик по [data-zoom-src] открывает на полный экран ----------
+     Одиночный режим (по умолчанию): одна картинка, без навигации.
+     Групповой режим (data-zoom-group): навигация prev/next, счётчик и миниатюры. */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = lightbox ? lightbox.querySelector('.lightbox__img') : null;
   const lightboxClose = lightbox ? lightbox.querySelector('.lightbox__close') : null;
+  const lightboxPrev = lightbox ? lightbox.querySelector('[data-lightbox-prev]') : null;
+  const lightboxNext = lightbox ? lightbox.querySelector('[data-lightbox-next]') : null;
+  const lightboxCounter = lightbox ? lightbox.querySelector('[data-lightbox-counter]') : null;
+  const lightboxCounterCur = lightbox ? lightbox.querySelector('[data-lightbox-current]') : null;
+  const lightboxCounterTot = lightbox ? lightbox.querySelector('[data-lightbox-total]') : null;
+  const lightboxThumbs = lightbox ? lightbox.querySelector('[data-lightbox-thumbs]') : null;
   let lastFocus = null;
+  let lbGroup = null;     /* { items: [...], index: number } или null */
+  let lbTouchX = null;    /* для свайпа */
+
+  const setNavVisible = (show) => {
+    [lightboxPrev, lightboxNext, lightboxCounter, lightboxThumbs].forEach((el) => {
+      if (!el) return;
+      if (show) el.removeAttribute('hidden');
+      else el.setAttribute('hidden', '');
+    });
+    if (lightbox) lightbox.classList.toggle('is-group', !!show);
+  };
+
+  const renderLightbox = () => {
+    if (!lbGroup) return;
+    const item = lbGroup.items[lbGroup.index];
+    if (!item) return;
+    lightboxImg.src = item.dataset.zoomSrc;
+    lightboxImg.alt = item.dataset.zoomAlt || '';
+    if (lightboxCounterCur) lightboxCounterCur.textContent = String(lbGroup.index + 1);
+    if (lightboxCounterTot) lightboxCounterTot.textContent = String(lbGroup.items.length);
+    /* подсветить активную миниатюру + прокрутить её в видимую зону */
+    if (lightboxThumbs) {
+      lightboxThumbs.querySelectorAll('.lightbox__thumb').forEach((t, i) => {
+        t.classList.toggle('is-active', i === lbGroup.index);
+        t.setAttribute('aria-selected', i === lbGroup.index ? 'true' : 'false');
+      });
+      const active = lightboxThumbs.querySelector('.lightbox__thumb.is-active');
+      if (active && typeof active.scrollIntoView === 'function') {
+        active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      }
+    }
+  };
+
+  const buildThumbs = () => {
+    if (!lightboxThumbs || !lbGroup) return;
+    lightboxThumbs.innerHTML = '';
+    lbGroup.items.forEach((item, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'lightbox__thumb';
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-label', `Изображение ${i + 1} из ${lbGroup.items.length}`);
+      const img = document.createElement('img');
+      img.alt = '';
+      img.loading = 'lazy';
+      img.src = item.dataset.zoomThumb || item.dataset.zoomSrc;
+      btn.appendChild(img);
+      btn.addEventListener('click', () => {
+        lbGroup.index = i;
+        renderLightbox();
+      });
+      lightboxThumbs.appendChild(btn);
+    });
+  };
+
+  const navigate = (delta) => {
+    if (!lbGroup || lbGroup.items.length < 2) return;
+    const len = lbGroup.items.length;
+    lbGroup.index = ((lbGroup.index + delta) % len + len) % len;
+    renderLightbox();
+  };
 
   const openLightbox = (src, alt, trigger) => {
     if (!lightbox || !lightboxImg) return;
     lastFocus = trigger || document.activeElement;
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+    const groupName = trigger && trigger.dataset.zoomGroup;
+    if (groupName) {
+      const items = Array.from(document.querySelectorAll(`[data-zoom-group="${groupName}"]`));
+      const index = items.indexOf(trigger);
+      lbGroup = { items, index: index >= 0 ? index : 0 };
+      setNavVisible(true);
+      buildThumbs();
+      renderLightbox();
+    } else {
+      lbGroup = null;
+      setNavVisible(false);
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+    }
     lightbox.hidden = false;
     document.body.classList.add('lightbox-open');
-    lightboxClose && lightboxClose.focus();
+    (lightboxClose || lightbox).focus();
   };
 
   const closeLightbox = () => {
     if (!lightbox) return;
     lightbox.hidden = true;
     document.body.classList.remove('lightbox-open');
+    lbGroup = null;
+    if (lightboxThumbs) lightboxThumbs.innerHTML = '';
     if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
   };
 
+  /* Кешируем миниатюру (для быстрого рендера) — production-quality */
   document.querySelectorAll('[data-zoom-src]').forEach((btn) => {
+    /* у gallery-ячеек thumb уже есть рядом — подсунем его как миниатюру */
+    if (!btn.dataset.zoomThumb) {
+      const innerImg = btn.querySelector('img');
+      if (innerImg && innerImg.src) btn.dataset.zoomThumb = innerImg.src;
+    }
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       openLightbox(btn.dataset.zoomSrc, btn.dataset.zoomAlt, btn);
@@ -504,14 +1137,38 @@
   });
 
   if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener('click', () => navigate(-1));
+  if (lightboxNext) lightboxNext.addEventListener('click', () => navigate(1));
   if (lightbox) {
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) closeLightbox();
     });
   }
+
+  /* Клавиатура */
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
+    if (!lightbox || lightbox.hidden) return;
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (!lbGroup) return;
+    if (e.key === 'ArrowLeft')  { navigate(-1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { navigate(1);  e.preventDefault(); }
   });
+
+  /* Touch-свайп (горизонтальный) */
+  if (lightbox) {
+    lightbox.addEventListener('touchstart', (e) => {
+      if (!lbGroup) return;
+      const t = e.touches[0];
+      lbTouchX = t.clientX;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', (e) => {
+      if (!lbGroup || lbTouchX == null) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - lbTouchX;
+      if (Math.abs(dx) > 40) navigate(dx > 0 ? -1 : 1);
+      lbTouchX = null;
+    }, { passive: true });
+  }
 
   /* ---------- Gallery tabs: переключение Активная / Пассивная ---------- */
   const galleryTabs = document.querySelectorAll('[data-gallery-tab]');

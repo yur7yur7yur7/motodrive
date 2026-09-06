@@ -128,7 +128,9 @@
       <div class="hero__bg-num" aria-hidden="true">45</div>
       <div class="hero__grid container">
         <div class="hero__copy">
-          <span class="eyebrow">WHEEL PILOTS · ЭЛЕКТРОПРИСТАВКА</span>
+          <a href="#top" class="hero__brand" aria-label="Wheel Pilots — электроприставка к инвалидной коляске">
+            <img class="hero__brand-img" src="./img/logo-horizontal-white.png" alt="Wheel Pilots" width="320" height="120" />
+          </a>
           <h1 class="hero__title">
             <span class="hero__title-line">Свобода</span>
             <span class="hero__title-line hero__title-line--italic">не ждёт</span>
@@ -153,17 +155,58 @@
           </ul>
         </div>
         <div class="hero__visual">
-          <div class="hero__photo">
-            <picture>
-              <source srcset="./img/products/wheelchair-drive-active-isolated.webp" type="image/webp" />
-              <img class="hero__photo-img"
-                   src="./img/products/wheelchair-drive-active-isolated.webp"
-                   alt="Электроприставка Wheel Pilots Power для активной инвалидной коляски"
-                   width="1600" height="1600"
-                   fetchpriority="high"
-                   decoding="async" />
-            </picture>
-            <figcaption class="hero__photo-caption">TOP SPEED · 45 км/ч</figcaption>
+          <div class="hero__photo hero__photo--video">
+            <div class="vp vp--hero" data-player tabindex="0"
+                 data-player-src="./photo/promo.mp4"
+                 data-player-poster="./img/products/wheelchair-drive-active-summer-poster.webp"
+                 data-player-label="Проморолик Wheel Pilots — 40 секунд: преимущества и демонстрация"
+                 data-player-loop="true"
+                 data-player-init-muted="true"
+                 data-player-unmute-on-play="true"
+                 data-player-no-fs="true">
+              <img class="vp__poster" alt="Электроприставка Wheel Pilots Power" />
+              <video class="vp__el" preload="metadata" playsinline muted></video>
+              <button type="button" class="vp__big-play" aria-label="Воспроизвести проморолик">
+                <span class="vp__big-play-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                <span class="vp__big-play-text">Смотреть проморолик</span>
+                <span class="vp__big-play-sub">PROMO · 40 сек</span>
+              </button>
+              <div class="vp__controls" role="group" aria-label="Управление видео">
+                <button type="button" class="vp__btn vp__play" aria-label="Воспроизвести">
+                  <svg class="vp__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+                </button>
+                <div class="vp__time" aria-live="off">
+                  <span class="vp__time-cur">0:00</span>
+                  <span class="vp__time-sep">/</span>
+                  <span class="vp__time-dur">0:00</span>
+                </div>
+                <div class="vp__seek" role="slider" aria-label="Перемотка" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="vp__seek-buffer"></div>
+                  <div class="vp__seek-fill"></div>
+                  <div class="vp__seek-thumb"></div>
+                </div>
+                <button type="button" class="vp__btn vp__mute" aria-label="Выключить звук">
+                  <svg class="vp__icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+                  <svg class="vp__icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
+                </button>
+                <div class="vp__volume" role="slider" aria-label="Громкость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
+                  <div class="vp__volume-fill"></div>
+                  <div class="vp__volume-thumb"></div>
+                </div>
+                <button type="button" class="vp__btn vp__quality" aria-label="Качество" hidden>
+                  <span class="vp__quality-label">Auto</span>
+                </button>
+                <button type="button" class="vp__btn vp__fs" aria-label="На весь экран">
+                  <svg class="vp__icon-fs-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+                  <svg class="vp__icon-fs-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+                </button>
+              </div>
+              <div class="vp__status" role="status" aria-live="polite"></div>
+            </div>
+            <figcaption class="hero__photo-caption">PROMO · 40 сек</figcaption>
             <div class="dial dial--badge" aria-hidden="true">
               <svg viewBox="0 0 240 240" class="dial__svg">
                 <circle cx="120" cy="120" r="110" fill="none" stroke="rgba(245,242,235,0.10)" stroke-width="2"/>
@@ -383,7 +426,7 @@
           <div class="gallery__pane" id="gallery-pane-active" role="tabpanel" aria-labelledby="gallery-tab-active">
             <p class="gallery__pane-desc">20 кадров: крепление к подножкам, органы управления, установка в действии.</p>
             <div class="gallery__grid">
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-01.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №01">
@@ -399,7 +442,7 @@
               </span>
               <span class="gallery__cell-num">01</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-02.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №02">
@@ -415,7 +458,7 @@
               </span>
               <span class="gallery__cell-num">02</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-03.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №03">
@@ -431,7 +474,7 @@
               </span>
               <span class="gallery__cell-num">03</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-04.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №04">
@@ -447,7 +490,7 @@
               </span>
               <span class="gallery__cell-num">04</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-05.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №05">
@@ -463,7 +506,7 @@
               </span>
               <span class="gallery__cell-num">05</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-06.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №06">
@@ -479,7 +522,7 @@
               </span>
               <span class="gallery__cell-num">06</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-07.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №07">
@@ -495,7 +538,7 @@
               </span>
               <span class="gallery__cell-num">07</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-08.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №08">
@@ -511,7 +554,7 @@
               </span>
               <span class="gallery__cell-num">08</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-09.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №09">
@@ -527,7 +570,7 @@
               </span>
               <span class="gallery__cell-num">09</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-10.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №10">
@@ -543,7 +586,7 @@
               </span>
               <span class="gallery__cell-num">10</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-11.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №11">
@@ -559,7 +602,7 @@
               </span>
               <span class="gallery__cell-num">11</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-12.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №12">
@@ -575,7 +618,7 @@
               </span>
               <span class="gallery__cell-num">12</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-13.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №13">
@@ -591,7 +634,7 @@
               </span>
               <span class="gallery__cell-num">13</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-14.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №14">
@@ -607,7 +650,7 @@
               </span>
               <span class="gallery__cell-num">14</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-15.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №15">
@@ -623,7 +666,7 @@
               </span>
               <span class="gallery__cell-num">15</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-16.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №16">
@@ -639,7 +682,7 @@
               </span>
               <span class="gallery__cell-num">16</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-17.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №17">
@@ -655,7 +698,7 @@
               </span>
               <span class="gallery__cell-num">17</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-18.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №18">
@@ -671,7 +714,7 @@
               </span>
               <span class="gallery__cell-num">18</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-19.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №19">
@@ -687,7 +730,7 @@
               </span>
               <span class="gallery__cell-num">19</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-active"
                     data-zoom-src="./img/gallery/active/full/active-20.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №20">
@@ -709,7 +752,7 @@
           <div class="gallery__pane" id="gallery-pane-passive" role="tabpanel" aria-labelledby="gallery-tab-passive" hidden>
             <p class="gallery__pane-desc">28 кадров: крепление к раме, положение сопровождающего, узлы и детали.</p>
             <div class="gallery__grid">
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-01.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №01">
@@ -725,7 +768,7 @@
               </span>
               <span class="gallery__cell-num">01</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-02.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №02">
@@ -741,7 +784,7 @@
               </span>
               <span class="gallery__cell-num">02</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-03.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №03">
@@ -757,7 +800,7 @@
               </span>
               <span class="gallery__cell-num">03</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-04.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №04">
@@ -773,7 +816,7 @@
               </span>
               <span class="gallery__cell-num">04</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-05.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №05">
@@ -789,7 +832,7 @@
               </span>
               <span class="gallery__cell-num">05</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-06.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №06">
@@ -805,7 +848,7 @@
               </span>
               <span class="gallery__cell-num">06</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-07.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №07">
@@ -821,7 +864,7 @@
               </span>
               <span class="gallery__cell-num">07</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-08.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №08">
@@ -837,7 +880,7 @@
               </span>
               <span class="gallery__cell-num">08</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-09.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №09">
@@ -853,7 +896,7 @@
               </span>
               <span class="gallery__cell-num">09</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-10.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №10">
@@ -869,7 +912,7 @@
               </span>
               <span class="gallery__cell-num">10</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-11.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №11">
@@ -885,7 +928,7 @@
               </span>
               <span class="gallery__cell-num">11</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-12.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №12">
@@ -901,7 +944,7 @@
               </span>
               <span class="gallery__cell-num">12</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-13.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №13">
@@ -917,7 +960,7 @@
               </span>
               <span class="gallery__cell-num">13</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-14.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №14">
@@ -933,7 +976,7 @@
               </span>
               <span class="gallery__cell-num">14</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-15.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №15">
@@ -949,7 +992,7 @@
               </span>
               <span class="gallery__cell-num">15</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-16.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №16">
@@ -965,7 +1008,7 @@
               </span>
               <span class="gallery__cell-num">16</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-17.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №17">
@@ -981,7 +1024,7 @@
               </span>
               <span class="gallery__cell-num">17</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-18.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №18">
@@ -997,7 +1040,7 @@
               </span>
               <span class="gallery__cell-num">18</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-19.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №19">
@@ -1013,7 +1056,7 @@
               </span>
               <span class="gallery__cell-num">19</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-20.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №20">
@@ -1029,7 +1072,7 @@
               </span>
               <span class="gallery__cell-num">20</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-21.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №21">
@@ -1045,7 +1088,7 @@
               </span>
               <span class="gallery__cell-num">21</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-22.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №22">
@@ -1061,7 +1104,7 @@
               </span>
               <span class="gallery__cell-num">22</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-23.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №23">
@@ -1077,7 +1120,7 @@
               </span>
               <span class="gallery__cell-num">23</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-24.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №24">
@@ -1093,7 +1136,7 @@
               </span>
               <span class="gallery__cell-num">24</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-25.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №25">
@@ -1109,7 +1152,7 @@
               </span>
               <span class="gallery__cell-num">25</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-26.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №26">
@@ -1125,7 +1168,7 @@
               </span>
               <span class="gallery__cell-num">26</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-27.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №27">
@@ -1141,7 +1184,7 @@
               </span>
               <span class="gallery__cell-num">27</span>
             </button>
-            <button type="button" class="install__zoom gallery__cell"
+            <button type="button" class="install__zoom gallery__cell" data-zoom-group="gallery-passive"
                     data-zoom-src="./img/gallery/passive/full/passive-28.webp"
                     data-zoom-alt="Электроприставка Wheel Pilots Power — фото из производственного каталога"
                     aria-label="Увеличить фото №28">
@@ -1487,7 +1530,7 @@
         <header class="section__head">
           <span class="eyebrow">№05 / УСТАНОВКА</span>
           <h2 class="section__title">Крепление — <span class="accent">поехали.</span></h2>
-          <p class="section__sub">Три коротких шага, две версии инструкции — для активной и пассивной коляски. Общая видеоинструкция — ниже.</p>
+          <p class="section__sub">Три коротких шага, две версии инструкции — для активной и пассивной коляски. Выберите свой тип и посмотрите видео сборки.</p>
         </header>
         <ol class="steps">
           <li class="step">
@@ -1551,16 +1594,116 @@
           </figure>
         </div>
 
-        <figure class="install__video">
-          <div class="install__video-inner">
-            <div class="install__video-eyebrow">Видеоинструкция · общая</div>
-            <h3 class="install__video-title">Установка Wheel Pilots за 10 минут</h3>
-            <button type="button" class="install__video-play" aria-label="Воспроизвести видео">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <p class="install__video-meta"><strong>≈ 2:30</strong> · 1080p · русская озвучка</p>
+        <div class="install__video" data-video-tabs>
+          <header class="install__video-head">
+            <div>
+              <span class="install__video-eyebrow">Видеоинструкция по установке</span>
+              <h3 class="install__video-title">Сборка Wheel Pilots за 10 минут</h3>
+            </div>
+            <div class="install__video-tabs" role="tablist" aria-label="Тип коляски">
+              <button type="button" class="install__video-tab is-active" id="vt-active" role="tab" aria-selected="true" aria-controls="vt-pane-active" data-video-tab="active">Для активной</button>
+              <button type="button" class="install__video-tab" id="vt-passive" role="tab" aria-selected="false" aria-controls="vt-pane-passive" data-video-tab="passive" tabindex="-1">Для пассивной</button>
+            </div>
+          </header>
+          <div class="install__video-pane" id="vt-pane-active" role="tabpanel" aria-labelledby="vt-active">
+            <div class="vp vp--install" data-player tabindex="0"
+                 data-player-src="./photo/install-active.mp4"
+                 data-player-poster="./img/products/assembly-guide-active-wheelchair.webp"
+                 data-player-label="Видеоинструкция по установке Wheel Pilots на активную коляску">
+              <img class="vp__poster" alt="" />
+              <video class="vp__el" preload="metadata" playsinline muted></video>
+              <button type="button" class="vp__big-play" aria-label="Воспроизвести видео для активной коляски">
+                <span class="vp__big-play-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                <span class="vp__big-play-text">Смотреть инструкцию</span>
+                <span class="vp__big-play-sub">Крепление к подножкам · 8 шагов</span>
+              </button>
+              <div class="vp__controls" role="group" aria-label="Управление видео">
+                <button type="button" class="vp__btn vp__play" aria-label="Воспроизвести">
+                  <svg class="vp__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+                </button>
+                <div class="vp__time" aria-live="off">
+                  <span class="vp__time-cur">0:00</span>
+                  <span class="vp__time-sep">/</span>
+                  <span class="vp__time-dur">0:00</span>
+                </div>
+                <div class="vp__seek" role="slider" aria-label="Перемотка" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="vp__seek-buffer"></div>
+                  <div class="vp__seek-fill"></div>
+                  <div class="vp__seek-thumb"></div>
+                </div>
+                <button type="button" class="vp__btn vp__mute" aria-label="Выключить звук">
+                  <svg class="vp__icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+                  <svg class="vp__icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
+                </button>
+                <div class="vp__volume" role="slider" aria-label="Громкость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
+                  <div class="vp__volume-fill"></div>
+                  <div class="vp__volume-thumb"></div>
+                </div>
+                <button type="button" class="vp__btn vp__quality" aria-label="Качество" hidden>
+                  <span class="vp__quality-label">Auto</span>
+                </button>
+                <button type="button" class="vp__btn vp__fs" aria-label="На весь экран">
+                  <svg class="vp__icon-fs-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+                  <svg class="vp__icon-fs-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+                </button>
+              </div>
+              <div class="vp__status" role="status" aria-live="polite"></div>
+            </div>
           </div>
-        </figure>
+          <p class="install__video-meta" data-install-meta-for="vt-pane-active"><strong>Крепление к подножкам</strong> · 8 шагов · русская озвучка</p>
+          <div class="install__video-pane" id="vt-pane-passive" role="tabpanel" aria-labelledby="vt-passive" hidden>
+            <div class="vp vp--install" data-player tabindex="0"
+                 data-player-src="./photo/install-passive.mp4"
+                 data-player-poster="./img/products/assembly-guide-passive-wheelchair.webp"
+                 data-player-label="Видеоинструкция по установке Wheel Pilots на пассивную коляску">
+              <img class="vp__poster" alt="" />
+              <video class="vp__el" preload="metadata" playsinline muted></video>
+              <button type="button" class="vp__big-play" aria-label="Воспроизвести видео для пассивной коляски">
+                <span class="vp__big-play-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                <span class="vp__big-play-text">Смотреть инструкцию</span>
+                <span class="vp__big-play-sub">Крепление типа B · 9 шагов</span>
+              </button>
+              <div class="vp__controls" role="group" aria-label="Управление видео">
+                <button type="button" class="vp__btn vp__play" aria-label="Воспроизвести">
+                  <svg class="vp__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+                </button>
+                <div class="vp__time" aria-live="off">
+                  <span class="vp__time-cur">0:00</span>
+                  <span class="vp__time-sep">/</span>
+                  <span class="vp__time-dur">0:00</span>
+                </div>
+                <div class="vp__seek" role="slider" aria-label="Перемотка" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="vp__seek-buffer"></div>
+                  <div class="vp__seek-fill"></div>
+                  <div class="vp__seek-thumb"></div>
+                </div>
+                <button type="button" class="vp__btn vp__mute" aria-label="Выключить звук">
+                  <svg class="vp__icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+                  <svg class="vp__icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
+                </button>
+                <div class="vp__volume" role="slider" aria-label="Громкость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
+                  <div class="vp__volume-fill"></div>
+                  <div class="vp__volume-thumb"></div>
+                </div>
+                <button type="button" class="vp__btn vp__quality" aria-label="Качество" hidden>
+                  <span class="vp__quality-label">Auto</span>
+                </button>
+                <button type="button" class="vp__btn vp__fs" aria-label="На весь экран">
+                  <svg class="vp__icon-fs-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+                  <svg class="vp__icon-fs-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+                </button>
+              </div>
+              <div class="vp__status" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+          <p class="install__video-meta" data-install-meta-for="vt-pane-passive" hidden><strong>Крепление типа B к раме</strong> · 9 шагов · русская озвучка</p>
+        </div>
       </div>
     </section>
 
@@ -1888,9 +2031,21 @@
   <button class="lightbox__close" type="button" aria-label="Закрыть">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L18 18 M6 18 L18 6"/></svg>
   </button>
+  <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Предыдущее изображение" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6 L9 12 L15 18"/></svg>
+  </button>
+  <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Следующее изображение" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 L15 12 L9 18"/></svg>
+  </button>
   <figure class="lightbox__figure">
     <img class="lightbox__img" src="" alt="" />
   </figure>
+  <div class="lightbox__counter" data-lightbox-counter hidden>
+    <span data-lightbox-current>1</span>
+    <span class="lightbox__counter-sep">/</span>
+    <span data-lightbox-total>1</span>
+  </div>
+  <div class="lightbox__thumbs" data-lightbox-thumbs hidden role="tablist" aria-label="Миниатюры"></div>
 </div>
 
 <script src="./app.js"></script>
