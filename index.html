@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0E1116" />
@@ -157,12 +159,10 @@
         <div class="hero__visual">
           <div class="hero__photo hero__photo--video">
             <div class="vp vp--hero" data-player tabindex="0"
-                 data-player-src="./photo/promo.mp4"
+                 data-player-sources='[{"label":"480p","src":"./photo/web/promo-480.mp4","default":true},{"label":"360p","src":"./photo/web/promo-360.mp4"}]'
                  data-player-poster="./img/products/wheelchair-drive-active-summer-poster.webp"
                  data-player-label="Проморолик Wheel Pilots — 40 секунд: преимущества и демонстрация"
                  data-player-loop="true"
-                 data-player-init-muted="true"
-                 data-player-unmute-on-play="true"
                  data-player-no-fs="true">
               <img class="vp__poster" alt="Электроприставка Wheel Pilots Power" />
               <video class="vp__el" preload="metadata" playsinline muted></video>
@@ -196,7 +196,7 @@
                   <div class="vp__volume-fill"></div>
                   <div class="vp__volume-thumb"></div>
                 </div>
-                <button type="button" class="vp__btn vp__quality" aria-label="Качество" hidden>
+                <button type="button" class="vp__btn vp__quality" aria-label="Качество">
                   <span class="vp__quality-label">Auto</span>
                 </button>
                 <button type="button" class="vp__btn vp__fs" aria-label="На весь экран">
@@ -1607,7 +1607,7 @@
           </header>
           <div class="install__video-pane" id="vt-pane-active" role="tabpanel" aria-labelledby="vt-active">
             <div class="vp vp--install" data-player tabindex="0"
-                 data-player-src="./photo/install-active.mp4"
+                 data-player-sources='[{"label":"720p","src":"./photo/web/install-active-720.mp4","default":true},{"label":"480p","src":"./photo/web/install-active-480.mp4"}]'
                  data-player-poster="./img/products/assembly-guide-active-wheelchair.webp"
                  data-player-label="Видеоинструкция по установке Wheel Pilots на активную коляску">
               <img class="vp__poster" alt="" />
@@ -1642,7 +1642,7 @@
                   <div class="vp__volume-fill"></div>
                   <div class="vp__volume-thumb"></div>
                 </div>
-                <button type="button" class="vp__btn vp__quality" aria-label="Качество" hidden>
+                <button type="button" class="vp__btn vp__quality" aria-label="Качество">
                   <span class="vp__quality-label">Auto</span>
                 </button>
                 <button type="button" class="vp__btn vp__fs" aria-label="На весь экран">
@@ -1656,7 +1656,7 @@
           <p class="install__video-meta" data-install-meta-for="vt-pane-active"><strong>Крепление к подножкам</strong> · 8 шагов · русская озвучка</p>
           <div class="install__video-pane" id="vt-pane-passive" role="tabpanel" aria-labelledby="vt-passive" hidden>
             <div class="vp vp--install" data-player tabindex="0"
-                 data-player-src="./photo/install-passive.mp4"
+                 data-player-sources='[{"label":"720p","src":"./photo/web/install-passive-720.mp4","default":true},{"label":"480p","src":"./photo/web/install-passive-480.mp4"}]'
                  data-player-poster="./img/products/assembly-guide-passive-wheelchair.webp"
                  data-player-label="Видеоинструкция по установке Wheel Pilots на пассивную коляску">
               <img class="vp__poster" alt="" />
@@ -1691,7 +1691,7 @@
                   <div class="vp__volume-fill"></div>
                   <div class="vp__volume-thumb"></div>
                 </div>
-                <button type="button" class="vp__btn vp__quality" aria-label="Качество" hidden>
+                <button type="button" class="vp__btn vp__quality" aria-label="Качество">
                   <span class="vp__quality-label">Auto</span>
                 </button>
                 <button type="button" class="vp__btn vp__fs" aria-label="На весь экран">

@@ -2924,7 +2924,7 @@ body.lightbox-open { overflow: hidden; }
   display: grid;
   grid-template-columns: auto auto 1fr auto auto auto auto;
   align-items: center;
-  gap: 10px;
+  gap: var(--vp-gap, 10px);
   padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
   background: linear-gradient(0deg, rgba(8,10,14,0.85) 0%, rgba(8,10,14,0.45) 70%, transparent 100%);
   color: var(--vp-text);
@@ -3088,8 +3088,10 @@ body.lightbox-open { overflow: hidden; }
 .vp__volume:hover .vp__volume-thumb,
 .vp__volume:focus-visible .vp__volume-thumb { box-shadow: 0 0 0 4px rgba(245, 242, 235, 0.28); }
 .vp__volume:focus-visible::before { box-shadow: 0 0 0 2px var(--vp-accent); }
-.vp__quality { width: auto; padding: 0 10px; min-width: 38px; font-size: 12px; font-weight: 700; }
-.vp__quality-label { letter-spacing: 0.04em; }
+.vp__quality { width: auto; padding: 0 7px; min-width: 32px; font-size: 11px; font-weight: 700; }
+.vp__quality-label { letter-spacing: 0.02em; white-space: nowrap; }
+.vp__quality--single { opacity: 0.7; cursor: default; }
+.vp__quality--single:hover { background: transparent; }
 .vp__status {
   position: absolute;
   inset: 0;
@@ -3137,20 +3139,36 @@ body.lightbox-open { overflow: hidden; }
 }
 .vp.is-error .vp__status-msg { color: var(--vp-mute); font-size: 12px; }
 @keyframes vp-spin { to { transform: rotate(360deg); } }
-.vp--hero .vp__controls { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+.vp--hero .vp__controls {
+  /* Узкий плеер 9:16 — сжимаем gap и padding, чтобы все нужные контролы
+     (play, time, seek, mute, volume, quality) уместились в одну строку. */
+  --vp-gap: 6px;
+  gap: var(--vp-gap);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+}
 .vp--hero .vp__big-play-icon { width: 88px; height: 88px; }
 .vp--hero .vp__big-play-icon svg { width: 40px; height: 40px; margin-left: 4px; }
 .vp--hero .vp__fs { display: none; }
+.vp--hero .vp__volume { width: 40px; }
+.vp--hero .vp__time { min-width: 0; font-size: 12px; gap: 2px; }
+.vp--hero .vp__quality { min-width: 30px; padding: 0 5px; }
+/* Mute-кнопка и шкала громкости — визуально одна группа без зазора.
+   margin-right на mute "съедает" gap между mute и volume: на hero gap=6,
+   на install gap=10 — единая CSS-переменная делает margin универсальным. */
+.vp__mute { margin-right: calc(-1 * var(--vp-gap, 10px)); }
 @media (max-width: 700px) {
   .vp__controls {
     grid-template-columns: auto 1fr auto auto auto;
-    gap: 6px;
+    --vp-gap: 6px;
+    gap: var(--vp-gap);
     padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
     font-size: 12px;
   }
   .vp__time { display: none; }
   .vp__volume { display: none; }
   .vp__quality { display: none; }
+  /* На мобильном volume скрыт — не сдвигаем mute влево отрицательным margin. */
+  .vp__mute { margin-right: 0; }
   .vp__big-play-icon { width: 64px; height: 64px; }
   .vp__big-play-icon svg { width: 28px; height: 28px; }
   .vp__big-play-text { font-size: 15px; }

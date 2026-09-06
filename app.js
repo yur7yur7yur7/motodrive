@@ -506,7 +506,10 @@
   };
 
   const updatePlayUI = (player) => {
-    const playing = !player.video.paused && !player.video.ended && player.video.readyState > 2;
+    /* playing = реально проигрывается. ended считается «остановлен»,
+       paused — тоже. readyState не нужен: play/pause events приходят тогда,
+       когда состояние уже корректное (video действительно играет или стоит). */
+    const playing = !player.video.paused && !player.video.ended;
     player.root.classList.toggle('is-playing', playing);
     player.root.classList.toggle('is-paused', !playing);
     player.play.setAttribute('aria-label', playing ? 'Пауза' : 'Воспроизвести');
@@ -532,23 +535,27 @@
 
   const tryPlay = (player) => {
     ensureSource(player);
-    if (player.unmuteOnPlay) player.video.muted = false;
+    /* При первом ручном play (user gesture) снимаем mute — у всех плееров.
+       Без этого браузер всё равно проигрывает muted, и пользователь
+       слышит тишину вместо озвучки ролика. */
+    player.video.muted = false;
+    updateMuteUI(player);
     const fire = () => {
       const p = player.video.play();
       if (p && typeof p.then === 'function') {
         p.then(() => { setStatus(player, null); }).catch((err) => {
           if (err && err.name === 'AbortError') return;
-          /* Если unmuted-блок — пробуем muted как фолбэк */
-          if (player.unmuteOnPlay && player.video.muted === false) {
-            player.video.muted = true;
-            updateMuteUI(player);
-            const p2 = player.video.play();
-            if (p2 && typeof p2.then === 'function') {
-              p2.then(() => setStatus(player, null)).catch(() => setStatus(player, 'error'));
-            }
-            return;
+          /* Если браузер всё-таки отказал — оставляем muted=true, чтобы
+             иконка mute-состояния соответствовала реальности (нет звука),
+             и не показывали "звук вкл" при фактическом отсутствии. */
+          player.video.muted = true;
+          updateMuteUI(player);
+          const p2 = player.video.play();
+          if (p2 && typeof p2.then === 'function') {
+            p2.then(() => setStatus(player, null)).catch(() => setStatus(player, 'error'));
+          } else {
+            setStatus(player, 'error');
           }
-          setStatus(player, 'error');
         });
       }
     };
@@ -567,15 +574,29 @@
     if (player.sources && player.sources.length > 0) {
       const initial = player.sources.find((s) => s.default) || player.sources[0];
       player.currentQuality = initial.label;
-      player.video.src = initial.src;
+      player.video.src = pickBestSource(player.video, initial.src);
     } else {
-      player.video.src = player.src;
+      player.video.src = pickBestSource(player.video, player.src);
     }
     /* До явного Play качаем только метаданные (для превью-постера).
        При play() браузер догружает поток и стартует почти мгновенно. */
     try { player.video.preload = 'metadata'; } catch (e) {}
     try { player.video.load(); } catch (e) { /* noop */ }
   };
+
+  /* Возврат src как есть. Раньше здесь был webm/mp4 autoselect через
+     canPlayType('video/webm; codecs="vp9, opus"'); отключён, потому что
+     в репо только .mp4. Когда появятся .webm рядом — раскомментировать. */
+  const pickBestSource = (video, src) => src;
+  /* const pickBestSource = (video, src) => {
+    if (!src || !/\.mp4(\?|$)/i.test(src)) return src;
+    const webm = src.replace(/\.mp4(\?|$)/i, '.webm$1');
+    const ok = (() => {
+      try { return video.canPlayType('video/webm; codecs="vp9, opus"') !== ''; }
+      catch (e) { return false; }
+    })();
+    return ok ? webm : src;
+  }; */
 
   const captureFirstFrame = (player) => {
     /* Используем первый кадр видео как постер.
@@ -656,11 +677,27 @@
   };
 
   const buildQualityMenu = (player) => {
-    if (!player.sources || player.sources.length < 2) {
+    /* Если источник всего один — кнопка всё равно видна, но меню не открывается
+       и показывает текущее качество. Это убирает "Auto" без выбора. */
+    if (!player.sources || player.sources.length < 1) {
       player.quality.hidden = true;
       return;
     }
+    /* Сразу показываем текущее качество (по умолчанию = sources[0].label или default). */
+    const initialLabel = (player.sources.find((s) => s.default) || player.sources[0]).label;
+    player.currentQuality = initialLabel;
+    if (player.qualityLabel) player.qualityLabel.textContent = initialLabel;
     player.quality.hidden = false;
+    if (player.sources.length === 1) {
+      /* Один источник — оставляем только индикатор текущего разрешения. */
+      player.quality.disabled = true;
+      player.quality.setAttribute('aria-disabled', 'true');
+      player.quality.classList.add('vp__quality--single');
+      return;
+    }
+    player.quality.disabled = false;
+    player.quality.removeAttribute('aria-disabled');
+    player.quality.classList.remove('vp__quality--single');
     const wrap = document.createElement('div');
     wrap.className = 'vp__quality-menu';
     player.root.appendChild(wrap);
@@ -676,16 +713,42 @@
             wrap.classList.remove('is-open');
             return;
           }
-          const wasPlaying = !player.video.paused;
+          /* Запоминаем позицию и wasPlaying ДО смены src, чтобы корректно
+             возобновить воспроизведение после загрузки новых метаданных. */
+          const wasPlaying = !player.video.paused && !player.video.ended;
           const t = player.video.currentTime || 0;
+
+          /* Переключаем UI в loading-режим:
+             - снимаем is-ready (чтобы не показывать пустой vp__el)
+             - снимаем is-playing (чтобы big-play был виден, иконка play корректна)
+             - снимаем is-paused (чтобы контролы появились на :hover) */
+          player.root.classList.remove('is-ready', 'is-playing', 'is-paused');
+          setStatus(player, 'loading');
+
           player.currentQuality = s.label;
-          player.video.src = s.src;
-          player.video.currentTime = t;
-          player.video.addEventListener('loadedmetadata', () => {
-            if (wasPlaying) player.video.play().catch(() => {});
-          }, { once: true });
+          if (player.qualityLabel) player.qualityLabel.textContent = s.label;
+          /* Перерисовываем меню, чтобы is-current встал на новый пункт
+             (до того, как свернём выпадашку). Без этого все опции остаются
+             со старым is-current. */
+          render();
+
+          /* Ставим src и сразу load(). currentTime сбросится в 0;
+             корректную позицию восстановим на loadedmetadata. */
+          player.video.src = pickBestSource(player.video, s.src);
+          try { player.video.load(); } catch (e) { /* noop */ }
+
+          const onMeta = () => {
+            /* Восстанавливаем позицию и, если видео играло, запускаем play. */
+            try { player.video.currentTime = t; } catch (e) { /* noop */ }
+            if (wasPlaying) {
+              player.video.play().then(() => setStatus(player, null)).catch(() => setStatus(player, 'error'));
+            } else {
+              setStatus(player, null);
+            }
+          };
+          player.video.addEventListener('loadedmetadata', onMeta, { once: true });
+
           wrap.classList.remove('is-open');
-          player.qualityLabel && (player.qualityLabel.textContent = s.label);
         });
         wrap.appendChild(opt);
       });
@@ -724,12 +787,6 @@
     if (posterUrl && player.poster) player.poster.src = posterUrl;
 
     if (root.getAttribute('data-player-loop') === 'true') player.video.loop = true;
-    if (root.getAttribute('data-player-init-muted') === 'true') {
-      player.video.muted = true;
-    }
-    if (root.getAttribute('data-player-unmute-on-play') === 'true') {
-      player.unmuteOnPlay = true;
-    }
 
     /* Начальная громкость — из localStorage или 1 */
     let storedVol = 1;
@@ -983,7 +1040,10 @@
             pane.removeAttribute('hidden');
           } else {
             pane.setAttribute('hidden', '');
-            if (panePlayer && panePlayer.video) panePlayer.video.pause();
+            /* panePlayer — это <div class="vp" data-player>, у него нет свойства .video.
+               Достаём сам <video> через querySelector, чтобы вызвать pause(). */
+            const v = panePlayer && panePlayer.querySelector('.vp__el');
+            if (v) v.pause();
           }
         });
 
