@@ -75,12 +75,73 @@
   --nav-h: 70px;
 }
 
-/* Fluid gutter on mobile */
-@media (max-width: 600px) {
-  :root { --gutter: 20px; }
+/* Fluid design tokens — mobile-first refinement
+   Пять ступеней: базовый десктоп → 1100 (компактный десктоп) → 880 (планшет)
+   → 600 (большой телефон) → 420 (узкий телефон).
+   На каждой ступени переопределяем spacing-токены, чтобы все
+   использующие их компоненты (section padding, card gap, отступы между
+   элементами) получили более тесный ритм без необходимости писать
+   отдельные правила на каждое место. Брейкпоинты унифицированы —
+   1024/700/480/380 ранее существовали, теперь схлопнуты в 880/600/420. */
+
+@media (max-width: 1100px) {
+  :root {
+    --space-7: 40px;
+    --space-8: 56px;
+    --space-9: 80px;
+    --space-10: 96px;
+  }
 }
-@media (max-width: 380px) {
-  :root { --gutter: 16px; }
+
+@media (max-width: 880px) {
+  :root {
+    --gutter: 20px;
+    --space-6: 28px;
+    --space-7: 36px;
+    --space-8: 48px;
+    --space-9: 64px;
+    --space-10: 80px;
+    --max-narrow: 720px;
+    --nav-h: 64px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: 18px;
+    --space-4: 14px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 40px;
+    --space-9: 56px;
+    --space-10: 64px;
+    --nav-h: 60px;
+    /* Минимальная комфортная высота тач-таргета — Apple HIG = 44pt.
+       Используем 44 как базовый «пилюльный» tap-зона для кнопок,
+       сегментированных контролов, иконок-кнопок в плеере/lightbox. */
+    --touch-min: 44px;
+    /* Display sizes — более «журнальные» на mobile, без 64-96px заголовков,
+       которые ломают ритм. 36-40px для h1, 28-32px для h2. */
+    --fs-display-1: clamp(40px, 11vw, 56px);
+    --fs-display-2: clamp(28px, 7.4vw, 40px);
+    --fs-display-3: clamp(22px, 6vw, 30px);
+    --fs-body-lg: 16px;
+    /* Карточки на mobile получают более мягкий радиус — современный «fluid» стиль. */
+    --radius-2: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --gutter: 16px;
+    --space-3: 10px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 20px;
+    --space-7: 28px;
+    --space-8: 36px;
+  }
 }
 
 /* ==========================================================================
@@ -108,6 +169,12 @@ img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 button, input, select { font: inherit; color: inherit; }
 button { -webkit-tap-highlight-color: transparent; cursor: pointer; }
+
+/* Галерейные кнопки-обёртки для фото: на iOS tap-вспышка выглядит
+   некрасиво, оставляем только тонкий outline через :focus-visible.
+   При активном нажатии — едва заметный scale-down, как feedback. */
+.gallery__cell:active img,
+.install__zoom:active img { transform: scale(0.985); }
 ul, ol { padding: 0; margin: 0; list-style: none; }
 h1, h2, h3, h4, p { margin: 0; }
 em { font-style: italic; font-family: var(--font-d); font-weight: 500; }
@@ -141,7 +208,8 @@ summary:focus-visible {
 }
 .skip-link:focus,
 .skip-link:focus-visible {
-  left: var(--space-2);
+  left: max(8px, env(safe-area-inset-left));
+  top: max(8px, env(safe-area-inset-top));
   outline: 3px solid var(--ink);
   outline-offset: 2px;
 }
@@ -173,9 +241,34 @@ summary:focus-visible {
 
 /* prevent long words/strings from blowing out the layout on tiny screens */
 .section, .footer, .hero, .order, .review, .model__item, .faq__item p,
-.hero__lede, .order__sub, .section__sub, .model__tag, .step p {
+.hero__lede, .order__sub, .section__sub, .model__tag, .step p,
+.kit-item, .scenario, .compat__card, .legal-banner__item,
+.legal-banner__lead, .compat__help-text, .compat__card-meta,
+.specs__row, .specs__value, .specs__compare-cell {
   overflow-wrap: anywhere;
   word-break: break-word;
+}
+
+/* ===== Mobile typography rhythm =====
+   Глобальные правила, чтобы любой display-заголовок выглядел
+   одинаково аккуратно на mobile: text-wrap: balance (без висячих
+   строк), letter-spacing чуть свободнее для читаемости на 320-414px. */
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  h1, h2, h3 { text-wrap: balance; }
+  /* Display-шрифт на mobile — те же Inter Tight, но с оптимизированным
+     letter-spacing: десктопный -0.03em делает текст на 30px тесноватым. */
+  .hero__title,
+  .section__title,
+  .compat__title,
+  .scenarios__title,
+  .order__title,
+  .kit__title,
+  .specs__compare-title,
+  .legal-banner__title,
+  .reviews-trust + * .section__title {
+    letter-spacing: -0.02em;
+  }
 }
 
 /* ==========================================================================
@@ -375,10 +468,69 @@ summary:focus-visible {
   font-size: 17px;
 }
 
-@media (max-width: 880px) {
+/* ===== Nav — mobile breakpoints =====
+   На mobile скрываем горизонтальное меню и CTA в шапке,
+   показываем бургер с увеличенной hit-area и более мягкой анимацией.
+   Брейкпоинт 1100px (а не 880): меню из 5 ссылок перестаёт помещаться
+   на узких ноутбуках — переключаемся на бургер раньше. */
+@media (max-width: 1100px) {
   .nav__links { display: none; }
   .nav__cta { display: none; }
-  .nav__burger { display: inline-flex; align-items: center; justify-content: center; }
+  .nav__burger { display: inline-flex; }
+}
+
+@media (max-width: 880px) {
+  .nav { padding: 12px 0; }
+  .nav__inner { gap: 16px; }
+  .nav__logo { height: 32px; }
+  /* Бургер — крупнее, чем у десктопа: 48×48 — попадание пальцем 100%. */
+  .nav__burger {
+    width: 48px; height: 48px;
+    border-color: var(--line);
+    background: rgba(14, 17, 22, 0.4);
+  }
+  /* Полосы бургера на mobile толще и с бо́льшим контрастом. */
+  .nav__burger span {
+    left: 12px; right: 12px;
+    height: 2.5px;
+    background: var(--paper);
+  }
+  .nav__burger span:nth-child(1) { top: 16px; }
+  .nav__burger span:nth-child(2) { top: 23px; }
+  .nav__burger span:nth-child(3) { top: 30px; }
+  .nav__burger.is-open span:nth-child(1),
+  .nav__burger.is-open span:nth-child(3) { top: 23px; }
+}
+
+@media (max-width: 420px) {
+  .nav__logo { height: 28px; }
+  .nav__burger { width: 44px; height: 44px; }
+}
+
+/* ===== Mobile off-canvas menu =====
+   На mobile меню растягивается на 100dvh (а не 100vh — корректно
+   работает в Safari iOS). Контент центрируется по верху, внизу —
+   крупная CTA «Заказать» с safe-area-inset. */
+@media (max-width: 1100px) {
+  .mobile-nav {
+    padding: 80px 22px 24px;
+    padding-top: calc(72px + env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+  .mobile-nav__list { gap: 2px; }
+  .mobile-nav__list a {
+    min-height: 60px;
+    padding: 18px 6px;
+    font-size: 21px;
+    border-bottom-color: rgba(245, 242, 235, 0.07);
+  }
+  .mobile-nav__list a:not(.btn)::after { font-size: 22px; }
+  .mobile-nav__list .btn {
+    margin-top: 28px;
+    padding: 20px 24px;
+    font-size: 17px;
+    min-height: 56px;
+  }
 }
 
 /* ==========================================================================
@@ -439,6 +591,8 @@ summary:focus-visible {
   line-height: 0.95;
   letter-spacing: -0.03em;
   margin: 22px 0 28px;
+  font-feature-settings: "ss01", "cv11";
+  text-wrap: balance;
 }
 .hero__title-line {
   display: block;
@@ -534,9 +688,9 @@ summary:focus-visible {
 }
 
 @media (max-width: 600px) {
-  .dial__number { font-size: 44px; }
-  .dial__unit { font-size: 12px; }
-  .dial__label { font-size: 9px; }
+  .dial__number { font-size: 38px; }
+  .dial__unit { font-size: 11px; }
+  .dial__label { font-size: 9px; letter-spacing: 0.16em; }
 }
 
 .hero__chip {
@@ -624,56 +778,89 @@ summary:focus-visible {
 
 /* ==========================================================================
    Hero — responsive (multi-tier breakpoints)
+   Брейкпоинты унифицированы: 1100 / 880 / 600 / 420.
+   Прежние 1024 / 700 / 480 / 380 растворены в соседних.
    ========================================================================== */
 
 /* tablet — keep 2 cols but stack copy/visual tighter */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
+  .hero { padding: 140px 0 56px; }
   .hero__grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .hero__visual { max-width: 380px; margin-left: auto; }
   .hero__stats { gap: 32px; }
 }
 
-/* large phone / phablet — stack */
+/* large phone / phablet — stack. ВАЖНО: brand-логотип в hero дублирует
+   nav-логотип — на mobile скрываем, иначе он «съедает» 60-80px
+   первого экрана без пользы. */
 @media (max-width: 880px) {
-  .hero { padding-top: 130px; padding-bottom: 50px; }
-  .hero__grid { grid-template-columns: 1fr; gap: 50px; }
+  .hero { padding-top: 120px; padding-bottom: 56px; }
+  .hero__grid { grid-template-columns: 1fr; gap: 44px; }
+  .hero__brand { display: none; }
   .hero__visual { max-width: 360px; margin: 0 auto; }
   .hero__chip--1 { left: -4%; }
   .hero__chip--2 { right: -4%; }
   .hero__stats { gap: 28px; }
-  .hero__stats b { font-size: 28px; }
+  .hero__stats b { font-size: 30px; }
   .hero__ctas { flex-wrap: wrap; }
   .hero__ctas .btn { flex: 1 1 220px; }
+  .hero__lede { max-width: 560px; }
 }
 
-/* small phones — shrink padding, scale down stats, fit dial nicely */
+/* small phones — оптимизированная типографика и воздух.
+   Заголовок не должен ломать 2 строки на «Свобода/не ждёт/на обочине» —
+   оставляем трёхстрочный ритм, но с уменьшенным кеглем (40-44px). */
 @media (max-width: 600px) {
-  .hero { padding-top: 110px; padding-bottom: 40px; }
-  .hero__title { font-size: clamp(36px, 11vw, 64px); margin: 16px 0 20px; }
-  .hero__lede { font-size: 15px; margin-bottom: 28px; }
-  .hero__ctas { margin-bottom: 40px; }
-  .hero__stats { gap: 20px; }
-  .hero__stats b { font-size: 24px; }
+  .hero { padding-top: 100px; padding-bottom: 48px; }
+  .hero__title {
+    font-size: clamp(36px, 10.5vw, 48px);
+    margin: 4px 0 18px;
+    line-height: 0.98;
+  }
+  .hero__lede { font-size: 15px; margin-bottom: 24px; line-height: 1.55; }
+  .hero__ctas { margin-bottom: 32px; gap: 12px; }
+  .hero__ctas .btn { padding: 16px 20px; font-size: 15px; min-height: 52px; }
+  .hero__stats {
+    gap: 16px;
+    padding-top: 24px;
+    margin-top: 32px;
+  }
+  .hero__stats b { font-size: 26px; }
+  .hero__stats span { font-size: 10px; }
+  .hero__trust { margin-top: 24px; padding-top: 20px; gap: 8px; }
+  .hero__trust-item { padding: 7px 12px; font-size: 10.5px; }
   .hero__visual { max-width: 300px; }
   .hero__chip { padding: 8px 12px; font-size: 12px; }
   .hero__chip--1 { left: -2%; top: 4%; }
   .hero__chip--2 { right: -2%; top: 42%; }
   .hero__chip--3 { left: 6%; bottom: 4%; }
+  /* На мобиле сокращаем задержки анимации hero — они могут попасть в LCP
+     на медленных телефонах и ощущаются как «лаг» перед текстом. */
+  .hero__title-line, .hero__lede, .hero__ctas, .hero__stats, .hero__trust {
+    animation-duration: .55s;
+  }
   .hero__ticker { margin-top: 40px; padding: 12px 0; }
   .ticker__track { font-size: 15px; gap: 40px; }
+  .hero__bg-num { font-size: clamp(220px, 60vw, 360px); right: -10%; bottom: -18%; }
+  .ad-mark { padding: 12px 14px; gap: 8px 12px; font-size: 11px; }
 }
 
-/* very small phones (320-360) — drop chip-3, tighten further */
-@media (max-width: 380px) {
-  .hero { padding-top: 100px; }
-  .hero__visual { max-width: 240px; }
+/* very small phones (320-360) — drop chip-3, tighten further.
+   Хит-таргеты CTA — на всю ширину, заголовок не уходит ниже 36px. */
+@media (max-width: 420px) {
+  .hero { padding-top: 92px; padding-bottom: 40px; }
+  .hero__title { font-size: clamp(34px, 9.4vw, 40px); }
+  .hero__visual { max-width: 260px; }
   .hero__chip--3 { display: none; }
   .hero__chip--1 { left: 0; }
   .hero__chip--2 { right: 0; }
-  .hero__stats { gap: 14px; }
-  .hero__stats b { font-size: 20px; }
-  .hero__stats span { font-size: 10px; }
+  .hero__stats { gap: 10px; }
+  .hero__stats b { font-size: 22px; }
+  .hero__stats span { font-size: 9.5px; }
   .hero__ctas .btn { flex: 1 1 100%; }
+  .hero__trust { gap: 6px; }
+  .hero__trust-item { padding: 6px 10px; font-size: 10px; }
+  .hero__photo-caption { font-size: 10px; padding: 4px 10px; }
 }
 
 /* ==========================================================================
@@ -703,15 +890,26 @@ summary:focus-visible {
   max-width: 540px;
 }
 
+/* Section rhythm — единая шкала по всем брейкпоинтам.
+   На mobile секции теряют 60-80% вертикального воздуха: 120→88→72→56px.
+   Это даёт больше контента выше fold и при этом сохраняет «дыхание». */
+@media (max-width: 1100px) {
+  .section { padding: 96px 0; }
+}
 @media (max-width: 880px) {
   .section { padding: 80px 0; }
-  .section__head { margin-bottom: 44px; }
+  .section__head { margin-bottom: 40px; }
+  .section__title { margin: 14px 0 16px; }
 }
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .section { padding: 64px 0; }
-  .section__head { margin-bottom: 36px; }
-  .section__title { margin: 14px 0 14px; }
-  .section__sub { font-size: 15px; }
+  .section__head { margin-bottom: 32px; }
+  .section__title { margin: 12px 0 14px; }
+  .section__sub { font-size: 15px; line-height: 1.5; }
+}
+@media (max-width: 420px) {
+  .section { padding: 56px 0; }
+  .section__head { margin-bottom: 28px; }
 }
 
 /* ==========================================================================
@@ -766,8 +964,14 @@ summary:focus-visible {
   .specs__bar { width: 100%; }
   .specs__value { font-size: 18px; }
 }
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .specs__row { padding: 18px 0; }
+  .specs__value { font-size: 17px; }
+  .specs__label { font-size: 11px; }
+}
+
+@media (max-width: 420px) {
+  .specs__row { padding: 16px 0; gap: 8px; }
   .specs__value { font-size: 16px; }
 }
 
@@ -826,7 +1030,7 @@ summary:focus-visible {
   content: '◆ ';
   color: var(--bolt);
 }
-@media (max-width: 1024px) and (min-width: 881px) {
+@media (max-width: 1100px) and (min-width: 881px) {
   .step { padding: 0 24px 0 0; }
   .step__num { font-size: 72px; }
 }
@@ -836,10 +1040,16 @@ summary:focus-visible {
   .step:not(:last-child)::after { display: none; }
   .step__num { font-size: 72px; }
 }
-@media (max-width: 480px) {
-  .step { padding-bottom: 28px; margin-bottom: 28px; }
-  .step__num { font-size: 56px; margin-bottom: 18px; }
+@media (max-width: 600px) {
+  .step { padding-bottom: 32px; margin-bottom: 32px; }
+  .step__num { font-size: 64px; margin-bottom: 16px; }
   .step h3 { font-size: 24px; }
+  .step p { font-size: 14.5px; }
+}
+@media (max-width: 420px) {
+  .step { padding-bottom: 28px; margin-bottom: 28px; }
+  .step__num { font-size: 52px; }
+  .step h3 { font-size: 22px; }
   .step p { font-size: 14px; }
 }
 
@@ -918,13 +1128,19 @@ summary:focus-visible {
 }
 
 @media (max-width: 880px) {
-  .reviews { grid-template-columns: 1fr; }
+  .reviews { grid-template-columns: 1fr; gap: 18px; }
   .compat__card-photo { aspect-ratio: 16 / 10; }
 }
-@media (max-width: 480px) {
-  .review { padding: 28px 22px; gap: 22px; }
+@media (max-width: 600px) {
+  .review { padding: 26px 22px; gap: 20px; }
   .review blockquote { font-size: 16px; }
-  .review::before { font-size: 60px; left: 16px; }
+  .review::before { font-size: 64px; left: 16px; }
+  .review__metric b { font-size: 26px; }
+}
+@media (max-width: 420px) {
+  .review { padding: 24px 18px; gap: 18px; }
+  .review blockquote { font-size: 15px; }
+  .review__metric b { font-size: 24px; }
 }
 
 /* ==========================================================================
@@ -972,9 +1188,17 @@ summary:focus-visible {
 }
 
 @media (max-width: 600px) {
-  .faq__item summary { font-size: 18px; padding: 20px 0; min-height: 56px; }
-  .faq__item summary::after { font-size: 26px; }
-  .faq__item p { padding: 0 40px 20px 0; font-size: 14px; }
+  .faq__item summary { font-size: 18px; padding: 20px 0; min-height: 60px; gap: 16px; }
+  .faq__item summary::after { font-size: 28px; }
+  .faq__item p { padding: 0 36px 22px 0; font-size: 14.5px; line-height: 1.6; }
+  .faq__item[open] summary { padding-bottom: 8px; }
+}
+
+@media (max-width: 420px) {
+  .faq__item summary { font-size: 16px; padding: 18px 0; min-height: 56px; }
+  .faq__item summary::after { font-size: 24px; }
+  .faq__item p { padding: 0 32px 20px 0; font-size: 14px; }
+  .faq__figure { padding: 10px; }
 }
 
 /* ==========================================================================
@@ -1050,7 +1274,7 @@ label.field--full { display: flex; }
 }
 .phone-country {
   display: inline-flex;
-  padding: 2px;
+  padding: 3px;
   background: var(--surface-light, #f3f4f6);
   border: 1.5px solid var(--line-d);
   border-radius: 999px;
@@ -1061,10 +1285,11 @@ label.field--full { display: flex; }
   -webkit-appearance: none;
   background: transparent;
   border: 0;
-  padding: 4px 10px;
+  padding: 6px 12px;
+  min-height: 32px;
   font: inherit;
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 12px;
+  letter-spacing: 0.04em;
   color: var(--mute-d);
   border-radius: 999px;
   cursor: pointer;
@@ -1118,21 +1343,23 @@ label.field--full { display: flex; }
   display: flex;
   flex-direction: row !important;
   align-items: flex-start;
-  gap: 10px !important;
-  padding: 14px;
+  gap: 12px !important;
+  padding: 14px 16px;
   background: color-mix(in srgb, var(--paper) 50%, var(--surface-light));
   border: 1px solid var(--line-d);
-  border-radius: 2px;
+  border-radius: var(--radius-2);
   cursor: pointer;
   transition: border-color .2s ease, background .2s ease;
   min-width: 0;
+  min-height: 56px;
 }
 .consent:hover { background: rgba(245,242,235,0.8); }
 .consent + .consent { margin-top: 8px; }
 .consent input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   margin: 0;
+  margin-top: 1px;
   flex-shrink: 0;
   accent-color: var(--bolt);
   cursor: pointer;
@@ -1156,12 +1383,54 @@ label.field--full { display: flex; }
 .consent--error .consent__text { color: var(--ink); }
 @media (max-width: 880px) {
   .order { grid-template-columns: 1fr; gap: 36px; }
-  .order__form { grid-template-columns: 1fr; padding: 26px; }
+  .order__form { grid-template-columns: 1fr; padding: 26px; gap: 18px; }
 }
-@media (max-width: 480px) {
-  .section--cta { padding: 80px 0; }
-  .order__form { padding: 22px 18px; gap: 14px; }
-  .field input, .field select { padding: 16px 14px; font-size: 16px; /* prevent iOS zoom */ }
+
+@media (max-width: 600px) {
+  .section--cta { padding: 64px 0; }
+  .order__head { max-width: 100%; }
+  .order__sub { font-size: 15px; line-height: 1.55; }
+  .order__form {
+    padding: 20px 16px;
+    gap: 16px;
+    border-radius: var(--radius-2);
+  }
+  .field input, .field select {
+    padding: 16px 14px;
+    font-size: 16px; /* prevent iOS zoom on focus */
+    border-radius: var(--radius-1);
+  }
+  .field__label { font-size: 10.5px; }
+  .field__helper { font-size: 11.5px; }
+  .phone-country { padding: 3px; }
+  .phone-country__btn {
+    padding: 6px 12px;
+    min-height: 32px;
+    font-size: 11px;
+  }
+  .consent {
+    padding: 12px;
+    gap: 12px;
+  }
+  .consent input[type="checkbox"] { width: 22px; height: 22px; }
+  .consent__text { font-size: 12.5px; line-height: 1.45; }
+  /* Кнопка отправки — крупная, 52px высота, тень-усилитель. */
+  .order__form .btn--lg { padding: 18px 24px; font-size: 16px; min-height: 56px; }
+  .order__cta-note { font-size: 11px; }
+  .form-trust { gap: 6px 12px; }
+  .form-trust__item { font-size: 10.5px; }
+  .order__form-success { padding: var(--space-5) var(--space-3); }
+  .order__form-success-title { font-size: 22px; }
+  .order__form-success-text { font-size: 14.5px; line-height: 1.55; }
+  .mini-dial { width: 140px; height: 140px; }
+  .mini-dial__number { font-size: 30px; }
+}
+
+@media (max-width: 420px) {
+  .order__form { padding: 18px 14px; }
+  .consent { padding: 10px; }
+  .consent__text { font-size: 12px; }
+  .order__form .btn--lg { padding: 16px 20px; min-height: 52px; font-size: 15px; }
 }
 
 /* ==========================================================================
@@ -1284,14 +1553,28 @@ label.field--full { display: flex; }
   font-family: var(--font-m);
   letter-spacing: 0.05em;
 }
-@media (max-width: 880px) {
+@media (max-width: 1100px) {
   .footer__inner { grid-template-columns: 1fr 1fr; }
-  .footer__bottom { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 880px) {
+  .footer__inner { gap: 32px; margin-bottom: 48px; }
+  .footer__bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
 }
 @media (max-width: 600px) {
-  .footer { padding: 64px 0 24px; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
-  .footer__inner { grid-template-columns: 1fr; gap: 32px; margin-bottom: 40px; }
+  .footer { padding: 56px 0 24px; padding-bottom: max(96px, calc(24px + env(safe-area-inset-bottom))); }
+  /* Дополнительный нижний паддинг под sticky-CTA — 80px + safe-area */
+  .footer__inner { grid-template-columns: 1fr; gap: 28px; margin-bottom: 36px; }
   .footer__col h4 { margin-top: 8px; }
+  .footer__col a, .footer__col p { padding: 6px 0; font-size: 14px; }
+  .footer__brand p { font-size: 14px; line-height: 1.5; }
+  .cert-badge { padding: 8px 14px; font-size: 10.5px; }
+  .footer__legal { padding: 20px 18px; }
+  .footer__legal-list { font-size: 12.5px; gap: 4px 0; }
+  .footer__bottom { font-size: 11px; }
+}
+@media (max-width: 420px) {
+  .footer { padding-top: 48px; }
+  .footer__legal-list { font-size: 12px; }
 }
 
 /* ==========================================================================
@@ -1402,7 +1685,8 @@ body.legal-page { background: var(--paper); color: var(--ink); }
 .footer--minimal a { color: var(--ink); }
 .footer--minimal a:hover { color: var(--bolt); }
 @media (max-width: 600px) {
-  .footer--minimal .container { flex-direction: column; align-items: flex-start; }
+  .footer--minimal { padding: 32px 0; padding-bottom: max(32px, calc(16px + env(safe-area-inset-bottom))); }
+  .footer--minimal .container { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
 /* ==========================================================================
@@ -1443,12 +1727,7 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   align-items: stretch;
   row-gap: 12px;
 }
-@media (max-width: 880px) {
-  .hero__photo--video { max-height: 480px; }
-}
-@media (max-width: 600px) {
-  .hero__photo--video { max-height: 420px; }
-}
+/* dial--badge — круглый «спидометр» в углу hero-фото. */
 .dial--badge {
   position: absolute;
   right: 12px;
@@ -1465,23 +1744,25 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   z-index: 4;
   pointer-events: none;
   transition: opacity 0.2s var(--ease-out);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 212, 0, 0.1);
 }
 .dial--badge .dial__svg { width: 96%; height: 96%; }
 .hero__photo--video:has(.vp.is-playing) .dial--badge { opacity: 0; }
 @media (max-width: 880px) {
+  .hero__photo--video { max-height: 480px; }
   .hero__photo { max-width: 360px; margin: 0 auto; }
-  .hero__photo--video { max-width: 280px; }
-  .dial--badge { width: 76px; height: 76px; right: 8px; top: 8px; }
+  .hero__photo--video { max-width: 300px; }
+  .dial--badge { width: 76px; height: 76px; right: 10px; top: 10px; }
 }
 @media (max-width: 600px) {
   .hero__photo { max-width: 300px; padding: 12px; }
-  .hero__photo--video { max-width: 240px; padding: 0; }
-  .dial--badge { width: 64px; height: 64px; right: 6px; top: 6px; }
+  .hero__photo--video { max-height: 440px; max-width: 260px; padding: 0; }
+  .dial--badge { width: 68px; height: 68px; right: 8px; top: 8px; }
 }
-@media (max-width: 380px) {
-  .hero__photo { max-width: 240px; }
-  .hero__photo--video { max-width: 220px; }
-  .dial--badge { width: 56px; height: 56px; right: 4px; top: 4px; }
+@media (max-width: 420px) {
+  .hero__photo { max-width: 260px; padding: 10px; }
+  .hero__photo--video { max-width: 220px; max-height: 400px; }
+  .dial--badge { width: 60px; height: 60px; right: 6px; top: 6px; }
 }
 
 /* Models section — two product variants (active / passive) */
@@ -1578,21 +1859,31 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   gap: var(--space-2);
   margin-top: var(--space-3);
   padding: 0 6px;
+  /* На mobile включаем горизонтальный scroll-snap, чтобы пользователь
+     мог свайпом переключать миниатюры — родное поведение, без JS. */
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.model__thumbs::-webkit-scrollbar { display: none; }
 .model__thumb {
-  flex: 1;
-  padding: 8px 4px;
+  flex: 1 0 auto;
+  min-width: 80px;
+  padding: 10px 12px;
   background: var(--steel-2);
   border: 1.5px solid var(--line);
   border-radius: var(--radius-1);
   color: var(--paper);
   font-family: var(--font-m);
-  font-size: var(--fs-mono-sm);
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
   transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
-  min-height: 32px;
+  min-height: 40px;
+  scroll-snap-align: start;
+  text-align: center;
+  white-space: nowrap;
 }
 .model__thumb:hover { border-color: var(--mute); }
 .model__thumb.is-active {
@@ -1702,8 +1993,24 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .models { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@media (max-width: 600px) {
+  .model__item { padding: var(--space-5); border-radius: var(--radius-2); }
+  .model__name { font-size: 26px; }
+  .model__tag { font-size: 15px; }
+  .model__price b { font-size: 28px; }
+  .model__photo { margin: 0 0 12px; padding: 10px; }
+  .model__season-gift { padding: var(--space-3); }
+  .model__season-gift b { font-size: 16px; }
+}
+
+@media (max-width: 420px) {
+  .model__item { padding: var(--space-4); }
+  .model__name { font-size: 22px; }
+  .model__num { padding: 5px 10px; font-size: 10px; }
 }
 
 /* Specs safety card — text + thumbnail */
@@ -1795,7 +2102,19 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   text-align: center;
 }
 @media (max-width: 880px) {
-  .specs__safety { grid-template-columns: 1fr; padding: 24px; }
+  .specs__safety { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
+}
+@media (max-width: 600px) {
+  .specs__safety { padding: 20px; margin-top: var(--space-6); }
+  .specs__safety-rules li { font-size: 14.5px; }
+  .specs__safety-lead { font-size: 15px; }
+  .specs__safety-card { padding: 10px; }
+}
+
+@media (max-width: 420px) {
+  .specs__safety { padding: 16px; }
+  .specs__safety-rules li { padding-left: 24px; font-size: 14px; }
+  .specs__safety-rules li::before { width: 18px; height: 18px; font-size: 12px; }
 }
 
 /* FAQ figure inside details */
@@ -2015,7 +2334,7 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   gap: var(--space-2);
 }
 @media (max-width: 600px) {
-  .chair-radios__grid { grid-template-columns: 1fr; }
+  .chair-radios__grid { grid-template-columns: 1fr; gap: 10px; }
 }
 .chair-radio {
   position: relative;
@@ -2030,10 +2349,11 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
   min-width: 0;
   overflow: hidden;
+  min-height: 56px;
 }
 .chair-radio:hover { border-color: color-mix(in srgb, var(--ink) 30%, transparent); }
 .chair-radio input[type="radio"] {
-  width: 18px; height: 18px;
+  width: 20px; height: 20px;
   margin: 0;
   flex-shrink: 0;
   accent-color: var(--bolt);
@@ -2054,15 +2374,25 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   color: var(--mute-d);
   line-height: 1.3;
 }
-@media (max-width: 700px) {
-  .chair-radios__grid { grid-template-columns: 1fr; }
-}
 
 .order__form {
   grid-area: form;
 }
-@media (max-width: 700px) {
-  .order__variants { grid-template-columns: 1fr; }
+@media (max-width: 600px) {
+  .order__variants { grid-template-columns: 1fr; gap: 10px; }
+  .order__variant { padding: 16px 18px; gap: 4px 14px; }
+  .order__variant-icon { width: 48px; height: 48px; font-size: 24px; }
+  .order__variant-name { font-size: 16px; }
+  .order__variant-meta { font-size: 10.5px; }
+  .order__summary {
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+  .order__summary-img { width: 72px; height: 96px; }
+  .order__summary-tag { font-size: 9px; padding: 3px 6px; }
+  .order__summary-kit { font-size: 14px; }
+  .order__summary-price { font-size: 14px; }
+  .order__summary-hint { font-size: 12px; }
 }
 
 /* Install — tabs for active/passive guide */
@@ -2187,10 +2517,6 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   box-shadow: var(--shadow-1);
 }
 
-@media (max-width: 880px) {
-  .install__grid { grid-template-columns: 1fr; gap: var(--space-4); }
-}
-
 /* ==========================================================================
    Lightbox — увеличение картинки по клику
    ========================================================================== */
@@ -2238,6 +2564,7 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   cursor: pointer;
   box-shadow: var(--shadow-glow-strong);
   transition: transform var(--dur-fast) var(--ease-out);
+  z-index: 6;
 }
 .lightbox__close:hover { transform: rotate(90deg); }
 .lightbox__close svg { width: 22px; height: 22px; }
@@ -2352,6 +2679,38 @@ body.lightbox-open { overflow: hidden; }
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* Lightbox — mobile
+   На мобиле плеер выходит на полный экран: full-bleed,
+   кнопки prev/next — крупные (64px), чтобы попасть пальцем,
+   миниатюры уменьшаются до 52×52 и поднимаются ближе к нижнему краю. */
+@media (max-width: 880px) {
+  .lightbox { padding: var(--space-3); }
+  .lightbox__img { max-height: calc(100vh - 100px); border-radius: var(--radius-2); }
+  .lightbox__nav { width: 64px; height: 64px; }
+  .lightbox__nav--prev { left: var(--space-3); }
+  .lightbox__nav--next { right: var(--space-3); }
+  .lightbox__nav svg { width: 28px; height: 28px; }
+  .lightbox__close { top: max(12px, env(safe-area-inset-top)); right: 12px; }
+  .lightbox__counter { top: max(14px, env(safe-area-inset-top)); font-size: 11px; padding: 6px 12px; }
+  .lightbox__thumbs { padding: var(--space-2) var(--space-3); gap: 6px; }
+  .lightbox__thumb { width: 52px; height: 52px; border-width: 1.5px; }
+  .lightbox.is-group .lightbox__img { max-height: calc(100vh - 180px); }
+  .lightbox.is-group .lightbox__figure { max-height: calc(100vh - 180px); }
+}
+
+@media (max-width: 420px) {
+  .lightbox { padding: 0; }
+  /* На совсем узких экранах миниатюры не помещаются снизу — свайп по картинке
+     справляется сам, миниатюры избыточны. Скрываем их полностью. */
+  .lightbox__thumbs { display: none !important; }
+  .lightbox.is-group .lightbox__img { max-height: calc(100vh - 140px); }
+  .lightbox.is-group .lightbox__figure { max-height: calc(100vh - 140px); }
+  .lightbox__nav { width: 56px; height: 56px; background: rgba(14, 17, 22, 0.7); }
+  .lightbox__nav--prev { left: 8px; }
+  .lightbox__nav--next { right: 8px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lightbox { animation: none; }
   .install__zoom:hover img { transform: none; }
@@ -2399,7 +2758,15 @@ body.lightbox-open { overflow: hidden; }
   color: var(--mute-d);
 }
 @media (max-width: 880px) {
-  .specs__cards { grid-template-columns: 1fr; }
+  .specs__cards { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; padding-top: 32px; }
+}
+@media (max-width: 600px) {
+  .specs__cards { gap: 14px; }
+  .specs__card { padding: 12px; }
+  .specs__mini-dial { width: 56px; height: 56px; }
+}
+@media (max-width: 420px) {
+  .specs__mini-dial { width: 48px; height: 48px; top: 8px; right: 8px; }
 }
 
 /* ==========================================================================
@@ -2602,9 +2969,29 @@ body.lightbox-open { overflow: hidden; }
 
 @media (max-width: 880px) {
   .compat { padding: var(--space-8) 0; }
-  .compat__grid { grid-template-columns: 1fr; }
+  .compat__grid { grid-template-columns: 1fr; gap: var(--space-4); }
   .compat__help { grid-template-columns: 1fr; gap: var(--space-4); padding: var(--space-5); }
   .compat__help-icon { margin: 0; }
+}
+
+@media (max-width: 600px) {
+  .compat__head { margin-bottom: var(--space-6); }
+  .compat__sub { font-size: 15px; line-height: 1.55; }
+  /* Карточка совместимости на mobile — фото уходит в полноэкранный постер
+     (aspect-ratio 16:9), затем контент-блок. Это даёт «превью»
+     при скролле ленты. */
+  .compat__card-photo { aspect-ratio: 16 / 9; }
+  .compat__card-body { padding: var(--space-4); gap: var(--space-2); }
+  .compat__card-name { font-size: 21px; }
+  .compat__help { padding: var(--space-4); border-radius: var(--radius-2); }
+  .compat__help-title { font-size: 20px; }
+  .compat__help-form { gap: var(--space-2); }
+  .compat__help-form .field input { padding: 14px 14px; }
+}
+
+@media (max-width: 420px) {
+  .compat__card-name { font-size: 19px; }
+  .compat__card-features li { font-size: 13px; }
 }
 
 /* Compat card features (список под описанием) */
@@ -2739,7 +3126,22 @@ body.lightbox-open { overflow: hidden; }
 
 @media (max-width: 880px) {
   .scenarios { padding: var(--space-8) 0; }
-  .scenarios__grid { grid-template-columns: 1fr; }
+  .scenarios__grid { grid-template-columns: 1fr; gap: var(--space-4); }
+}
+@media (max-width: 600px) {
+  .scenarios__head { margin-bottom: var(--space-5); }
+  .scenarios__sub { font-size: 15px; }
+  .scenario { padding: var(--space-5); gap: var(--space-3); }
+  .scenario__icon { width: 52px; height: 52px; }
+  .scenario__icon svg { width: 28px; height: 28px; }
+  .scenario__title { font-size: 21px; }
+  .scenario__quote { font-size: 15px; line-height: 1.5; }
+}
+@media (max-width: 420px) {
+  .scenario { padding: var(--space-4); }
+  .scenario__title { font-size: 19px; }
+  .scenario__quote { font-size: 14.5px; }
+  .scenario__fact { font-size: 11px; }
 }
 
 /* ==========================================================================
@@ -2855,14 +3257,36 @@ body.lightbox-open { overflow: hidden; }
 }
 .install__video-meta[hidden] { display: none; }
 .install__video-meta strong { color: var(--paper); font-weight: 700; }
-@media (max-width: 700px) {
+@media (max-width: 600px) {
+  .install__video { margin: var(--space-6) 0 var(--space-5); border-radius: var(--radius-2); }
   .install__video-head {
     flex-direction: column;
     align-items: stretch;
+    padding: var(--space-4);
+    gap: var(--space-3);
   }
+  .install__video-title { font-size: 22px; }
+  .install__video-eyebrow { margin-bottom: var(--space-2); }
   .install__video-tabs { align-self: flex-start; }
-  .install__video-tab { padding: 8px 14px; font-size: 12px; }
-  .install__video-meta { font-size: 11px; padding: 6px 10px; margin-bottom: var(--space-4); }
+  .install__video-tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    min-height: 40px;
+  }
+  .install__video-meta { font-size: 11px; padding: 6px 12px; margin: 0 var(--space-4) var(--space-3); }
+  .install__video-pane { margin-bottom: var(--space-2); }
+}
+
+@media (max-width: 420px) {
+  .install__video-title { font-size: 19px; }
+  .install__video-tab { padding: 8px 12px; font-size: 12px; min-height: 36px; }
+}
+
+@media (max-width: 880px) {
+  .install__grid { grid-template-columns: 1fr; gap: var(--space-4); margin: var(--space-6) 0; }
+  .install__guide { padding: var(--space-3); }
+  .install__guide figcaption b { font-size: 16px; }
+  .install__zoom-icon { width: 36px; height: 36px; opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
@@ -3200,46 +3624,63 @@ body.lightbox-open { overflow: hidden; }
 .vp--hero .vp__controls {
   /* Узкий плеер 9:16 — сжимаем gap и padding, чтобы все нужные контролы
      (play, time, seek, mute, volume, quality) уместились в одну строку. */
-  --vp-gap: 6px;
+  --vp-gap: 5px;
   gap: var(--vp-gap);
   padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  font-size: 11.5px;
 }
 .vp--hero .vp__big-play-icon { width: 88px; height: 88px; }
 .vp--hero .vp__big-play-icon svg { width: 40px; height: 40px; margin-left: 4px; }
 .vp--hero .vp__fs { display: none; }
-.vp--hero .vp__volume { width: 40px; }
-.vp--hero .vp__time { min-width: 0; font-size: 12px; gap: 2px; }
-.vp--hero .vp__quality { min-width: 30px; padding: 0 5px; }
+.vp--hero .vp__volume { width: 44px; }
+.vp--hero .vp__time { min-width: 0; font-size: 11.5px; gap: 2px; }
+.vp--hero .vp__quality { min-width: 36px; padding: 0 6px; font-size: 10.5px; }
 /* Mute-кнопка и шкала громкости — визуально одна группа без зазора.
    margin-right на mute "съедает" gap между mute и volume: на hero gap=6,
    на install gap=10 — единая CSS-переменная делает margin универсальным. */
 .vp__mute { margin-right: calc(-1 * var(--vp-gap, 10px)); }
-@media (max-width: 700px) {
+/* ==========================================================================
+   .vp — mobile breakpoints (унифицированы: 880 / 600 / 420)
+   Прежние 700/480 растворены в 600/420.
+   Принцип: shrink-then-hide. Никогда не display:none на десктопных
+   контролах — пользователь ожидает одинаковый набор кнопок на любом
+   устройстве. На mobile сжимаем gap, padding, font-size и touch-area
+   до тех пор, пока всё не уместится. Если что-то не влезает — раньше
+   это была качество-кнопка, теперь она останется 40px в ширину. */
+@media (max-width: 880px) {
   .vp__controls {
-    /* play, time, seek(1fr), mute, volume, fullscreen, quality — 7 видимых колонок. */
     grid-template-columns: auto auto 1fr auto auto auto auto;
     --vp-gap: 6px;
     gap: var(--vp-gap);
     padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
     font-size: 12px;
   }
+  .vp__big-play-icon { width: 72px; height: 72px; }
+  .vp__big-play-icon svg { width: 32px; height: 32px; }
+  .vp__big-play-text { font-size: 16px; }
+  .vp__big-play-sub { font-size: 11px; letter-spacing: 0.1em; }
+}
+
+@media (max-width: 600px) {
   .vp__big-play-icon { width: 64px; height: 64px; }
   .vp__big-play-icon svg { width: 28px; height: 28px; }
   .vp__big-play-text { font-size: 15px; }
   .vp__big-play-sub { font-size: 10px; letter-spacing: 0.1em; }
+  /* Кнопка качества: 40×34 — комфортнее для пальца, чем 32×34. */
+  .vp__quality { min-width: 40px; padding: 0 8px; font-size: 11px; }
+  /* Seek-bar немного толще, чтобы палец мог попасть. */
+  .vp__seek { height: 18px; }
+  .vp__seek::before { height: 5px; }
+  .vp__seek-buffer,
+  .vp__seek-fill { height: 5px; }
   /* На мобиле центральная кнопка видна и при playing (нужна для паузы).
      Во время паузы — полный десктопный вид: жёлтый круг + подписи.
      Во время воспроизведения — облегчённый полупрозрачный значок паузы
      (показывается как часть контролов, прячется по таймауту бездействия). */
   .vp.is-playing .vp__big-play { display: grid; }
-  /* Облегчённый стиль — только при playing. На паузе всё выглядит как на десктопе. */
   .vp.is-playing .vp__big-play-text,
   .vp.is-playing .vp__big-play-sub { display: none; }
-  .vp.is-playing .vp__big-play {
-    background: transparent;
-    border: 0;
-    padding: 0;
-  }
+  .vp.is-playing .vp__big-play { background: transparent; border: 0; padding: 0; }
   .vp.is-playing .vp__big-play::before { background: transparent; }
   .vp.is-playing .vp__big-play-icon {
     background: rgba(8, 10, 14, 0.55);
@@ -3248,9 +3689,26 @@ body.lightbox-open { overflow: hidden; }
     box-shadow: 0 4px 18px rgba(0,0,0,0.4);
   }
 }
-@media (max-width: 480px) {
+
+@media (max-width: 420px) {
+  /* На совсем узких экранах сжимаем только padding и font —
+     сами контролы остаются читаемыми. */
+  .vp__controls {
+    --vp-gap: 4px;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    font-size: 11px;
+  }
   .vp__btn { width: 32px; height: 32px; }
   .vp__btn svg { width: 16px; height: 16px; }
+  .vp__quality { min-width: 36px; padding: 0 6px; font-size: 10.5px; }
+  .vp__time { min-width: 64px; font-size: 11px; }
+  /* Hero-плеер — он 9:16, у него своя высота — пережимаем сильнее. */
+  .vp--hero .vp__controls { padding: 5px 6px calc(5px + env(safe-area-inset-bottom)); }
+  .vp--hero .vp__quality { min-width: 28px; padding: 0 4px; }
+  .vp--hero .vp__time { min-width: 0; }
+  .vp--hero .vp__volume { width: 32px; }
+  .vp--hero .vp__big-play-icon { width: 56px; height: 56px; }
+  .vp--hero .vp__big-play-icon svg { width: 24px; height: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .vp__el,
@@ -3269,7 +3727,7 @@ body.lightbox-open { overflow: hidden; }
   border: 1px solid var(--vp-line);
   border-radius: 10px;
   padding: 4px;
-  min-width: 80px;
+  min-width: 96px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
@@ -3282,7 +3740,8 @@ body.lightbox-open { overflow: hidden; }
   font: inherit;
   font-size: 12px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 10px 14px;
+  min-height: 40px;
   text-align: left;
   cursor: pointer;
   border-radius: 6px;
@@ -3311,36 +3770,6 @@ body.lightbox-open { overflow: hidden; }
 @media (pointer: coarse) {
   .vp__el {
     cursor: default;
-  }
-}
-
-/* Мобильные: показываем центральную кнопку при воспроизведении */
-@media (max-width: 700px) {
-  .vp.is-playing .vp__big-play {
-    display: grid;
-  }
-
-  /* Облегчённый стиль для центральной кнопки во время воспроизведения */
-  .vp.is-playing .vp__big-play-text,
-  .vp.is-playing .vp__big-play-sub {
-    display: none;
-  }
-
-  .vp.is-playing .vp__big-play {
-    background: transparent;
-    border: 0;
-    padding: 0;
-  }
-
-  .vp.is-playing .vp__big-play::before {
-    background: transparent;
-  }
-
-  .vp.is-playing .vp__big-play-icon {
-    background: rgba(8, 10, 14, 0.55);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.4);
   }
 }
 
@@ -3381,7 +3810,12 @@ body.lightbox-open { overflow: hidden; }
 }
 
 @media (max-width: 880px) {
-  .reviews-trust { grid-template-columns: repeat(2, 1fr); }
+  .reviews-trust { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); padding: var(--space-4); }
+}
+@media (max-width: 420px) {
+  .reviews-trust { gap: var(--space-3); padding: var(--space-3); }
+  .trust-counter b { font-size: 24px; }
+  .trust-counter span { font-size: 9.5px; }
 }
 
 /* ==========================================================================
@@ -3421,8 +3855,36 @@ body.lightbox-open { overflow: hidden; }
 .sticky-cta__copy span { color: var(--mute); font-size: 12px; }
 .sticky-cta__btn { flex-shrink: 0; padding: 12px 18px; font-size: 14px; }
 
-@media (max-width: 880px) {
+@media (max-width: 1100px) {
   .sticky-cta { display: flex; }
+  /* На мобиле делаем sticky-CTA полноценной «пилюлей» с увеличенными
+     tap-таргетами. Фон — глубокий ink с blur + жёлтая подсветка
+     на верхней границе через inset shadow — читается как
+     «всплывающее системное уведомление». */
+  .sticky-cta {
+    padding: 12px var(--gutter);
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    gap: var(--space-3);
+    background: linear-gradient(180deg, rgba(14, 17, 22, 0.92), rgba(14, 17, 22, 0.98));
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+  }
+  .sticky-cta__copy strong { font-size: 18px; }
+  .sticky-cta__copy span { font-size: 12px; }
+  .sticky-cta__btn {
+    padding: 14px 22px;
+    font-size: 15px;
+    min-height: 48px;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 420px) {
+  .sticky-cta { padding: 10px 14px; }
+  .sticky-cta__copy strong { font-size: 16px; }
+  .sticky-cta__btn { padding: 12px 18px; min-height: 44px; font-size: 14px; }
 }
 
 /* ==========================================================================
@@ -3727,9 +4189,17 @@ body.lightbox-open { overflow: hidden; }
   content: '— ';
   color: var(--mute-d);
 }
-@media (max-width: 700px) {
-  .specs__compare { padding: var(--space-5); }
-  .specs__compare-cell { font-size: 13px; padding: var(--space-3) var(--space-2); }
+@media (max-width: 600px) {
+  .specs__compare { padding: var(--space-5) var(--space-4); }
+  .specs__compare-title { font-size: 22px; margin-bottom: var(--space-4); }
+  .specs__compare-cell { font-size: 13px; padding: var(--space-3) var(--space-2); line-height: 1.45; }
+  .specs__compare-cell--head { font-size: 12px; letter-spacing: 0.01em; }
+}
+
+@media (max-width: 420px) {
+  .specs__compare { padding: var(--space-4) var(--space-3); }
+  .specs__compare-cell { font-size: 12px; padding: 10px 6px; }
+  .specs__compare-cell--head { font-size: 11px; }
 }
 
 /* ==========================================================================
@@ -3901,10 +4371,10 @@ body.lightbox-open { overflow: hidden; }
 }
 @media (max-width: 880px) {
   .kit { padding: var(--space-8) 0; }
-  .kit__grid { grid-template-columns: repeat(2, 1fr); }
+  .kit__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
   .kit-item--bonus { grid-column: 1 / -1; }
 }
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   .kit-item__bonus-grid {
     grid-template-columns: 1fr;
     gap: var(--space-3);
@@ -3920,10 +4390,16 @@ body.lightbox-open { overflow: hidden; }
     min-height: 0;
     min-width: 24px;
   }
+  .kit-item__name--bonus { font-size: 19px; }
+  .kit-item__bonus-name { font-size: 15px; }
+  .kit-item__bonus-desc { font-size: 12.5px; }
 }
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .kit__grid { grid-template-columns: 1fr; gap: var(--space-3); }
-  .kit-item { padding: var(--space-4); }
+  .kit-item { padding: var(--space-4); gap: var(--space-2); }
+  .kit-item__icon { width: 40px; height: 40px; }
+  .kit-item__icon svg { width: 22px; height: 22px; }
+  .kit-item__name { font-size: 16px; }
 }
 
 /* ==========================================================================
@@ -3988,8 +4464,18 @@ body.lightbox-open { overflow: hidden; }
   max-width: 720px;
 }
 .legal-banner__note [aria-hidden] { color: var(--bolt); font-weight: 700; margin: 0 2px; }
-@media (max-width: 700px) {
-  .legal-banner__grid { grid-template-columns: 1fr; }
+@media (max-width: 600px) {
+  .legal-banner { padding: var(--space-5) var(--space-4); border-radius: 0 var(--radius-2) var(--radius-2) 0; border-left-width: 3px; }
+  .legal-banner__title { font-size: 22px; margin-bottom: var(--space-3); }
+  .legal-banner__lead { font-size: 15px; line-height: 1.55; }
+  .legal-banner__grid { grid-template-columns: 1fr; gap: var(--space-3); margin-bottom: var(--space-3); }
+  .legal-banner__item { padding: var(--space-3); }
+  .legal-banner__item b { font-size: 16px; }
+}
+
+@media (max-width: 420px) {
+  .legal-banner { padding: var(--space-4) var(--space-3); }
+  .legal-banner__title { font-size: 20px; }
 }
 
 /* * marker — стандартный для ссылок на ПДД, региональные ограничения и т.д. */
@@ -4105,13 +4591,19 @@ body.lightbox-open { overflow: hidden; }
 .gallery__pane[hidden] { display: none; }
 
 @media (max-width: 880px) {
-  .gallery__tabs { margin-bottom: var(--space-6); padding-bottom: var(--space-4); }
-  .gallery__tab { padding: 12px 18px; font-size: 16px; }
+  .gallery__tabs { margin-bottom: var(--space-6); padding-bottom: var(--space-4); gap: var(--space-2); }
+  .gallery__tab { padding: 12px 18px; font-size: 16px; min-height: 44px; }
   .gallery__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
 }
-@media (max-width: 480px) {
-  .gallery__tab { padding: 10px 14px; font-size: 15px; }
+@media (max-width: 600px) {
+  .gallery__pane-desc { font-size: 14.5px; line-height: 1.55; margin-bottom: var(--space-4); }
+  .gallery__cell-num { padding: 3px 7px; font-size: 10px; left: 8px; bottom: 8px; }
+}
+@media (max-width: 420px) {
+  .gallery__tabs { gap: 8px; margin-bottom: var(--space-5); }
+  .gallery__tab { padding: 10px 14px; font-size: 14.5px; }
   .gallery__tab-count { display: none; }
+  .gallery__grid { gap: 6px; }
 }
 
 /* Скрытие контролов по таймауту бездействия во время воспроизведения.
