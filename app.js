@@ -125,26 +125,167 @@
     dialObserver.observe(document.querySelector('.dial'));
   }
 
-  /* ---------- phone mask +7 (___) ___-__-__ ---------- */
-  const maskPhone = (raw) => {
-    const digits = (raw || '').replace(/\D/g, '').replace(/^8/, '7').slice(0, 11);
-    let out = '+7';
-    if (digits.length > 1) out += ' (' + digits.slice(1, 4);
-    if (digits.length >= 4) out += ') ' + digits.slice(4, 7);
-    if (digits.length >= 7) out += '-' + digits.slice(7, 9);
-    if (digits.length >= 9) out += '-' + digits.slice(9, 11);
+  /* ---------- phone masks: РФ +7 (___) ___-__-__  ·  РБ +375 (__) ___-__-__ ---------- */
+  // Правила стран: cc — международный код цифрами, total — сколько цифр должно быть всего,
+  //                segments — куски после кода для шаблона "(a) b-c-d".
+  const PHONE_RULES = {
+    ru: { name: 'ru', cc: '7',   total: 11, segments: [3, 3, 2, 2], prefix: '+7' },     // +7 (XXX) XXX-XX-XX
+    by: { name: 'by', cc: '375', total: 12, segments: [2, 3, 2, 2], prefix: '+375' },   // +375 (XX) XXX-XX-XX
+  };
+
+  // Каждое поле с маской хранит:
+  //   country  — выбранную пользователем страну ('ru'/'by'),
+  //   digits   — «сырые» цифры, которые он набрал (без префикса и разделителей).
+  // Сырые цифры нужны, чтобы корректно пересобирать строку при переключении страны
+  // и при частичном стирании — мы не пытаемся вытащить цифры из уже отформатированного
+  // значения (там мог остаться, например, префикс предыдущей страны).
+  const phoneCountry = new WeakMap();
+  const phoneDigits  = new WeakMap();
+
+  // Если digits начинаются с явного кода другой страны — это сигнал, что пользователь
+  // печатает «чужой» номер: доверяем набору, контрол не важен.
+  const detectCountry = (digits) => {
+    if (digits.startsWith('375') || digits.startsWith('80')) return 'by';
+    if (digits.startsWith('7')   || digits.startsWith('8'))  return 'ru';
+    return null;
+  };
+
+  const formatByRule = (rule, body) => {
+    // Пустое тело → возвращаем '', чтобы нативный placeholder был виден.
+    if (body.length === 0) return '';
+    let out = rule.prefix;
+    let pos = 0;
+    const g0 = rule.segments[0];
+    out += ' (' + body.slice(pos, pos + g0);
+    pos += g0;
+    const seps = [') ', '-', '-'];
+    for (let i = 1; i < rule.segments.length; i++) {
+      if (body.length > pos) {
+        out += seps[i - 1] + body.slice(pos, pos + rule.segments[i]);
+        pos += rule.segments[i];
+      }
+    }
     return out;
   };
+
+  // digits — «сырые» цифры, которые реально набрал пользователь (например '9991234567').
+  // country — какую страну он выбрал в сегмент-контроле. Возвращаем отформатированную строку.
+  const buildPhone = (digits, country) => {
+    const c = country || 'ru';
+    const rule = PHONE_RULES[c];
+
+    // digits — это тело номера, без международного кода. Если пользователь случайно
+    // набрал код вручную (например '375...' в РФ-режиме) — отрезаем его.
+    let body = digits;
+    if (body.startsWith(rule.cc)) body = body.slice(rule.cc.length);
+    else if (c === 'ru' && body.startsWith('8')) body = body.slice(1); // 8... → без ведущей 8
+    else if (c === 'by' && body.startsWith('80')) body = body.slice(2); // 80... → без ведущих 80
+
+    const maxBody = rule.total - rule.cc.length;
+    return formatByRule(rule, body.slice(0, maxBody));
+  };
+
+  // Пересчитать «сырые» цифры по текущему отформатированному значению.
+  // Это нужно, чтобы WeakMap всегда синхронизировался с тем, что реально в DOM.
+  // Внутри отформатированной строки префикса '+7 '/'+375 ' нет (маска переписывает),
+  // так что replace(/\D/g,'') даёт чистые цифры тела + иногда код.
+  const refreshDigits = (input) => {
+    const country = phoneCountry.get(input) || 'ru';
+    const rule = PHONE_RULES[country];
+    const raw = (input.value || '').replace(/\D/g, '');
+    // Снимаем код, если он там есть, и нормализуем ведущие 8/80.
+    let body = raw;
+    if (body.startsWith(rule.cc)) body = body.slice(rule.cc.length);
+    else if (country === 'ru' && body.startsWith('8')) body = body.slice(1);
+    else if (country === 'by' && body.startsWith('80')) body = body.slice(2);
+    const maxBody = rule.total - rule.cc.length;
+    phoneDigits.set(input, body.slice(0, maxBody));
+  };
+
+  const renderPhone = (input) => {
+    const country = phoneCountry.get(input) || 'ru';
+    const digits = phoneDigits.get(input) || '';
+    input.value = buildPhone(digits, country);
+    try { input.setSelectionRange(input.value.length, input.value.length); } catch (_) {}
+  };
+
+  // Обновить placeholder инпута под выбранную страну.
+  const updatePlaceholder = (input) => {
+    const country = phoneCountry.get(input) || 'ru';
+    const ph = input.dataset['placeholder' + (country === 'by' ? 'By' : 'Ru')];
+    if (ph) input.placeholder = ph;
+  };
+
+  // Сегмент-контрол выбора страны: переключаем активную кнопку и пересобираем поле.
+  const setPhoneCountry = (input, country) => {
+    phoneCountry.set(input, country);
+    const seg = input.closest('.field').querySelector('.phone-country');
+    if (seg) {
+      seg.querySelectorAll('.phone-country__btn').forEach((b) => {
+        const active = b.dataset.country === country;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+    updatePlaceholder(input);
+    // Если пользователь сам набрал цифры явно «чужой» страны — не выбрасываем их.
+    // Но в обычном сценарии digits содержит только тело, оно совместимо с обеими странами.
+    renderPhone(input);
+    validateField(input);
+  };
+
   document.querySelectorAll('input[data-mask="phone"]').forEach((input) => {
-    input.addEventListener('input', (e) => {
-      const caret = input.selectionStart;
-      input.value = maskPhone(input.value);
-      if (caret !== null) {
-        try { input.setSelectionRange(caret, caret); } catch (_) {}
+    phoneCountry.set(input, 'ru');
+    phoneDigits.set(input, '');
+    updatePlaceholder(input);
+    input.addEventListener('input', () => {
+      // input.value сейчас — отформатированная строка из прошлого тика.
+      // Извлекаем «сырые» цифры тела, склеиваем с тем, что только что ввёл пользователь
+      // (он не мог стереть/добавить ничего, кроме цифр, потому что маска блокирует лишнее).
+      const before = phoneDigits.get(input) || '';
+      const after  = (input.value || '').replace(/\D/g, '');
+      // Длина могла измениться только на ±1 цифру (input вызывается по одному keystroke).
+      // Если input.value укоротилось на 1 — значит пользователь нажал backspace.
+      //   digits = before без последней цифры.
+      // Если удлинилось — приписать новую цифру к before.
+      // (Эта эвристика устойчива: маска сама гарантирует, что в input.value только
+      // цифры тела + служебные символы.)
+      let next;
+      const country = phoneCountry.get(input) || 'ru';
+      const rule = PHONE_RULES[country];
+      // Нормализуем after: убираем код, если он там есть, чтобы корректно сравнивать.
+      let body = after;
+      if (body.startsWith(rule.cc)) body = body.slice(rule.cc.length);
+      else if (country === 'ru' && body.startsWith('8')) body = body.slice(1);
+      else if (country === 'by' && body.startsWith('80')) body = body.slice(2);
+
+      const maxBody = rule.total - rule.cc.length;
+      body = body.slice(0, maxBody);
+
+      // Если получилось больше, чем было — это ввод новой цифры.
+      // Если меньше — стирание.
+      if (body.length > before.length) {
+        // приписать новые цифры (обычно одна) к before
+        next = before + body.slice(before.length);
+      } else {
+        next = body; // после стирания маска уже подобрала правильный вариант
       }
+      phoneDigits.set(input, next);
+      renderPhone(input);
       validateField(input);
     });
     input.addEventListener('blur', () => validateField(input));
+  });
+
+  document.querySelectorAll('.phone-country').forEach((seg) => {
+    seg.addEventListener('click', (e) => {
+      const btn = e.target.closest('.phone-country__btn');
+      if (!btn) return;
+      const country = btn.dataset.country;
+      if (!PHONE_RULES[country]) return;
+      const input = seg.closest('.field').querySelector('input[data-mask="phone"]');
+      if (input) setPhoneCountry(input, country);
+    });
   });
 
   /* ---------- field validation (live) ---------- */
@@ -157,8 +298,10 @@
 
     if (field.dataset.mask === 'phone') {
       const digits = value.replace(/\D/g, '');
-      ok = digits.length === 11;
-      if (value && !ok) msg = 'Введите полный номер из 11 цифр';
+      const country = phoneCountry.get(field) || 'ru';
+      const rule = PHONE_RULES[country];
+      ok = digits.length === rule.total && digits.startsWith(rule.cc);
+      if (value && !ok) msg = `Введите полный номер (${rule.prefix} — ${rule.total - rule.cc.length} цифр после кода)`;
     } else if (field.required && !value) {
       ok = false;
       msg = 'Заполните поле';
@@ -363,8 +506,10 @@
     compatForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const digits = (phoneInput.value || '').replace(/\D/g, '');
+      const country = phoneCountry.get(phoneInput) || 'ru';
+      const rule = PHONE_RULES[country];
       const btn = compatForm.querySelector('button');
-      if (digits.length !== 11) {
+      if (digits.length !== rule.total || !digits.startsWith(rule.cc)) {
         phoneInput.style.borderColor = 'var(--danger)';
         phoneInput.focus();
         return;
@@ -814,11 +959,42 @@
       io.observe(root);
     }
 
+    /* Контролы как в профессиональных плеерах: видны после любой активности
+       (клик/тач/move/key) и сами скрываются через 2.5с во время воспроизведения.
+       На паузе таймер не запускается — контролы остаются видимыми. */
+    const CONTROLS_HIDE_MS = 2500;
+    const showControls = () => {
+      player.root.classList.remove('is-controls-hidden');
+      clearTimeout(player._hideTimer);
+      if (player.video.paused || player.video.ended) return; // пауза — без таймера
+      player._hideTimer = setTimeout(hideControls, CONTROLS_HIDE_MS);
+    };
+    const hideControls = () => {
+      if (player.video.paused || player.video.ended) return;
+      player.root.classList.add('is-controls-hidden');
+    };
+    player.showControls = showControls;
+    player.hideControls = hideControls;
+    /* Сбрасываем таймер на любую пользовательскую активность. Используем capture,
+       чтобы ловить события от дочерних элементов (контролов, big-play). */
+    ['mousemove', 'mouseenter', 'touchstart', 'touchmove', 'keydown', 'click', 'focusin'].forEach((ev) => {
+      root.addEventListener(ev, showControls, true);
+    });
+    root.addEventListener('mouseleave', () => {
+      if (!player.video.paused && !player.video.ended) hideControls();
+    });
+
     /* Big play = основная кнопка запуска */
     player.bigPlay.addEventListener('click', () => {
-      /* Если данные из init-muted — снимаем mute, чтобы был звук при ручном старте.
-         Но! Не делаем unmute автоматически — пользователь сам решит, нажав Mute. */
-      tryPlay(player);
+      /* Центральная кнопка: на старте запускает воспроизведение, во время игры —
+         ставит на паузу (toggle). На десктопе она скрыта при playing (CSS), но
+         на мобиле видна и работает как основная play/pause. */
+      if (player.video.paused || player.video.ended) {
+        tryPlay(player);
+      } else {
+        player.video.pause();
+      }
+      showControls();
     });
 
     /* Внутренний play/pause */
@@ -829,6 +1005,12 @@
         player.video.pause();
       }
     });
+
+    /* Синхронизируем классы is-playing/is-paused с реальным состоянием видео
+       при инициализации. Без этого CSS-правила .vp:not(.is-paused) срабатывают
+       и на свежем плеере, переключая центральную кнопку на значок pause ещё
+       до старта воспроизведения. */
+    updatePlayUI(player);
 
     /* Mute */
     player.mute.addEventListener('click', () => {
@@ -884,10 +1066,15 @@
       player.video.addEventListener('dblclick', () => player.fs.click());
     }
 
-    /* Click on video area toggles play */
+    /* Клик/тап по самой области видео НЕ переключает play/pause — ни на десктопе,
+       ни на мобиле. Раньше на десктопе оставляли toggle, но он плохо работал
+       на тач-устройствах в landscape/iPad, где matchMedia + ширина не давали
+       надёжного отличия от мыши. Пауза теперь — только по значкам:
+       .vp__play (нижняя панель) и .vp__big-play (центральная кнопка).
+       Клик по самому видео просто показывает контролы (через capture-хендлер
+       showControls на root). */
     player.video.addEventListener('click', () => {
-      if (player.video.paused || player.video.ended) tryPlay(player);
-      else player.video.pause();
+      showControls();
     });
 
     /* Состояния видео */
@@ -903,12 +1090,20 @@
         }
       }
       updatePlayUI(player);
+      showControls();
     });
-    player.video.addEventListener('pause', () => updatePlayUI(player));
+    player.video.addEventListener('pause', () => {
+      updatePlayUI(player);
+      /* На паузе контролы остаются видимыми без таймера. */
+      clearTimeout(player._hideTimer);
+      player.root.classList.remove('is-controls-hidden');
+    });
     player.video.addEventListener('ended', () => {
       if (player.video.loop) return;
       updatePlayUI(player);
       player.bigPlay.hidden = false;
+      clearTimeout(player._hideTimer);
+      player.root.classList.remove('is-controls-hidden');
     });
     player.video.addEventListener('timeupdate', () => {
       const t = player.video.currentTime || 0;

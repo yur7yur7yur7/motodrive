@@ -1041,6 +1041,55 @@ label.field--full { display: flex; }
   text-transform: uppercase;
   color: var(--mute-d);
 }
+.field__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 18px;
+}
+.phone-country {
+  display: inline-flex;
+  padding: 2px;
+  background: var(--surface-light, #f3f4f6);
+  border: 1.5px solid var(--line-d);
+  border-radius: 999px;
+  font-family: var(--font-m);
+}
+.phone-country__btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--mute-d);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.phone-country__flag {
+  width: 16px;
+  height: 12px;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+.phone-country__btn:hover { color: var(--text-d, #111); }
+.phone-country__btn.is-active {
+  background: var(--bolt, #111);
+  color: var(--paper, #fff);
+}
+.phone-country__btn:focus-visible {
+  outline: 2px solid var(--bolt, #111);
+  outline-offset: 2px;
+}
 .field input, .field select {
   padding: 14px 14px;
   border: 1.5px solid var(--line-d);
@@ -2900,6 +2949,11 @@ body.lightbox-open { overflow: hidden; }
   box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 0 12px rgba(255, 212, 0, 0.24);
 }
 .vp__big-play-icon svg { width: 38px; height: 38px; margin-left: 4px; }
+/* Переключение play/pause внутри центральной кнопки.
+   По умолчанию (paused) виден play; при is-playing — pause. */
+.vp__big-play-icon .vp__icon-pause { display: none; }
+.vp:not(.is-paused) .vp__big-play-icon .vp__icon-play { display: none; }
+.vp:not(.is-paused) .vp__big-play-icon .vp__icon-pause { display: block; margin-left: 0; }
 .vp__big-play-text {
   font-family: var(--font-b);
   font-weight: 700;
@@ -2940,6 +2994,18 @@ body.lightbox-open { overflow: hidden; }
   opacity: 1;
   transform: translateY(0);
 }
+/* Принудительно скрывает контролы во время воспроизведения после таймаута
+   бездействия (модель "как в YouTube"). При паузе класс не ставится. */
+.vp.is-playing.is-controls-hidden .vp__controls,
+.vp.is-playing.is-controls-hidden:hover .vp__controls {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+/* На мобиле центральная кнопка (vp__big-play) тоже прячется по таймауту
+   бездействия вместе с нижней панелью. На десктопе big-play и так display:none
+   при is-playing (см. правило ниже), поэтому это правило не конфликтует. */
+.vp.is-playing.is-controls-hidden .vp__big-play { display: none; }
 .vp__btn {
   display: inline-grid;
   place-items: center;
@@ -3158,21 +3224,37 @@ body.lightbox-open { overflow: hidden; }
 .vp__mute { margin-right: calc(-1 * var(--vp-gap, 10px)); }
 @media (max-width: 700px) {
   .vp__controls {
-    grid-template-columns: auto 1fr auto auto auto;
+    /* play, time, seek(1fr), mute, volume, fullscreen, quality — 7 видимых колонок. */
+    grid-template-columns: auto auto 1fr auto auto auto auto;
     --vp-gap: 6px;
     gap: var(--vp-gap);
     padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
     font-size: 12px;
   }
-  .vp__time { display: none; }
-  .vp__volume { display: none; }
-  .vp__quality { display: none; }
-  /* На мобильном volume скрыт — не сдвигаем mute влево отрицательным margin. */
-  .vp__mute { margin-right: 0; }
   .vp__big-play-icon { width: 64px; height: 64px; }
   .vp__big-play-icon svg { width: 28px; height: 28px; }
   .vp__big-play-text { font-size: 15px; }
   .vp__big-play-sub { font-size: 10px; letter-spacing: 0.1em; }
+  /* На мобиле центральная кнопка видна и при playing (нужна для паузы).
+     Во время паузы — полный десктопный вид: жёлтый круг + подписи.
+     Во время воспроизведения — облегчённый полупрозрачный значок паузы
+     (показывается как часть контролов, прячется по таймауту бездействия). */
+  .vp.is-playing .vp__big-play { display: grid; }
+  /* Облегчённый стиль — только при playing. На паузе всё выглядит как на десктопе. */
+  .vp.is-playing .vp__big-play-text,
+  .vp.is-playing .vp__big-play-sub { display: none; }
+  .vp.is-playing .vp__big-play {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .vp.is-playing .vp__big-play::before { background: transparent; }
+  .vp.is-playing .vp__big-play-icon {
+    background: rgba(8, 10, 14, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  }
 }
 @media (max-width: 480px) {
   .vp__btn { width: 32px; height: 32px; }

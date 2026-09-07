@@ -168,7 +168,8 @@
               <video class="vp__el" preload="metadata" playsinline muted></video>
               <button type="button" class="vp__big-play" aria-label="Воспроизвести проморолик">
                 <span class="vp__big-play-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
                 </span>
                 <span class="vp__big-play-text">Смотреть проморолик</span>
                 <span class="vp__big-play-sub">PROMO · 40 сек</span>
@@ -309,8 +310,20 @@
           </div>
           <form class="compat__help-form" id="compatHelpForm" novalidate>
             <label class="field">
-              <span class="field__label">Телефон</span>
-              <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" required data-mask="phone" />
+              <div class="field__row">
+                <span class="field__label">Телефон</span>
+                <div class="phone-country" role="tablist" aria-label="Страна номера">
+                  <button type="button" role="tab" class="phone-country__btn is-active" data-country="ru" aria-selected="true">
+                    <img class="phone-country__flag" src="./img/flag_rf.webp" alt="" />
+                    <span>РФ</span>
+                  </button>
+                  <button type="button" role="tab" class="phone-country__btn" data-country="by" aria-selected="false">
+                    <img class="phone-country__flag" src="./img/flag_rb.webp" alt="" />
+                    <span>РБ</span>
+                  </button>
+                </div>
+              </div>
+              <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" required data-mask="phone" data-placeholder-ru="+7 (___) ___-__-__" data-placeholder-by="+375 (__) ___-__-__" />
             </label>
             <label class="consent consent--compact">
               <input type="checkbox" name="compat_consent" required />
@@ -1614,7 +1627,8 @@
               <video class="vp__el" preload="metadata" playsinline muted></video>
               <button type="button" class="vp__big-play" aria-label="Воспроизвести видео для активной коляски">
                 <span class="vp__big-play-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
                 </span>
                 <span class="vp__big-play-text">Смотреть инструкцию</span>
                 <span class="vp__big-play-sub">Крепление к подножкам · 8 шагов</span>
@@ -1663,7 +1677,8 @@
               <video class="vp__el" preload="metadata" playsinline muted></video>
               <button type="button" class="vp__big-play" aria-label="Воспроизвести видео для пассивной коляски">
                 <span class="vp__big-play-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="vp__icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
                 </span>
                 <span class="vp__big-play-text">Смотреть инструкцию</span>
                 <span class="vp__big-play-sub">Крепление типа B · 9 шагов</span>
@@ -1895,9 +1910,21 @@
                 <span class="field__helper">Как к вам обращаться</span>
               </label>
               <label class="field">
-                <span class="field__label">Телефон</span>
-                <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" enterkeyhint="send" required data-form-field="phone" data-mask="phone" />
-                <span class="field__helper">Без +7 — мы добавим</span>
+                <div class="field__row">
+                  <span class="field__label">Телефон</span>
+                  <div class="phone-country" role="tablist" aria-label="Страна номера">
+                    <button type="button" role="tab" class="phone-country__btn is-active" data-country="ru" aria-selected="true">
+                      <img class="phone-country__flag" src="./img/flag_rf.webp" alt="" />
+                      <span>РФ</span>
+                    </button>
+                    <button type="button" role="tab" class="phone-country__btn" data-country="by" aria-selected="false">
+                      <img class="phone-country__flag" src="./img/flag_rb.webp" alt="" />
+                      <span>РБ</span>
+                    </button>
+                  </div>
+                </div>
+                <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" enterkeyhint="send" required data-form-field="phone" data-mask="phone" data-placeholder-ru="+7 (___) ___-__-__" data-placeholder-by="+375 (__) ___-__-__" />
+                <span class="field__helper">Без кода страны — мы добавим</span>
               </label>
 
               <div class="field field--full chair-radios">
