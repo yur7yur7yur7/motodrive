@@ -1438,6 +1438,10 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   aspect-ratio: 9 / 16;
   max-height: 640px;
   padding: 0;
+  overflow: visible;
+  grid-template-rows: 1fr auto;
+  align-items: stretch;
+  row-gap: 12px;
 }
 @media (max-width: 880px) {
   .hero__photo--video { max-height: 480px; }
@@ -2994,18 +2998,6 @@ body.lightbox-open { overflow: hidden; }
   opacity: 1;
   transform: translateY(0);
 }
-/* Принудительно скрывает контролы во время воспроизведения после таймаута
-   бездействия (модель "как в YouTube"). При паузе класс не ставится. */
-.vp.is-playing.is-controls-hidden .vp__controls,
-.vp.is-playing.is-controls-hidden:hover .vp__controls {
-  opacity: 0;
-  transform: translateY(6px);
-  pointer-events: none;
-}
-/* На мобиле центральная кнопка (vp__big-play) тоже прячется по таймауту
-   бездействия вместе с нижней панелью. На десктопе big-play и так display:none
-   при is-playing (см. правило ниже), поэтому это правило не конфликтует. */
-.vp.is-playing.is-controls-hidden .vp__big-play { display: none; }
 .vp__btn {
   display: inline-grid;
   place-items: center;
@@ -3298,6 +3290,59 @@ body.lightbox-open { overflow: hidden; }
 }
 .vp__quality-opt:hover { background: rgba(245, 242, 235, 0.1); }
 .vp__quality-opt.is-current { color: var(--vp-accent); }
+/* ==========================================================================
+   Custom video player — responsive behavior (desktop vs mobile)
+   ========================================================================== */
+
+/* Десктоп: контролы видны при наведении курсора */
+.vp.is-hovering .vp__controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Курсор-указатель для видео на десктопе */
+@media (pointer: fine) {
+  .vp__el {
+    cursor: pointer;
+  }
+}
+
+/* Для мобильных устройств убираем pointer cursor */
+@media (pointer: coarse) {
+  .vp__el {
+    cursor: default;
+  }
+}
+
+/* Мобильные: показываем центральную кнопку при воспроизведении */
+@media (max-width: 700px) {
+  .vp.is-playing .vp__big-play {
+    display: grid;
+  }
+
+  /* Облегчённый стиль для центральной кнопки во время воспроизведения */
+  .vp.is-playing .vp__big-play-text,
+  .vp.is-playing .vp__big-play-sub {
+    display: none;
+  }
+
+  .vp.is-playing .vp__big-play {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .vp.is-playing .vp__big-play::before {
+    background: transparent;
+  }
+
+  .vp.is-playing .vp__big-play-icon {
+    background: rgba(8, 10, 14, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  }
+}
 
 /* ==========================================================================
    Reviews — Trust counters (метрики) + карточки с метриками
@@ -3549,10 +3594,10 @@ body.lightbox-open { overflow: hidden; }
 }
 
 .hero__photo-caption {
-  position: absolute;
-  left: 50%;
-  bottom: -10px;
-  transform: translateX(-50%);
+  display: inline-block;
+  align-self: end;
+  justify-self: center;
+  margin-top: 12px;
   padding: 6px 14px;
   background: var(--ink);
   color: var(--paper);
@@ -4068,3 +4113,15 @@ body.lightbox-open { overflow: hidden; }
   .gallery__tab { padding: 10px 14px; font-size: 15px; }
   .gallery__tab-count { display: none; }
 }
+
+/* Скрытие контролов по таймауту бездействия во время воспроизведения.
+   При паузе класс is-controls-hidden не ставится — контролы остаются. */
+.vp.is-playing.is-controls-hidden .vp__controls,
+.vp.is-playing.is-controls-hidden:hover .vp__controls {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+/* На мобиле центральная кнопка прячется вместе с нижней панелью; на десктопе
+   big-play и так display:none при is-playing, поэтому правило не конфликтует. */
+.vp.is-playing.is-controls-hidden .vp__big-play { display: none; }

@@ -602,6 +602,12 @@
   /* ---------- Custom video player (gated loading + full controls) ---------- */
   const videoPlayers = new Map();
 
+  const isMobile = () => {
+    return window.matchMedia('(pointer: coarse)').matches ||
+        window.matchMedia('(max-width: 700px)').matches ||
+        'ontouchstart' in window;
+  };
+
   const formatTime = (sec) => {
     if (!Number.isFinite(sec) || sec < 0) return '0:00';
     const s = Math.floor(sec % 60);
@@ -925,7 +931,11 @@
       sources: parseSources(root),
       currentQuality: null,
       noFs: root.getAttribute('data-player-no-fs') === 'true',
+      _controlsVisible: true,
+      _isMobile: isMobile(),
+    _suppressNextClick: false,
     };
+
     if (!player.video) return null;
 
     const posterUrl = root.getAttribute('data-player-poster');
@@ -950,7 +960,18 @@
     };
     root.addEventListener('mouseenter', primeLoad);
     root.addEventListener('focusin', primeLoad);
-    root.addEventListener('touchstart', primeLoad, { passive: true });
+    root.addEventListener('touchstart', (e) => {
+      primeLoad();
+
+      // Если контролы скрыты, показываем их и подавляем следующий click
+      if (player._isMobile && !player._controlsVisible) {
+        showControls();
+        player._suppressNextClick = true;
+        setTimeout(() => {
+          player._suppressNextClick = false;
+        }, 300);
+      }
+    }, { passive: true });
     /* И на visibility — когда плеер появляется в viewport */
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
@@ -960,50 +981,102 @@
     }
 
     /* Контролы как в профессиональных плеерах: видны после любой активности
-       (клик/тач/move/key) и сами скрываются через 2.5с во время воспроизведения.
+       (клик/тач/move/key) и сами скрываются через 2с во время воспроизведения.
        На паузе таймер не запускается — контролы остаются видимыми. */
-    const CONTROLS_HIDE_MS = 2500;
+    const CONTROLS_HIDE_MS = 2000;
+    /* Флаг "контролы только что показаны из скрытого состояния во время игры":
+       используется, чтобы первый тап (touchstart→click) шёл только на показ, а
+       не долетал до центральной кнопки и не ставил видео на паузу. На мобиле
+       capture-хендлер showControls снимает is-controls-hidden раньше, чем click
+       успевает дойти до .vp__big-play, — без этого флага любой тап по видео
+       ставил бы паузу. */
     const showControls = () => {
+      player._controlsVisible = true;
       player.root.classList.remove('is-controls-hidden');
       clearTimeout(player._hideTimer);
-      if (player.video.paused || player.video.ended) return; // пауза — без таймера
-      player._hideTimer = setTimeout(hideControls, CONTROLS_HIDE_MS);
+
+      // На десктопе контролы всегда видны при наведении
+      if (!player._isMobile) {
+        player.root.classList.add('is-hovering');
+      }
+
+      // Таймер скрытия только для мобильных во время воспроизведения
+      if (player._isMobile && !player.video.paused && !player.video.ended) {
+        player._hideTimer = setTimeout(hideControls, CONTROLS_HIDE_MS);
+      }
     };
+
     const hideControls = () => {
+      // На десктопе не скрываем контролы, если курсор над плеером
+      if (!player._isMobile && player.root.matches(':hover')) return;
+
+      // Скрываем только если видео играет
       if (player.video.paused || player.video.ended) return;
+
+      player._controlsVisible = false;
       player.root.classList.add('is-controls-hidden');
+      if (!player._isMobile) {
+        player.root.classList.remove('is-hovering');
+      }
     };
     player.showControls = showControls;
     player.hideControls = hideControls;
-    /* Сбрасываем таймер на любую пользовательскую активность. Используем capture,
-       чтобы ловить события от дочерних элементов (контролов, big-play). */
-    ['mousemove', 'mouseenter', 'touchstart', 'touchmove', 'keydown', 'click', 'focusin'].forEach((ev) => {
-      root.addEventListener(ev, showControls, true);
-    });
-    root.addEventListener('mouseleave', () => {
-      if (!player.video.paused && !player.video.ended) hideControls();
-    });
+    /* Обработчики для показа контролов */
+    if (!player._isMobile) {
+      // Десктоп: показываем контролы при наведении
+      root.addEventListener('mouseenter', showControls);
+      root.addEventListener('mousemove', showControls);
+      root.addEventListener('mouseleave', () => {
+        if (!player.video.paused && !player.video.ended) {
+          hideControls();
+        }
+      });
+      root.addEventListener('focusin', showControls);
+    } else {
+      // Мобильные: показываем контролы при тапе
+      root.addEventListener('touchstart', () => {
+        if (!player._controlsVisible) {
+          showControls();
+        }
+      }, { passive: true });
+    }
 
-    /* Big play = основная кнопка запуска */
-    player.bigPlay.addEventListener('click', () => {
-      /* Центральная кнопка: на старте запускает воспроизведение, во время игры —
-         ставит на паузу (toggle). На десктопе она скрыта при playing (CSS), но
-         на мобиле видна и работает как основная play/pause. */
+    /* Big play = основная кнопка запуска.
+       На мобиле во время воспроизведения .vp__big-play показывается как
+       полупрозрачный круг со значком паузы (display: grid из @media ≤700px).
+       Когда контролы только что были скрыты и пользователь тапает, чтобы их
+       вернуть, capture-хендлер touchstart уже снял is-controls-hidden — без
+       флага _suppressClick click пробежал бы до big-play и поставил видео на
+       паузу. Поэтому в первые ~350мс после показа click на big-play
+       игнорируется. */
+    player.bigPlay.addEventListener('click', (e) => {
+      e.stopPropagation(); // Предотвращаем всплытие к video click
+      e.preventDefault(); // Предотвращаем двойное срабатывание на мобильных
+
+      if (player._isMobile && !player._controlsVisible) {
+        showControls();
+        return;
+      }
+
       if (player.video.paused || player.video.ended) {
         tryPlay(player);
       } else {
         player.video.pause();
       }
-      showControls();
+      // Не вызываем showControls() здесь - он вызовется из обработчика play/pause
     });
 
     /* Внутренний play/pause */
-    player.play.addEventListener('click', () => {
+    player.play.addEventListener('click', (e) => {
+      e.stopPropagation(); // Предотвращаем всплытие к video click
+      e.preventDefault(); // Предотвращаем двойное срабатывание на мобильных
+
       if (player.video.paused || player.video.ended) {
         tryPlay(player);
       } else {
         player.video.pause();
       }
+      // Не вызываем showControls() здесь - он вызовется из обработчика play/pause
     });
 
     /* Синхронизируем классы is-playing/is-paused с реальным состоянием видео
@@ -1066,36 +1139,72 @@
       player.video.addEventListener('dblclick', () => player.fs.click());
     }
 
-    /* Клик/тап по самой области видео НЕ переключает play/pause — ни на десктопе,
-       ни на мобиле. Раньше на десктопе оставляли toggle, но он плохо работал
-       на тач-устройствах в landscape/iPad, где matchMedia + ширина не давали
-       надёжного отличия от мыши. Пауза теперь — только по значкам:
-       .vp__play (нижняя панель) и .vp__big-play (центральная кнопка).
-       Клик по самому видео просто показывает контролы (через capture-хендлер
-       showControls на root). */
-    player.video.addEventListener('click', () => {
-      showControls();
-    });
+    /* Клик по видео: пауза/воспроизведение */
+    const handleVideoClick = (e) => {
+      // Проверяем, не кликнули ли по контролам
+      if (e.target.closest('.vp__controls') || e.target.closest('.vp__big-play')) {
+        return; // Клик по контролам, не обрабатываем здесь
+      }
+
+      // Если это подавленный клик после показа контролов
+      if (player._suppressNextClick) {
+        player._suppressNextClick = false;
+        return;
+      }
+
+      if (player._isMobile) {
+        // Мобильная логика
+        if (!player._controlsVisible) {
+          // Первый тап: показываем контролы
+          showControls();
+          return;
+        }
+
+        // Контролы видны: пауза при клике на видео во время воспроизведения
+        if (!player.video.paused && !player.video.ended) {
+          player.video.pause();
+          // Не вызываем showControls() здесь
+        }
+      } else {
+        // Десктоп: клик по видео переключает play/pause
+        if (player.video.paused || player.video.ended) {
+          tryPlay(player);
+        } else {
+          player.video.pause();
+          // Не вызываем showControls() здесь
+        }
+      }
+    };
+
+    player.video.addEventListener('click', handleVideoClick);
 
     /* Состояния видео */
-    player.video.addEventListener('play', () => {
+        player.video.addEventListener('play', () => {
       /* Single-active rule: при старте любого плеера пауза всем остальным. */
       for (const other of videoPlayers.values()) {
         if (other === player) continue;
         if (!other.video.paused) {
           other.video.pause();
-          /* Если другой плеер был инициализирован как init-muted=true (например, hero
-             с data-player-unmute-on-play), его pause вернёт корректный state.
-             Звук мы не трогаем. */
         }
       }
       updatePlayUI(player);
-      showControls();
+
+      // Показываем контролы напрямую, без вызова showControls
+      player._controlsVisible = true;
+      player.root.classList.remove('is-controls-hidden');
+
+      // Явно запускаем таймер скрытия для мобильных
+      if (player._isMobile) {
+        clearTimeout(player._hideTimer);
+        player._hideTimer = setTimeout(hideControls, CONTROLS_HIDE_MS);
+      }
     });
-    player.video.addEventListener('pause', () => {
+        player.video.addEventListener('pause', () => {
       updatePlayUI(player);
-      /* На паузе контролы остаются видимыми без таймера. */
       clearTimeout(player._hideTimer);
+
+      // Показываем контролы напрямую
+      player._controlsVisible = true;
       player.root.classList.remove('is-controls-hidden');
     });
     player.video.addEventListener('ended', () => {
@@ -1103,7 +1212,7 @@
       updatePlayUI(player);
       player.bigPlay.hidden = false;
       clearTimeout(player._hideTimer);
-      player.root.classList.remove('is-controls-hidden');
+      showControls();
     });
     player.video.addEventListener('timeupdate', () => {
       const t = player.video.currentTime || 0;
