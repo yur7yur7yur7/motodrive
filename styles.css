@@ -4496,8 +4496,26 @@ body.lightbox-open { overflow: hidden; }
   flex-wrap: wrap;
   gap: var(--space-3);
   margin: 0 0 var(--space-7);
-  padding-bottom: var(--space-5);
+  padding: 14px 0;
   border-bottom: 1px solid var(--steel-2);
+  /* Sticky к верхней границе секции — приклеиваются к nav (--nav-h).
+     z-index ниже, чем у nav (50) и sticky-CTA (45) — корректное наслоение:
+     nav сверху, tabs под ним, sticky-CTA при появлении внизу страницы.
+     Подложка добавляется классом .is-pinned (см. JS — IntersectionObserver
+     на нижнюю границу секции). Рецепт подложки — как у .nav.is-scrolled:
+     rgba(14,17,22,0.85) + blur(12px) + тонкая нижняя линия var(--line). */
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 30;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+.gallery__tabs.is-pinned {
+  background: rgba(14, 17, 22, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--line);
 }
 .gallery__tab {
   display: inline-flex;
@@ -4591,7 +4609,14 @@ body.lightbox-open { overflow: hidden; }
 .gallery__pane[hidden] { display: none; }
 
 @media (max-width: 880px) {
-  .gallery__tabs { margin-bottom: var(--space-6); padding-bottom: var(--space-4); gap: var(--space-2); }
+  .gallery__tabs {
+    margin-bottom: var(--space-6);
+    padding: 10px 0;
+    gap: var(--space-2);
+    /* На mobile учитываем safe-area-top — табы приклеиваются под nav
+       с учётом notch. top считается как высота nav + safe-area. */
+    top: calc(var(--nav-h) + env(safe-area-inset-top));
+  }
   .gallery__tab { padding: 12px 18px; font-size: 16px; min-height: 44px; }
   .gallery__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
 }

@@ -26,6 +26,52 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* ---------- Gallery: sticky tab-list with blur background ----------
+     При скролле табы приклеиваются к верхней границе (под nav) и
+     остаются на виду, пока видна секция #gallery. Когда пользователь
+     доскролливает до конца секции — табы естественно «уезжают» с
+     остальным контентом (sticky внутри секции).
+
+     Раннее решение через IntersectionObserver страдало от классического
+     бага: при первом скролле вниз браузер пропускает промежуточные
+     состояния (ratio прыгает с 0 на 1 за один кадр), и callback с
+     `isPinned=true` не успевает выставиться. При обратном скролле
+     вверх секция полностью видна (ratio=1), observer срабатывает,
+     и класс наконец-то навешивается. Это и было «подложка появляется
+     только после скролла вниз-вверх».
+
+     Решение — rAF-throttled scroll-handler с прямым getBoundingClientRect.
+     Запрашиваем rect на каждом animation frame, и нет зависимости
+     от того, какие threshold'ы прошёл IO. */
+  const gallery = document.getElementById('gallery');
+  const pinTabs = gallery ? gallery.querySelector('.gallery__tabs') : null;
+  if (gallery && pinTabs) {
+    let rafQueued = false;
+    let lastPinned = null;
+    const updateGalleryPin = () => {
+      rafQueued = false;
+      const navH = nav ? nav.offsetHeight : 64;
+      const rect = gallery.getBoundingClientRect();
+      // pin = верх секции ушёл за nav. Sticky-position сам обеспечит
+      // отлипание у низа секции — табы физически упираются в top.
+      const isPinned = rect.top <= navH;
+      // Тогглим класс только при реальном изменении — избегаем лишних
+      // reflow и срабатывания transition на каждом кадре.
+      if (isPinned !== lastPinned) {
+        lastPinned = isPinned;
+        pinTabs.classList.toggle('is-pinned', isPinned);
+      }
+    };
+    const onScrollGallery = () => {
+      if (rafQueued) return;
+      rafQueued = true;
+      requestAnimationFrame(updateGalleryPin);
+    };
+    window.addEventListener('scroll', onScrollGallery, { passive: true });
+    window.addEventListener('resize', onScrollGallery, { passive: true });
+    updateGalleryPin();
+  }
+
   /* ---------- mobile nav toggle ---------- */
   const closeMobileNav = () => {
     if (!mobileNav || !burger) return;
