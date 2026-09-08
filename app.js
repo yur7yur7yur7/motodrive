@@ -545,13 +545,27 @@
   if (compatForm) {
     const phoneInput = compatForm.querySelector('input[name="phone"]');
     if (phoneInput) {
+      // Инициализация для compatForm
+      if (!phoneCountry.has(phoneInput)) {
+        phoneCountry.set(phoneInput, 'ru');
+        phoneDigits.set(phoneInput, '');
+      }
+      updatePlaceholder(phoneInput);
+
       phoneInput.addEventListener('input', () => {
-        phoneInput.value = maskPhone(phoneInput.value);
+        const digits = (phoneInput.value || '').replace(/\D/g, '');
+        phoneDigits.set(phoneInput, digits);
+        renderPhone(phoneInput);
       });
     }
     compatForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const digits = (phoneInput.value || '').replace(/\D/g, '');
+      // Инициализация если еще не была сделана
+      if (!phoneCountry.has(phoneInput)) {
+        phoneCountry.set(phoneInput, 'ru');
+        phoneDigits.set(phoneInput, '');
+      }
       const country = phoneCountry.get(phoneInput) || 'ru';
       const rule = PHONE_RULES[country];
       const btn = compatForm.querySelector('button');

@@ -4501,8 +4501,8 @@ body.lightbox-open { overflow: hidden; }
   /* Sticky к верхней границе секции — приклеиваются к nav (--nav-h).
      z-index ниже, чем у nav (50) и sticky-CTA (45) — корректное наслоение:
      nav сверху, tabs под ним, sticky-CTA при появлении внизу страницы.
-     Подложка добавляется классом .is-pinned (см. JS — IntersectionObserver
-     на нижнюю границу секции). Рецепт подложки — как у .nav.is-scrolled:
+     Подложка добавляется классом .is-pinned (см. JS).
+     Рецепт подложки — как у .nav.is-scrolled:
      rgba(14,17,22,0.85) + blur(12px) + тонкая нижняя линия var(--line). */
   position: sticky;
   top: var(--nav-h);
