@@ -480,62 +480,32 @@
       });
     });
 
-    /* Обновление order__summary при смене варианта комплекта или типа коляски */
-    const summaryScope = form.parentElement || document;
-    const summary = summaryScope.querySelector('[data-summary-kit]');
-    const variantInput = form.querySelector('[data-variant-input]');
-    const summaryImg = summaryScope.querySelector('[data-summary-img]');
-    if (summary && variantInput) {
-      const summaryMap = {
-        summer: 'Летний · держатель телефона в подарок',
-        winter: 'Зимний · зимняя покрышка в подарок'
+    /* Обновление картинки комплекта при смене типа коляски (active/passive).
+       Подарки в комплекте одинаковые — меняется только иллюстрация. */
+    const summaryImg = form.parentElement.querySelector('[data-summary-img]');
+    if (summaryImg) {
+      const applyKitImage = () => {
+        try {
+          const map = JSON.parse(summaryImg.dataset.summaryMap || '{}');
+          const altMap = JSON.parse(summaryImg.dataset.summaryAlt || '{}');
+          const chair = (form.querySelector('input[name="chair"]:checked') || {}).value || 'active';
+          const key = (chair === 'active' || chair === 'passive') ? chair : 'active';
+          const nextSrc = map[key];
+          const nextAlt = altMap[key];
+          if (nextSrc && summaryImg.getAttribute('src') !== nextSrc) {
+            summaryImg.style.opacity = '0.55';
+            summaryImg.src = nextSrc;
+            summaryImg.alt = nextAlt || summaryImg.alt;
+            summaryImg.addEventListener('load', () => {
+              summaryImg.style.opacity = '';
+            }, { once: true });
+          } else if (nextAlt) {
+            summaryImg.alt = nextAlt;
+          }
+        } catch (_) { /* noop: data-summary-map invalid */ }
       };
-      const tagMap = {
-        summer: '☀ ЛЕТНИЙ',
-        winter: '❄ ЗИМНИЙ'
-      };
-      /* Ключ картинки: вариант + тип коляски. Для «Не знаю» (help) — оставляем текущий chair из variantInput. */
-      const composeKey = (variant, chair) => {
-        const c = (chair === 'active' || chair === 'passive') ? chair : 'active';
-        return `${variant}-${c}`;
-      };
-      const applySummary = () => {
-        const variant = variantInput.value;
-        if (!summaryMap[variant]) return;
-        summary.textContent = summaryMap[variant];
-        const tag = summaryScope.querySelector('[data-summary-tag]');
-        if (tag && tagMap[variant]) tag.textContent = tagMap[variant];
-        if (summaryImg) {
-          try {
-            const map = JSON.parse(summaryImg.dataset.summaryMap || '{}');
-            const altMap = JSON.parse(summaryImg.dataset.summaryAlt || '{}');
-            const chair = (form.querySelector('input[name="chair"]:checked') || {}).value || 'active';
-            const key = composeKey(variant, chair);
-            const nextSrc = map[key];
-            const nextAlt = altMap[key];
-            if (nextSrc && summaryImg.getAttribute('src') !== nextSrc) {
-              summaryImg.style.opacity = '0.55';
-              summaryImg.src = nextSrc;
-              summaryImg.alt = nextAlt || summaryImg.alt;
-              summaryImg.addEventListener('load', () => {
-                summaryImg.style.opacity = '';
-              }, { once: true });
-            } else if (nextAlt) {
-              summaryImg.alt = nextAlt;
-            }
-          } catch (_) { /* noop: data-summaryMap invalid */ }
-        }
-      };
-      document.querySelectorAll('.order__variant').forEach((v) => {
-        v.addEventListener('click', () => {
-          const variant = v.dataset.variant;
-          if (!variant || !summaryMap[variant]) return;
-          variantInput.value = variant;
-          applySummary();
-        });
-      });
       form.querySelectorAll('input[name="chair"]').forEach((r) => {
-        r.addEventListener('change', applySummary);
+        r.addEventListener('change', applyKitImage);
       });
     }
   }
@@ -627,37 +597,12 @@
     });
   });
 
-  /* ---------- Tabs (install + order variants) ---------- */
-  function bindTabs(tabSelector, panelAttr) {
-    const tabs = document.querySelectorAll(tabSelector);
-    if (!tabs.length) return;
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const target = tab.dataset.tab || tab.dataset.variant;
-        if (!target) return;
-        tabs.forEach((other) => {
-          const active = other === tab;
-          other.classList.toggle('is-active', active);
-          other.setAttribute('aria-pressed', active ? 'true' : 'false');
-          other.setAttribute('aria-selected', active ? 'true' : 'false');
-        });
-        document.querySelectorAll(`[data-panel], [data-kit]`).forEach((p) => {
-          const matches = (p.dataset.panel || p.dataset.kit) === target;
-          p.classList.toggle('is-active', matches);
-          if (p.hasAttribute('hidden')) {
-            if (matches) p.removeAttribute('hidden');
-          } else if (!matches) {
-            p.setAttribute('hidden', '');
-          }
-        });
-        if (tabSelector !== '.order__variant') {
-          const input = document.querySelector('[data-variant-input]');
-          if (input && tab.dataset.variant) input.value = tab.dataset.variant;
-        }
-      });
-    });
-  }
-  bindTabs('.order__variant', 'kit');
+  /* ---------- Tabs (install — active/passive) ---------- */
+  /* Старая bindTabs('.order__variant', 'kit') удалена вместе с разделением
+     на летний/зимний комплект — вариантов комплекта больше нет, только
+     тип коляски (active/passive), который уже обрабатывается через radio
+     в форме заказа. Install-табы (активная/пассивная коляска) реализованы
+     отдельно через свой механизм (см. ниже — install__video). */
 
   /* ---------- Custom video player (gated loading + full controls) ---------- */
   const videoPlayers = new Map();
