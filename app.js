@@ -1556,6 +1556,7 @@
     }
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       openLightbox(btn.dataset.zoomSrc, btn.dataset.zoomAlt, btn);
     });
   });

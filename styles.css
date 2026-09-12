@@ -808,8 +808,8 @@ summary:focus-visible {
 }
 
 /* small phones — оптимизированная типографика и воздух.
-   Заголовок не должен ломать 2 строки на «Свобода/не ждёт/на обочине» —
-   оставляем трёхстрочный ритм, но с уменьшенным кеглем (40-44px). */
+   Заголовок не должен ломать 2 строки на «Свобода/в движении.» —
+   оставляем ритм, но с уменьшенным кеглем (40-44px). */
 @media (max-width: 600px) {
   .hero { padding-top: 100px; padding-bottom: 48px; }
   .hero__title {
@@ -2039,47 +2039,6 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   margin: 0 0 var(--space-4);
   max-width: 480px;
 }
-.specs__safety-text ul {
-  list-style: disc;
-  padding-left: 22px;
-  color: color-mix(in srgb, var(--paper) 82%, transparent);
-}
-.specs__safety-text li { margin-bottom: 10px; line-height: 1.55; }
-
-/* Короткий список «3 главных правила» — для краткой памятки */
-.specs__safety-rules {
-  list-style: none !important;
-  padding-left: 0 !important;
-  display: grid;
-  gap: var(--space-3);
-}
-.specs__safety-rules li {
-  position: relative;
-  padding-left: 28px;
-  font-size: var(--fs-body);
-  line-height: 1.55;
-  color: var(--paper);
-}
-.specs__safety-rules li::before {
-  content: '!';
-  position: absolute;
-  left: 0;
-  top: 1px;
-  width: 20px; height: 20px;
-  display: grid;
-  place-items: center;
-  background: var(--bolt);
-  color: var(--ink-deep);
-  border-radius: 50%;
-  font-family: var(--font-d);
-  font-weight: 800;
-  font-size: 13px;
-}
-.specs__safety-rules li b {
-  color: var(--bolt);
-  font-family: var(--font-d);
-  font-weight: 700;
-}
 .specs__safety-card {
   margin: 0;
   padding: 12px;
@@ -2106,15 +2065,12 @@ body.legal-page { background: var(--paper); color: var(--ink); }
 }
 @media (max-width: 600px) {
   .specs__safety { padding: 20px; margin-top: var(--space-6); }
-  .specs__safety-rules li { font-size: 14.5px; }
   .specs__safety-lead { font-size: 15px; }
   .specs__safety-card { padding: 10px; }
 }
 
 @media (max-width: 420px) {
   .specs__safety { padding: 16px; }
-  .specs__safety-rules li { padding-left: 24px; font-size: 14px; }
-  .specs__safety-rules li::before { width: 18px; height: 18px; font-size: 12px; }
 }
 
 /* FAQ figure inside details */
@@ -2128,7 +2084,10 @@ body.legal-page { background: var(--paper); color: var(--ink); }
 .faq__figure img {
   width: 100%;
   height: auto;
+  max-height: 520px;
+  object-fit: contain;
   display: block;
+  aspect-ratio: 1400 / 1866;
   border-radius: 2px;
 }
 .faq__figure figcaption {
@@ -2509,7 +2468,6 @@ body.legal-page { background: var(--paper); color: var(--ink); }
 }
 
 /* На светлой секции (specs) — светлая подложка иконки для контраста */
-.specs__card .install__zoom-icon,
 .specs__safety-card .install__zoom-icon {
   background: var(--surface-light);
   color: var(--ink-deep);
@@ -2714,59 +2672,6 @@ body.lightbox-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .lightbox { animation: none; }
   .install__zoom:hover img { transform: none; }
-}
-
-/* Specs — two spec cards (active + passive) */
-.specs__cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 48px;
-  padding-top: 40px;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
-}
-.specs__card {
-  margin: 0;
-  padding: 16px;
-  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
-  border-radius: 4px;
-  background: var(--surface-light);
-}
-.specs__card img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 2px;
-}
-.specs__card figcaption {
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.specs__card b {
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--ink);
-}
-.specs__card span {
-  font-family: var(--font-m);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--mute-d);
-}
-@media (max-width: 880px) {
-  .specs__cards { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; padding-top: 32px; }
-}
-@media (max-width: 600px) {
-  .specs__cards { gap: 14px; }
-  .specs__card { padding: 12px; }
-  .specs__mini-dial { width: 56px; height: 56px; }
-}
-@media (max-width: 420px) {
-  .specs__mini-dial { width: 48px; height: 48px; top: 8px; right: 8px; }
 }
 
 /* ==========================================================================
@@ -4104,26 +4009,6 @@ body.lightbox-open { overflow: hidden; }
 }
 
 /* ==========================================================================
-   Specs — мини-спидометр (signature) в specs-карточках
-   ========================================================================== */
-.specs__card {
-  position: relative;
-}
-.specs__mini-dial {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
-  width: 64px;
-  height: 64px;
-  display: grid;
-  place-items: center;
-  background: var(--paper);
-  border-radius: 50%;
-  padding: 4px;
-}
-.specs__mini-dial svg { width: 100%; height: 100%; }
-
-/* ==========================================================================
    Specs — comparison block "vs обычная коляска"
    ========================================================================== */
 .specs__compare {
@@ -4464,6 +4349,14 @@ body.lightbox-open { overflow: hidden; }
   max-width: 720px;
 }
 .legal-banner__note [aria-hidden] { color: var(--bolt); font-weight: 700; margin: 0 2px; }
+.faq__note {
+  font-size: var(--fs-body-sm);
+  line-height: 1.5;
+  color: var(--mute-d);
+  margin: var(--space-3) 0 0;
+  max-width: 720px;
+}
+.faq__note [aria-hidden] { color: var(--bolt); font-weight: 700; margin: 0 2px; }
 @media (max-width: 600px) {
   .legal-banner { padding: var(--space-5) var(--space-4); border-radius: 0 var(--radius-2) var(--radius-2) 0; border-left-width: 3px; }
   .legal-banner__title { font-size: 22px; margin-bottom: var(--space-3); }
