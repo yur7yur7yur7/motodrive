@@ -290,14 +290,23 @@ summary:focus-visible {
   border-color: var(--line-d);
 }
 
+/* ==========================================================================
+   Buttons — tactile "industrial" style
+   Скругление 14px, мягкие многослойные тени, пружинистый hover с лёгким scale.
+   Primary (.btn--accent) — жёлтый с верхним бликом и нижней "тенью-подушкой".
+   Secondary (.btn--ghost) — outlined с тонкой жёлтой обводкой и SVG-иконкой
+   щита слева; hover — мягкая заливка bolt с переворотом обводки на ink-deep.
+   Все варианты получают единый cubic-bezier для консистентного отклика.
+   ========================================================================== */
 .btn {
   --bg: transparent;
   --fg: currentColor;
   --br: var(--line);
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   padding: 14px 22px;
   font-family: var(--font-d);
   font-weight: 700;
@@ -306,24 +315,142 @@ summary:focus-visible {
   color: var(--fg);
   background: var(--bg);
   border: 1.5px solid var(--br);
-  border-radius: 2px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  text-decoration: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    transform .25s cubic-bezier(.34, 1.56, .64, 1),
+    background-color .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    box-shadow .25s ease;
+  will-change: transform, box-shadow;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
-.btn:focus-visible { outline: 2px solid var(--bolt); outline-offset: 3px; }
+.btn:hover {
+  transform: translateY(-2px) scale(1.015);
+}
+.btn:active {
+  transform: translateY(0) scale(0.99);
+  transition-duration: .08s;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--bolt);
+  outline-offset: 4px;
+}
 
-.btn--accent { --bg: var(--bolt); --fg: #0E1116; --br: var(--bolt); }
-.btn--accent:hover { --bg: var(--bolt-2); --br: var(--bolt-2); }
+/* ===== Primary CTA — «Заказать» ===== */
+.btn--accent {
+  --bg: var(--bolt);
+  --fg: var(--ink-deep);
+  --br: transparent;
+  /* Многослойная тень: внешняя мягкая "подушка" + тонкий блик сверху.
+     linear-gradient сверху добавляет едва заметный "металлический"
+     блик, типичный для премиальных CTA в e-commerce. */
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, var(--bolt) 0%, var(--bolt) 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 -2px 0 rgba(0,0,0,0.08) inset,
+    0 6px 14px -4px rgba(255,212,0,0.45),
+    0 12px 28px -8px rgba(14,17,22,0.35);
+}
+.btn--accent:hover {
+  --bg: var(--bolt-2);
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 50%),
+    linear-gradient(180deg, var(--bolt-2) 0%, var(--bolt-2) 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.45) inset,
+    0 -2px 0 rgba(0,0,0,0.10) inset,
+    0 10px 22px -6px rgba(255,212,0,0.55),
+    0 18px 36px -10px rgba(14,17,22,0.45);
+}
+.btn--accent:active {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.3) inset,
+    0 -1px 0 rgba(0,0,0,0.08) inset,
+    0 4px 10px -2px rgba(255,212,0,0.45),
+    0 6px 14px -4px rgba(14,17,22,0.3);
+}
+/* Иконка-стрелка справа на крупных accent-кнопках (hero CTA, модели,
+   sticky-CTA). В nav__cta иконка не нужна — там короткое «Заказать».
+   Применяем через :not(.nav__cta). */
+.btn--accent:not(.nav__cta)::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14M13 5l7 7-7 7'/></svg>") no-repeat center / contain;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14M13 5l7 7-7 7'/></svg>") no-repeat center / contain;
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
+}
+.btn--accent:not(.nav__cta):hover::after { transform: translateX(3px); }
+
+/* ===== Outline variant (на светлых секциях) ===== */
 .btn--outline { --br: var(--ink); }
 .btn--outline:hover { --bg: var(--ink); --fg: var(--paper); }
-.btn--ghost { --br: transparent; background: transparent; }
-.btn--ghost:hover { --bg: rgba(245,242,235,0.06); }
 
 .section--cta .btn--outline { --br: var(--ink); }
 
-.btn--lg { padding: 18px 30px; font-size: 16px; }
+/* ===== Secondary — «Проверить совместимость» =====
+   Outlined-вариант с тонкой жёлтой обводкой на тёмном hero. Иконка щита
+   слева через ::before (SVG mask), hover — заливка bolt, обводка
+   подменяется на ink-deep, иконка инвертируется. На светлых секциях
+   .btn--ghost оставляет минимальный прозрачный стиль (для nav-кнопок,
+   мобильного меню). */
+.btn--ghost {
+  --bg: transparent;
+  --fg: var(--paper);
+  --br: rgba(255,212,0,0.55);
+  padding: 14px 22px;
+  box-shadow: 0 0 0 0 rgba(255,212,0,0);
+}
+.btn--ghost::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background-color: var(--bolt);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z'/><path d='m9 12 2 2 4-4'/></svg>") no-repeat center / contain;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z'/><path d='m9 12 2 2 4-4'/></svg>") no-repeat center / contain;
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), background-color .2s ease;
+}
+.btn--ghost::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14M13 5l7 7-7 7'/></svg>") no-repeat center / contain;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14M13 5l7 7-7 7'/></svg>") no-repeat center / contain;
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1);
+}
+.btn--ghost:hover {
+  --bg: var(--bolt);
+  --fg: var(--ink-deep);
+  --br: var(--bolt);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 -2px 0 rgba(0,0,0,0.08) inset,
+    0 6px 14px -4px rgba(255,212,0,0.40),
+    0 12px 28px -8px rgba(14,17,22,0.30);
+}
+.btn--ghost:hover::before { background-color: var(--ink-deep); }
+.btn--ghost:hover::after { transform: translateX(3px); }
+
+/* Модификатор для кнопок, где иконка-щит не нужна (мобильное меню и пр.)
+   — оставляем только стрелку справа. */
+.btn--ghost.no-shield::before { display: none; }
+
+.btn--lg {
+  padding: 18px 30px;
+  font-size: 16px;
+  border-radius: 16px;
+}
 .btn--block { width: 100%; }
 
 /* ==========================================================================
@@ -388,7 +515,23 @@ summary:focus-visible {
 }
 .nav__links a:hover { color: var(--paper); }
 .nav__links a:hover::after { transform: scaleX(1); }
-.nav__cta { padding: 10px 18px; font-size: 14px; }
+.nav__cta {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 -2px 0 rgba(0,0,0,0.08) inset,
+    0 4px 10px -3px rgba(255,212,0,0.40),
+    0 8px 20px -6px rgba(14,17,22,0.30);
+}
+.nav__cta:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.45) inset,
+    0 -2px 0 rgba(0,0,0,0.10) inset,
+    0 6px 14px -4px rgba(255,212,0,0.55),
+    0 12px 26px -8px rgba(14,17,22,0.40);
+}
 
 /* burger button — visible only on mobile/tablet */
 .nav__burger {
@@ -802,8 +945,8 @@ summary:focus-visible {
   .hero__chip--2 { right: -4%; }
   .hero__stats { gap: 28px; }
   .hero__stats b { font-size: 30px; }
-  .hero__ctas { flex-wrap: wrap; }
-  .hero__ctas .btn { flex: 1 1 220px; }
+  .hero__ctas { flex-wrap: wrap; gap: 14px; }
+  .hero__ctas .btn { flex: 1 1 240px; }
   .hero__lede { max-width: 560px; }
 }
 
@@ -819,7 +962,14 @@ summary:focus-visible {
   }
   .hero__lede { font-size: 15px; margin-bottom: 24px; line-height: 1.55; }
   .hero__ctas { margin-bottom: 32px; gap: 12px; }
-  .hero__ctas .btn { padding: 16px 20px; font-size: 15px; min-height: 52px; }
+  .hero__ctas .btn {
+    padding: 17px 22px;
+    font-size: 15.5px;
+    min-height: 54px;
+    border-radius: 14px;
+  }
+  .hero__ctas .btn::before,
+  .hero__ctas .btn::after { width: 18px; height: 18px; }
   .hero__stats {
     gap: 16px;
     padding-top: 24px;
@@ -857,7 +1007,7 @@ summary:focus-visible {
   .hero__stats { gap: 10px; }
   .hero__stats b { font-size: 22px; }
   .hero__stats span { font-size: 9.5px; }
-  .hero__ctas .btn { flex: 1 1 100%; }
+  .hero__ctas .btn { flex: 1 1 100%; border-radius: 14px; }
   .hero__trust { gap: 6px; }
   .hero__trust-item { padding: 6px 10px; font-size: 10px; }
   .hero__photo-caption { font-size: 10px; padding: 4px 10px; }
@@ -1272,48 +1422,69 @@ label.field--full { display: flex; }
   gap: 12px;
   min-height: 18px;
 }
+/* Сегмент-контрол страны номера — в стиле полей формы (2px radius, моноширинный лейбл)
+   и табов галереи (active = жёлтый бренд-фон + чёрный текст, без белого на жёлтом). */
 .phone-country {
   display: inline-flex;
   padding: 3px;
-  background: var(--surface-light, #f3f4f6);
+  gap: 0;
+  background: var(--paper);
   border: 1.5px solid var(--line-d);
-  border-radius: 999px;
+  border-radius: var(--radius-1, 2px);
   font-family: var(--font-m);
+  overflow: hidden;
+  transition: border-color var(--dur-fast) var(--ease-out);
 }
+.phone-country:hover { border-color: var(--mute-d); }
+.phone-country:focus-within { border-color: var(--bolt); }
+
 .phone-country__btn {
   appearance: none;
   -webkit-appearance: none;
+  position: relative;
   background: transparent;
   border: 0;
-  padding: 6px 12px;
+  padding: 8px 14px;
   min-height: 32px;
   font: inherit;
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--mute-d);
-  border-radius: 999px;
+  border-radius: 0;
   cursor: pointer;
-  transition: background .15s ease, color .15s ease;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
   line-height: 1;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
+.phone-country__btn + .phone-country__btn { border-left: 1px solid var(--line-d); }
+.phone-country__btn:hover { color: var(--ink); }
+
 .phone-country__flag {
-  width: 16px;
-  height: 12px;
+  width: 18px;
+  height: 13px;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 1px;
   display: block;
+  box-shadow: 0 0 0 1px rgba(14, 17, 22, 0.12);
 }
-.phone-country__btn:hover { color: var(--text-d, #111); }
+
 .phone-country__btn.is-active {
-  background: var(--bolt, #111);
-  color: var(--paper, #fff);
+  background: var(--bolt);
+  color: var(--ink-deep);
 }
+/* Флаг на жёлтом фоне обводим тёмным, чтобы не сливался */
+.phone-country__btn.is-active .phone-country__flag {
+  box-shadow: 0 0 0 1px var(--ink-deep);
+}
+
 .phone-country__btn:focus-visible {
-  outline: 2px solid var(--bolt, #111);
-  outline-offset: 2px;
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
 }
 .field input, .field select {
   padding: 14px 14px;
@@ -1402,10 +1573,9 @@ label.field--full { display: flex; }
   }
   .field__label { font-size: 10.5px; }
   .field__helper { font-size: 11.5px; }
-  .phone-country { padding: 3px; }
   .phone-country__btn {
-    padding: 6px 12px;
-    min-height: 32px;
+    padding: 9px 12px;
+    min-height: 38px;
     font-size: 11px;
   }
   .consent {
@@ -1415,7 +1585,8 @@ label.field--full { display: flex; }
   .consent input[type="checkbox"] { width: 22px; height: 22px; }
   .consent__text { font-size: 12.5px; line-height: 1.45; }
   /* Кнопка отправки — крупная, 52px высота, тень-усилитель. */
-  .order__form .btn--lg { padding: 18px 24px; font-size: 16px; min-height: 56px; }
+  .order__form .btn--lg { padding: 18px 24px; font-size: 16px; min-height: 56px; border-radius: 14px; }
+  .order__form .btn--lg::after { width: 18px; height: 18px; }
   .order__cta-note { font-size: 11px; }
   .form-trust { gap: 6px 12px; }
   .form-trust__item { font-size: 10.5px; }
@@ -1430,7 +1601,7 @@ label.field--full { display: flex; }
   .order__form { padding: 18px 14px; }
   .consent { padding: 10px; }
   .consent__text { font-size: 12px; }
-  .order__form .btn--lg { padding: 16px 20px; min-height: 52px; font-size: 15px; }
+  .order__form .btn--lg { padding: 16px 20px; min-height: 52px; font-size: 15px; border-radius: 14px; }
 }
 
 /* ==========================================================================
@@ -1901,6 +2072,13 @@ body.legal-page { background: var(--paper); color: var(--ink); }
   padding-top: var(--space-4);
   border-top: 1px solid var(--line);
 }
+.model__foot .btn {
+  padding: 16px 22px;
+  font-size: 15px;
+  min-height: 54px;
+  border-radius: 14px;
+}
+.model__foot .btn::after { width: 16px; height: 16px; }
 
 /* Price note под основной ценой (legacy) */
 .model__price-note {
@@ -2834,6 +3012,13 @@ body.lightbox-open { overflow: hidden; }
   display: grid;
   gap: var(--space-3);
 }
+.compat__help-form .btn {
+  padding: 16px 22px;
+  font-size: 15px;
+  min-height: 54px;
+  border-radius: 14px;
+}
+.compat__help-form .btn::after { width: 16px; height: 16px; }
 .compat__help-form .field input {
   background: var(--ink);
   color: var(--paper);
@@ -3758,7 +3943,7 @@ body.lightbox-open { overflow: hidden; }
   color: var(--paper);
 }
 .sticky-cta__copy span { color: var(--mute); font-size: 12px; }
-.sticky-cta__btn { flex-shrink: 0; padding: 12px 18px; font-size: 14px; }
+.sticky-cta__btn { flex-shrink: 0; padding: 12px 20px; font-size: 14px; border-radius: 12px; }
 
 @media (max-width: 1100px) {
   .sticky-cta { display: flex; }
@@ -3782,14 +3967,15 @@ body.lightbox-open { overflow: hidden; }
     padding: 14px 22px;
     font-size: 15px;
     min-height: 48px;
-    border-radius: 4px;
+    border-radius: 12px;
   }
+  .sticky-cta__btn::after { width: 16px; height: 16px; }
 }
 
 @media (max-width: 420px) {
   .sticky-cta { padding: 10px 14px; }
   .sticky-cta__copy strong { font-size: 16px; }
-  .sticky-cta__btn { padding: 12px 18px; min-height: 44px; font-size: 14px; }
+  .sticky-cta__btn { padding: 12px 18px; min-height: 44px; font-size: 14px; border-radius: 10px; }
 }
 
 /* ==========================================================================
