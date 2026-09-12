@@ -1420,7 +1420,7 @@ label.field--full { display: flex; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 18px;
+  min-height: 44px;
 }
 /* Сегмент-контрол страны номера — в стиле полей формы (2px radius, моноширинный лейбл)
    и табов галереи (active = жёлтый бренд-фон + чёрный текст, без белого на жёлтом). */
@@ -1493,6 +1493,9 @@ label.field--full { display: flex; }
   border-radius: 2px;
   font-family: var(--font-b);
   font-size: 15px;
+  line-height: 1.2;
+  height: 50px;
+  box-sizing: border-box;
   transition: border-color .2s ease, background .2s ease;
 }
 .field input:focus, .field select:focus {
@@ -3423,6 +3426,14 @@ body.lightbox-open { overflow: hidden; }
 .vp.is-playing .vp__el { opacity: 1; }
 .vp.is-ready .vp__poster,
 .vp.is-playing .vp__poster { opacity: 0; pointer-events: none; }
+/* Плееры с data-player-no-snap: статичный постер из data-player-poster
+   должен висеть до самого старта воспроизведения. <video> становится
+   видимым только когда реально играет (.is-playing), а на .is-ready
+   остаётся прозрачным — иначе первый кадр видео «проступает» поверх
+   выбранного постера (кадр 34s у проморолика). */
+.vp[data-player-no-snap="true"] .vp__el { opacity: 0; }
+.vp[data-player-no-snap="true"].is-playing .vp__el { opacity: 1; }
+.vp[data-player-no-snap="true"].is-ready .vp__poster { opacity: 1; }
 .vp__big-play {
   position: absolute;
   inset: 0;
@@ -3758,11 +3769,30 @@ body.lightbox-open { overflow: hidden; }
   .vp__big-play-sub { font-size: 10px; letter-spacing: 0.1em; }
   /* Кнопка качества: 40×34 — комфортнее для пальца, чем 32×34. */
   .vp__quality { min-width: 40px; padding: 0 8px; font-size: 11px; }
-  /* Seek-bar немного толще, чтобы палец мог попасть. */
-  .vp__seek { height: 18px; }
-  .vp__seek::before { height: 5px; }
+  /* Контролы перестраиваем в две строки: сверху широкий seek,
+     снизу play/time/mute/volume/quality. На узком hero-плеере 9:16
+     seek внутри одной строки был слишком коротким и неудобным для
+     перемотки пальцем — отдельная строка решает это без правки HTML/JS. */
+  .vp__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 6px;
+  }
+  .vp__seek {
+    order: -1;
+    flex-basis: 100%;
+    height: 26px;
+    margin-bottom: 2px;
+  }
+  .vp__seek::before { height: 6px; }
   .vp__seek-buffer,
-  .vp__seek-fill { height: 5px; }
+  .vp__seek-fill { height: 6px; }
+  .vp__seek-thumb {
+    width: 16px;
+    height: 16px;
+    box-shadow: 0 0 0 5px rgba(255, 212, 0, 0.22);
+  }
   /* На мобиле центральная кнопка видна и при playing (нужна для паузы).
      Во время паузы — полный десктопный вид: жёлтый круг + подписи.
      Во время воспроизведения — облегчённый полупрозрачный значок паузы

@@ -158,8 +158,9 @@
           <div class="hero__photo hero__photo--video">
             <div class="vp vp--hero" data-player tabindex="0"
                  data-player-sources='[{"label":"480p","src":"./photo/web/promo-480.mp4","default":true},{"label":"360p","src":"./photo/web/promo-360.mp4"}]'
-                 data-player-poster="./img/products/wheelchair-drive-active-summer-poster.webp"
+                 data-player-poster="./img/products/wheelchair-drive-active-promo-poster.webp"
                  data-player-label="Проморолик Wheel Pilots — 40 секунд: преимущества и демонстрация"
+                 data-player-no-snap="true"
                  data-player-loop="true"
                  data-player-no-fs="true">
               <img class="vp__poster" alt="Электроприставка Wheel Pilots Power" />
@@ -1597,7 +1598,9 @@
 
             <div class="order__form-fields">
               <label class="field">
-                <span class="field__label">Имя</span>
+                <div class="field__row">
+                  <span class="field__label">Имя</span>
+                </div>
                 <input type="text" name="name" placeholder="Алексей" autocomplete="given-name" required data-form-field="name" />
                 <span class="field__helper">Как к вам обращаться</span>
               </label>

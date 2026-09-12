@@ -811,7 +811,11 @@
 
   const captureFirstFrame = (player) => {
     /* Используем первый кадр видео как постер.
-       Снимок делаем после loadeddata; рисуем в canvas → toDataURL → <img>. */
+       Снимок делаем после loadeddata; рисуем в canvas → toDataURL → <img>.
+       Если у плеера data-player-no-snap="true" — оставляем статичный постер
+       из data-player-poster как есть (используется для проморолика, где
+       заранее выбран конкретный кадр). */
+    if (player.root.getAttribute('data-player-no-snap') === 'true') return;
     const v = player.video;
     if (!player.poster) return;
     let done = false;
