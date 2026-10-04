@@ -99,10 +99,9 @@
         <img class="nav__logo" src="./img/logo-horizontal-white.png" alt="Wheel Pilots" width="180" height="68" />
       </a>
       <nav class="nav__links" aria-label="Главное меню">
-        <a href="#compat">Совместимость</a>
-        <a href="#models">Модели</a>
+        <a href="#compat">Модель</a>
         <a href="#how">Как установить</a>
-        <a href="#reviews">Отзывы</a>
+        <a href="#reviews">Цифры</a>
         <a href="#faq">FAQ</a>
       </nav>
       <a href="#order" class="btn btn--accent nav__cta">Заказать</a>
@@ -114,11 +113,10 @@
 
   <div class="mobile-nav" id="mobileNav" hidden>
     <nav class="mobile-nav__list" aria-label="Мобильное меню">
-      <a href="#compat">Совместимость</a>
-      <a href="#models">Модели</a>
+      <a href="#compat">Модель</a>
       <a href="#specs">Характеристики</a>
       <a href="#how">Как установить</a>
-      <a href="#reviews">Отзывы</a>
+      <a href="#reviews">Цифры и факты</a>
       <a href="#faq">FAQ</a>
       <a href="#order" class="btn btn--accent btn--block">Заказать</a>
     </nav>
@@ -246,61 +244,100 @@
       <a href="#order" class="btn btn--accent sticky-cta__btn">Заказать</a>
     </aside>
 
-    <!-- COMPAT-CHECK -->
-    <section class="compat" id="compat">
+    <!-- MODEL & COMPATIBILITY -->
+    <section class="pick" id="compat">
+      <div class="pick__bg" aria-hidden="true"></div>
       <div class="container">
-        <header class="compat__head">
-          <span class="eyebrow">№01 / СОВМЕСТИМОСТЬ</span>
-          <h2 class="compat__title">Подойдёт ли Wheel Pilots <span class="accent">к вашей коляске?</span></h2>
-          <p class="compat__sub">Два типа крепления — для активной коляски с ручным управлением и для пассивной со съёмными подножками. Выберите свой тип ниже или попросите менеджера подобрать по фото.</p>
+        <header class="pick__head">
+          <span class="eyebrow">№01 / МОДЕЛЬ И СОВМЕСТИМОСТЬ</span>
+          <h2 class="pick__title">Один привод — <span class="accent">два крепления.</span><br>Выберите свой вариант.</h2>
+          <p class="pick__sub">Wheel Pilots Power выпускается в двух комплектациях — для активной коляски с ручным управлением и для пассивной со съёмными подножками. Мотор, батарея и органы управления одинаковые — отличается только кронштейн.</p>
         </header>
 
-        <div class="compat__grid">
-          <a href="#order" class="compat__card" data-chair="active">
-            <div class="compat__card-photo">
-              <img src="./img/products/wheelchair-drive-active-isolated.webp" alt="Активная инвалидная коляска с ручным управлением" width="1600" height="1600" loading="lazy" />
+        <div class="pick__grid">
+          <!-- ACTIVE -->
+          <a href="#order" class="pick__card" data-chair="active">
+            <div class="pick__card-photo">
+              <span class="pick__card-num" aria-hidden="true">A</span>
+              <img src="./img/products/wheelchair-drive-active-isolated.webp" alt="Электроприставка Wheel Pilots Power с креплением к подножкам активной коляски" width="1600" height="1600" loading="lazy" />
+              <span class="pick__card-callout" aria-hidden="true">
+                <span class="pick__card-callout-dot"></span>
+                кронштейн к подножкам
+              </span>
             </div>
-            <div class="compat__card-body">
-              <div class="compat__card-tag">АКТИВНАЯ</div>
-              <div class="compat__card-name">Крепление к подножкам</div>
-              <div class="compat__card-meta">Подножки жёстко выходят из самой рамы коляски — именно за них и цепляется крепление. Подходит для большинства активных колясок с ручным управлением: лёгких, маневренных, со складной или жёсткой рамой. Установка ≈ 10 минут, без инструментов.</div>
-              <ul class="compat__card-features">
-                <li><span>Подходит для:</span><b>90% активных колясок</b></li>
-              </ul>
-              <span class="compat__card-arrow">Заказать с активным креплением</span>
+            <div class="pick__card-body">
+              <div class="pick__card-tag">ВАРИАНТ A · АКТИВНАЯ</div>
+              <h3 class="pick__card-name">Крепление <span class="accent">к подножкам.</span></h3>
+              <p class="pick__card-desc">Крюк-фиксатор обхватывает подножку активной коляски и зажимается без инструментов. Установка и снятие — за минуту, ключ в комплекте.</p>
+              <div class="pick__card-foot">
+                <div class="pick__card-price"><span>Цена комплекта</span><b>$ 2 000 000</b></div>
+                <span class="pick__card-arrow">Заказать с активным креплением</span>
+              </div>
             </div>
           </a>
 
-          <a href="#order" class="compat__card" data-chair="passive">
-            <div class="compat__card-photo">
-              <img src="./img/products/wheelchair-drive-passive-isolated.webp" alt="Пассивная инвалидная коляска со съёмными подножками" width="1600" height="1600" loading="lazy" />
+          <!-- PASSIVE -->
+          <a href="#order" class="pick__card" data-chair="passive">
+            <div class="pick__card-photo">
+              <span class="pick__card-num pick__card-num--alt" aria-hidden="true">B</span>
+              <img src="./img/products/wheelchair-drive-passive-isolated.webp" alt="Электроприставка Wheel Pilots Power с креплением к раме пассивной коляски" width="1600" height="1600" loading="lazy" />
+              <span class="pick__card-callout pick__card-callout--alt" aria-hidden="true">
+                <span class="pick__card-callout-dot"></span>
+                кронштейн к раме
+              </span>
             </div>
-            <div class="compat__card-body">
-              <div class="compat__card-tag compat__card-tag--b">ПАССИВНАЯ</div>
-              <div class="compat__card-name">Крепление типа B к раме</div>
-              <div class="compat__card-meta">Подножки снимаются — для посадки и пересаживания. Крепиться за них нельзя, поэтому кронштейн становится на основную раму коляски: жёстко, без люфтов, и не мешает ходьбе сопровождающего рядом. Подходит для пассивных и прогулочных колясок.</div>
-              <ul class="compat__card-features">
-                <li><span>Подходит для:</span><b>пассивные и прогулочные</b></li>
-              </ul>
-              <span class="compat__card-arrow">Заказать с пассивным креплением</span>
+            <div class="pick__card-body">
+              <div class="pick__card-tag pick__card-tag--alt">ВАРИАНТ B · ПАССИВНАЯ</div>
+              <h3 class="pick__card-name">Крепление <span class="accent">к раме.</span></h3>
+              <p class="pick__card-desc">Платформа крепится к основной раме пассивной коляски четырьмя болтами — жёстко, без люфтов и не мешает ходьбе сопровождающего рядом.</p>
+              <div class="pick__card-foot">
+                <div class="pick__card-price"><span>Цена комплекта</span><b>$ 2 000 000</b></div>
+                <span class="pick__card-arrow">Заказать с пассивным креплением</span>
+              </div>
             </div>
           </a>
         </div>
 
-        <div class="compat__help">
-          <div class="compat__help-icon" aria-hidden="true">
+        <!-- GIFTS row -->
+        <div class="pick__gifts">
+          <span class="pick__gifts-label">В подарок к любому комплекту:</span>
+          <ul class="pick__gifts-list">
+            <li>
+              <span class="pick__gifts-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+              </span>
+              <div>
+                <b>Держатель для телефона</b>
+                <span>Надёжно фиксирует смартфон на руле — навигация и звонки под рукой.</span>
+              </div>
+            </li>
+            <li>
+              <span class="pick__gifts-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 13l2 2 4-4"/></svg>
+              </span>
+              <div>
+                <b>Зимняя покрышка</b>
+                <span>Сцепление на снегу и на льду — без потери тяги в холодное время года.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- HELP -->
+        <div class="pick__help">
+          <div class="pick__help-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="24" cy="24" r="20"/>
               <path d="M24 16 L24 28"/>
               <circle cx="24" cy="34" r="1.5" fill="currentColor"/>
             </svg>
           </div>
-          <div class="compat__help-text-col">
-            <h3 class="compat__help-title">Не знаете, какой тип выбрать?</h3>
-            <p class="compat__help-text">Сфотографируйте коляску сбоку и спереди — менеджер подберёт подходящее крепление, назовёт точную цену и ответит в течение часа. Без обязательств.</p>
-            <span class="compat__help-trust">Отвечаем в течение часа в рабочее время · Без спама и рассылок</span>
+          <div class="pick__help-text-col">
+            <h3 class="pick__help-title">Не знаете, какой вариант выбрать?</h3>
+            <p class="pick__help-text">Сфотографируйте коляску сбоку и спереди — менеджер подберёт подходящее крепление, назовёт точную цену и ответит в течение часа. Без обязательств.</p>
+            <span class="pick__help-trust">Отвечаем в течение часа в рабочее время · Без спама и рассылок</span>
           </div>
-          <form class="compat__help-form" id="compatHelpForm" novalidate>
+          <form class="pick__help-form" id="compatHelpForm" novalidate>
             <label class="field">
               <div class="field__row">
                 <span class="field__label">Телефон</span>
@@ -330,65 +367,11 @@
             <button type="submit" class="btn btn--accent btn--block">Получить ответ о совместимости</button>
           </form>
         </div>
-      </div>
-    </section>
 
-    <!-- MODELS -->
-    <section class="section section--dark" id="models">
-      <div class="container">
-        <header class="section__head">
-          <span class="eyebrow">№02 / МОДЕЛЬ</span>
-          <h2 class="section__title">Электроприставка <span class="accent">для вашей коляски.</span></h2>
-          <p class="section__sub">Один привод — и два подарка в комплекте. Выпускается в двух комплектациях: для активной и пассивной коляски. Отличие — в типе крепления.</p>
-        </header>
-        <div class="models">
-          <article class="model__item">
-            <figure class="model__photo">
-              <picture>
-                <source srcset="./img/products/wheelchair-drive-active-summer-poster.webp" type="image/webp" />
-                <img class="model__photo-img"
-                     src="./img/products/wheelchair-drive-active-summer-poster.webp"
-                     alt="Электроприставка Wheel Pilots Power — на активной коляске"
-                     width="1400" height="1866"
-                     loading="lazy" decoding="async" />
-              </picture>
-              <div class="model__thumbs" role="tablist" aria-label="Тип коляски" data-thumb-alt-map='{"active":"Электроприставка Wheel Pilots Power — на активной коляске","passive":"Электроприставка Wheel Pilots Power — на пассивной коляске"}'>
-                <button class="model__thumb is-active" type="button" data-thumb-src="./img/products/wheelchair-drive-active-summer-poster.webp" data-thumb-key="active" aria-label="Активная коляска"><span>Активная</span></button>
-                <button class="model__thumb" type="button" data-thumb-src="./img/products/wheelchair-drive-passive-summer-poster.webp" data-thumb-key="passive" aria-label="Пассивная коляска"><span>Пассивная</span></button>
-              </div>
-              <figcaption class="model__photo-caption">
-                <span>Wheel Pilots Power · оба типа колясок</span>
-                <b>500 Вт · 17 Ah · 65 км</b>
-              </figcaption>
-            </figure>
-            <div class="model__body">
-              <h3 class="model__name">Wheel Pilots <span class="accent">Power.</span></h3>
-              <p class="model__tag">Базовый привод + два подарка в комплекте. Подходит для большинства колясок с ручным управлением и для пассивных со съёмными подножками — тип крепления выбирается на шаге заказа.</p>
-              <div class="model__gifts">
-                <span class="model__gifts-label">В подарок к комплекту:</span>
-                <ul class="model__gifts-list">
-                  <li>
-                    <b>Держатель для телефона</b>
-                    <span>Надёжно фиксирует смартфон на руле — навигация и звонки под рукой.</span>
-                  </li>
-                  <li>
-                    <b>Зимняя покрышка</b>
-                    <span>Сцепление на снегу и на льду — без потери тяги в холодное время года.</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="model__foot">
-                <div class="model__price"><span>Цена</span><b>$ 2 000 000</b></div>
-                <a href="#order" class="btn btn--accent btn--block">Заказать комплект</a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <aside class="models__tip" role="note">
-          <strong>Из них $ 1 800 000 — на чай программисту.</strong> Остальное — на зарплату, маркетинг, доставку и собственно железо. Если серьёзно, итоговая цена зависит от комплектации и крепления — менеджер назовёт точную за 15 минут без обязательств.
+        <aside class="pick__tip" role="note">
+          <strong>Из них $ 1 800 000 — на чай программисту.</strong> Остальное — на зарплату, маркетинг, доставку и собственно железо. Итоговая цена зависит от комплектации и крепления — менеджер назовёт точную за 15 минут без обязательств.
         </aside>
-        <p class="models__disclaimer">Запас хода зависит от нагрузки, рельефа, температуры и стиля езды.</p>
+        <p class="pick__disclaimer">Запас хода зависит от нагрузки, рельефа, температуры и стиля езды.</p>
       </div>
     </section>
 
@@ -396,7 +379,7 @@
     <section class="section section--dark" id="gallery">
       <div class="container">
         <header class="section__head">
-          <span class="eyebrow">№02.5 / КАК ВЫГЛЯДИТ</span>
+          <span class="eyebrow">№02 / КАК ВЫГЛЯДИТ</span>
           <h2 class="section__title">Фото из <span class="accent">каталога.</span></h2>
           <p class="section__sub">Реальные кадры, не рендеры — приставка на коляске, в руках, на асфальте и на площадке. Выберите тип коляски, чтобы посмотреть фото.</p>
         </header>
@@ -1276,7 +1259,7 @@
     <section class="section section--dark" id="how">
       <div class="container">
         <header class="section__head">
-          <span class="eyebrow">№05 / УСТАНОВКА</span>
+          <span class="eyebrow">№04 / УСТАНОВКА</span>
           <h2 class="section__title">Крепление — <span class="accent">поехали.</span></h2>
           <p class="section__sub">Две версии видеоинструкции — для активной и пассивной коляски. Выберите свой тип и посмотрите сборку.</p>
         </header>
@@ -1397,21 +1380,14 @@
     </section>
 
 
-    <!-- REVIEWS / TRUST -->
+    <!-- FACTS & FIGURES -->
     <section class="section" id="reviews">
       <div class="container">
         <header class="section__head section__head--light">
-          <span class="eyebrow eyebrow--dark">№06 / ОТЗЫВЫ</span>
+          <span class="eyebrow eyebrow--dark">№05 / ЦИФРЫ И ФАКТЫ</span>
           <h2 class="section__title section__title--dark">Проверено <span class="accent">в деле.</span></h2>
-          <p class="section__sub">Конкретные цифры из реальных испытаний и эксплуатации — без общих слов.</p>
+          <p class="section__sub">Главные цифры и факты о Wheel Pilots Power — ёмко, без воды. Полные характеристики — в отдельной таблице ниже.</p>
         </header>
-
-        <div class="reviews-trust" role="group" aria-label="Достижения бренда">
-          <div class="trust-counter"><b>500 Вт</b><span>мощность мотора</span></div>
-          <div class="trust-counter"><b>65 км</b><span>запас хода на 1 заряде</span></div>
-          <div class="trust-counter"><b>45 км/ч</b><span>максимальная скорость</span></div>
-          <div class="trust-counter"><b>1 год</b><span>гарантия на привод</span></div>
-        </div>
 
         <div class="reviews">
           <figure class="review">
@@ -1452,7 +1428,7 @@
     <section class="section section--dark" id="faq">
       <div class="container faq">
         <header class="section__head">
-          <span class="eyebrow">№07 / FAQ</span>
+          <span class="eyebrow">№06 / FAQ</span>
           <h2 class="section__title">Частые <span class="accent">вопросы.</span></h2>
         </header>
 
@@ -1490,7 +1466,7 @@
             <ul>
               <li><b>Права</b> — не нужны, СИМ приравнивается к электросамокату.</li>
               <li><b>Шлем</b> — не обязателен по закону, но мы рекомендуем.</li>
-              <li><b>Регистрация</b> — не требуется, сертификат соответствия в комплекте.</li>
+              <li><b>Регистрация</b> — не требуется.</li>
             </ul>
             <p class="faq__note">Региональные правила и ограничения могут отличаться<span aria-hidden="true">*</span> — перед поездкой в новом городе проверьте местные нормативные акты.</p>
           </details>
@@ -1527,7 +1503,7 @@
     <section class="section section--cta" id="order">
       <div class="container order">
         <div class="order__head">
-          <span class="eyebrow eyebrow--dark">№08 / ЗАКАЗ</span>
+          <span class="eyebrow eyebrow--dark">№07 / ЗАКАЗ</span>
           <h2 class="order__title">Готовы <em>поехать?</em></h2>
           <p class="order__sub">Выберите комплектацию, оставьте телефон — перезвоним за 15 минут и подберём привод под вашу коляску.</p>
         </div>
@@ -1671,7 +1647,6 @@
       <div class="footer__brand">
         <span class="footer__logo">Wheel&nbsp;Pilots</span>
         <p>Электроприставки к инвалидным коляскам <span class="footer__brand-note">Страна производства: Китай.</span></p>
-        <a href="./cert.html" class="cert-badge">Сертификат соответствия</a>
       </div>
       <div class="footer__col">
         <h4>Контакты</h4>
@@ -1681,11 +1656,10 @@
       </div>
       <div class="footer__col">
         <h4>Навигация</h4>
-        <a href="#compat">Совместимость</a>
-        <a href="#models">Модели</a>
+        <a href="#compat">Модель</a>
         <a href="#specs">Характеристики</a>
         <a href="#how">Установка</a>
-        <a href="#reviews">Отзывы</a>
+        <a href="#reviews">Цифры и факты</a>
         <a href="#faq">FAQ</a>
       </div>
       <div class="footer__col">
@@ -1693,7 +1667,6 @@
         <a href="./policy.html">Политика конфиденциальности</a>
         <a href="./offer.html">Договор публичной оферты</a>
         <a href="./consent.html">Согласие на обработку ПДн</a>
-        <a href="./cert.html">Сертификат соответствия</a>
       </div>
     </div>
 

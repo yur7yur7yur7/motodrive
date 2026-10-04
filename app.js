@@ -120,7 +120,7 @@
 
   /* ---------- reveal on scroll (IntersectionObserver) ---------- */
   const revealTargets = document.querySelectorAll(
-    '.section__head, .compat__card, .compat__help, .model__item, .specs__row, .step, .review, .faq__item, .scenario, .order__head, .order__form, .footer__inner, .install__video, .reviews-trust, .specs__compare'
+    '.section__head, .pick__card, .pick__help, .pick__gifts, .specs__row, .step, .review, .faq__item, .scenario, .order__head, .order__form, .footer__inner, .install__video, .specs__compare'
   );
   revealTargets.forEach((el) => el.classList.add('reveal'));
 
@@ -469,7 +469,7 @@
     });
 
     /* Compat-Check: карточка → preselect chair (radio) */
-    document.querySelectorAll('.compat__card[data-chair]').forEach((card) => {
+    document.querySelectorAll('.pick__card[data-chair]').forEach((card) => {
       card.addEventListener('click', () => {
         const chair = card.dataset.chair;
         if (!chair) return;
@@ -588,12 +588,33 @@
     });
   });
 
-  /* ---------- FAQ: ensure only one open at a time ---------- */
+  /* ---------- FAQ: ensure only one open at a time + keep title in view ---------- */
   const faqs = document.querySelectorAll('.faq__item');
+  const navRoot = getComputedStyle(document.documentElement);
+  const faqNavH = parseInt(navRoot.getPropertyValue('--nav-h')) || 70;
+
   faqs.forEach((f) => {
     f.addEventListener('toggle', () => {
-      if (!f.open) return;
+      if (!f.open) return; // интересует только открытие, не закрытие
+
+      // Закрыть остальные пункты
       faqs.forEach((other) => { if (other !== f) other.open = false; });
+
+      // После того как контент другого пункта свернулся и текущий развернулся —
+      // подравниваем позицию скролла, чтобы заголовок (summary) нового открытого
+      // пункта был виден сразу под навом. requestAnimationFrame ждёт кадр,
+      // в котором браузер уже пересчитал высоту <details>.
+      const summary = f.querySelector('summary');
+      if (!summary) return;
+      requestAnimationFrame(() => {
+        const rect = summary.getBoundingClientRect();
+        const idealTop = faqNavH + 20;           // где хотим видеть заголовок
+        const tolerance = 60;                   // ±60px — уже «нормально», не дёргаем
+        if (Math.abs(rect.top - idealTop) > tolerance) {
+          const targetY = window.scrollY + rect.top - idealTop;
+          window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+        }
+      });
     });
   });
 
