@@ -443,17 +443,19 @@
         };
         setTimeout(tick, 1000);
 
-        /* Auto-reset через 20с для повторной отправки */
+        /* Auto-reset через 15с — к этому моменту таймер «00:00» уже отсчитал и форма
+           готова к приёму новой заявки. */
         setTimeout(() => {
-          form.dataset.state = 'idle';
-          btn.disabled = false;
-          btn.textContent = original;
           form.reset();
-          if (display) display.textContent = '15:00';
-          if (num) num.textContent = '15:00';
+          form.dataset.state = 'idle';
+          btn.textContent = original;
+          if (display) display.textContent = '00:15';
+          if (num) num.textContent = '00:15';
           if (progress) progress.style.strokeDashoffset = '0';
           consentLabels.forEach((l) => l.classList.remove('consent--error'));
-        }, 20000);
+          /* После очистки полей — снова disabled, пока пользователь не ввёл данные. */
+          if (typeof recomputeFormState === 'function') recomputeFormState();
+        }, 15000);
       }, 900);
     });
 
@@ -508,6 +510,81 @@
         r.addEventListener('change', applyKitImage);
       });
     }
+
+    /* ---------- live: data-state="valid"|"invalid" → submit.disabled + hint ---------- */
+    const submitBtn = form.querySelector('[data-submit-btn]');
+    const hintBtn = form.querySelector('[data-submit-hint]');
+    const hintPanel = form.querySelector('[data-submit-hint-panel]');
+    const hintItems = form.querySelectorAll('[data-need]');
+    const nameInput = form.querySelector('input[name="name"]');
+    const phoneInput = form.querySelector('input[name="phone"]');
+    const consentInput = form.querySelector('input[name="consent"]');
+    const offerInput = form.querySelector('input[name="offer"]');
+
+    const recomputeFormState = () => {
+      const current = form.dataset.state;
+      /* Не трогаем состояния submitting / success — ими управляет submit handler */
+      if (current === 'submitting' || current === 'success') return;
+
+      const nameOk = !!(nameInput && nameInput.value.trim().length > 0);
+      const phoneOk = !!(phoneInput && validateField(phoneInput));
+      const consentOk = !!(consentInput && consentInput.checked);
+      const offerOk = !!(offerInput && offerInput.checked);
+      const allOk = nameOk && phoneOk && consentOk && offerOk;
+
+      form.dataset.state = allOk ? 'valid' : 'invalid';
+      if (submitBtn) submitBtn.disabled = !allOk;
+
+      /* Подсветка пунктов в подсказке — зачёркиваем выполненные. */
+      hintItems.forEach((li) => {
+        const need = li.dataset.need;
+        let ok = false;
+        if (need === 'name') ok = nameOk;
+        else if (need === 'phone') ok = phoneOk;
+        else if (need === 'consent') ok = consentOk;
+        else if (need === 'offer') ok = offerOk;
+        li.classList.toggle('is-done', ok);
+      });
+    };
+
+    /* Реактивные подписки на изменения полей. */
+    [nameInput, phoneInput].forEach((f) => {
+      if (!f) return;
+      f.addEventListener('input', recomputeFormState);
+      f.addEventListener('blur', recomputeFormState);
+    });
+    [consentInput, offerInput].forEach((cb) => {
+      if (!cb) return;
+      cb.addEventListener('change', recomputeFormState);
+    });
+
+    /* Тач-устройства: переключаем тултип кликом по "?". Десктоп
+       открывает его по :hover/:focus-visible (чисто CSS). */
+    if (hintBtn) {
+      hintBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const open = hintBtn.classList.toggle('is-open');
+        hintBtn.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('click', (e) => {
+        if (!hintBtn.contains(e.target) && hintPanel && !hintPanel.contains(e.target)) {
+          hintBtn.classList.remove('is-open');
+          hintBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      /* Esc закрывает тултип */
+      hintBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          hintBtn.classList.remove('is-open');
+          hintBtn.setAttribute('aria-expanded', 'false');
+          hintBtn.blur();
+        }
+      });
+    }
+
+    /* Начальное состояние (форма загружается пустой → disabled). */
+    recomputeFormState();
   }
 
   /* ---------- Compat-Check short form ---------- */
